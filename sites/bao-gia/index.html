@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#165dca" />
+  <title>Phiếu báo giá | Hải Hà Hưng</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="bao-gia"></script></head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="appSidebar">
+      <div class="brand-lockup">
+        <div class="brand-mark"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng" /></div>
+        <div><strong>HẢI HÀ HƯNG</strong><small>BUSINESS MANAGEMENT</small></div>
+      </div>
+      <div class="side-caption">KHÔNG GIAN LÀM VIỆC</div>
+      <nav class="side-nav" aria-label="Điều hướng chính">
+        <a href="#" class="nav-item"><span class="nav-icon">▦</span> Tổng quan</a>
+        <a href="../danh-muc-nhom/index.html" class="nav-item"><span class="nav-icon">▤</span> Danh mục nhôm</a>
+        <a href="../phu-kien/index.html" class="nav-item"><span class="nav-icon">◫</span> Phụ kiện</a>
+        <a href="#" class="nav-item active"><span class="nav-icon">▧</span> Báo giá <span class="nav-pill">Mới</span></a>
+        <a href="../lich-su-bao-gia/index.html" class="nav-item"><span class="nav-icon">◷</span> Lịch sử báo giá</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">?</div><strong>Cần hỗ trợ?</strong><p>Liên hệ quản trị hệ thống để cập nhật dữ liệu và bảng giá.</p><a href="mailto:kinhdoanh@haihahung.vn">Liên hệ hỗ trợ ↗</a></div>
+        <div class="user-profile"><div class="avatar"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng" /></div><div class="user-info"><strong>Nhân viên kinh doanh</strong><small>Hải Hà Hưng</small></div><span class="more">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Mở menu" aria-controls="appSidebar" aria-expanded="false">☰</button>
+        <div class="breadcrumbs"><span>Kinh doanh</span><span class="crumb-sep">/</span><strong>Phiếu báo giá</strong></div>
+        <div class="top-actions"><span class="today" id="todayLabel"></span><button class="icon-button" title="Thông báo" aria-label="Thông báo">♧<i></i></button><div class="top-avatar"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng" /></div></div>
+      </header>
+
+      <section class="page-heading">
+        <div><div class="eyebrow"><span class="eyebrow-dot"></span> QUẢN LÝ BÁN HÀNG</div><h1>Tạo phiếu báo giá</h1><p class="subtitle">Lập báo giá nhôm thanh và phụ kiện nhanh chóng, chính xác.</p></div>
+        <div class="heading-actions">
+        <a href="../dung-bao-gia-co-ban-ve/index.html" class="btn btn-secondary" id="drawingQuoteBtn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">▱ Dựng báo giá có bản vẽ</a><button class="btn btn-secondary" id="newQuoteBtn">＋ Báo giá mới</button><button class="btn btn-secondary" id="printQuoteBtn">▤ In / PDF</button><button class="btn btn-secondary" id="exportExcelBtn" title="Tải báo giá về máy dưới dạng Excel">▦ Xuất Excel</button><button class="btn btn-secondary" id="saveDriveBtn" title="Lưu PDF và dữ liệu báo giá vào Google Drive">☁ Lưu vào Drive</button><button class="btn btn-primary" id="saveQuoteBtn"><span>▣</span> Lưu báo giá</button></div>
+      </section>
+
+      <section class="stats-grid" aria-label="Thông tin báo giá">
+        <article class="stat-card"><div class="stat-top"><span>MÃ BÁO GIÁ</span><span class="stat-icon blue">▤</span></div><div class="stat-value" id="quoteCode">BG-261013-001</div><div class="stat-note">Mã tự tạo theo ngày</div></article>
+        <article class="stat-card"><div class="stat-top"><span>NGÀY BÁO GIÁ</span><span class="stat-icon violet">▦</span></div><div class="stat-value" id="quoteDateDisplay">13/10/2026</div><div class="stat-note">Hiệu lực <strong>15 ngày</strong> <span class="status-dot"></span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>SỐ DÒNG SẢN PHẨM</span><span class="stat-icon orange">▥</span></div><div class="stat-value"><span id="lineCount">3</span> <small>dòng</small></div><div class="stat-note"><span id="aluminumCount">2</span> nhôm thanh · <span id="accessoryCount">1</span> phụ kiện</div></article>
+        <article class="stat-card total-stat"><div class="stat-top"><span>TỔNG THANH TOÁN</span><span class="stat-icon green">₫</span></div><div class="stat-value" id="totalCard">0 ₫</div><div class="stat-note">VAT mặc định tắt; chiết khấu theo thiết lập</div></article>
+      </section>
+
+      <section class="panel customer-panel">
+        <div class="panel-heading"><div class="panel-title-wrap"><div class="section-icon">♙</div><div><h2>Thông tin khách hàng</h2><p>Thông tin đơn vị nhận báo giá</p></div></div><span class="required-note"><span>*</span> Thông tin bắt buộc</span></div>
+        <div class="customer-picker-row">
+          <div class="field customer-select-field"><span>Chọn khách hàng đã lưu</span><button type="button" class="customer-picker-trigger" id="chooseCustomerBtn"><span id="selectedCustomerLabel">— Chọn khách hàng trong danh mục —</span><span aria-hidden="true">⌄</span></button><select id="customerSelect" class="visually-hidden" aria-hidden="true" tabindex="-1"><option value="">— Chọn khách hàng trong danh mục —</option><option value="__new__">＋ Nhập khách hàng mới</option></select></div>
+          <span class="customer-data-hint" id="customerDataStatus">Đang tải danh mục khách hàng…</span>
+        </div>
+        <div class="form-grid customer-grid">
+          <label class="field span-2"><span>Tên khách hàng / đơn vị <b>*</b></span><input id="customerName" placeholder="Nhập tên khách hàng hoặc công ty" value="" required /></label>
+          <label class="field"><span>Số điện thoại <b>*</b></span><input id="customerPhone" placeholder="VD: 0905 123 456" value="" /></label>
+          <label class="field"><span>Người liên hệ</span><input id="customerContact" placeholder="Tên người liên hệ" value="" /></label>
+          <label class="field span-2"><span>Địa chỉ</span><input id="customerAddress" placeholder="Số nhà, đường, phường/xã, tỉnh/thành" value="" /></label>
+          <label class="field"><span>Nhân viên phụ trách</span><select id="salesperson"><option>Nhân viên kinh doanh</option><option>Phòng kinh doanh</option><option>Quản lý bán hàng</option></select></label>
+          <label class="field"><span>Hiệu lực báo giá</span><select id="validity"><option value="7">7 ngày</option><option value="15" selected>15 ngày</option><option value="30">30 ngày</option></select></label>
+        </div>
+      </section>
+
+      <section class="panel products-panel">
+        <div class="panel-heading products-heading"><div class="panel-title-wrap"><div class="section-icon blue-bg">▤</div><div><h2>Chi tiết nhôm thanh</h2><p>Chọn mã hàng, màu sắc, quy cách và đơn giá</p></div></div><div class="heading-tools"><div class="search-box"><span>⌕</span><input id="productSearch" placeholder="Lọc dòng đã chọn theo mã, tên, hệ..." aria-label="Lọc dòng báo giá" /></div><button class="btn btn-secondary btn-small" id="toggleAluminumPriceEdit" type="button" aria-pressed="false" title="Bật khi cần sửa đơn giá nhôm">🔒 Sửa đơn giá: Tắt</button><button class="btn btn-primary btn-small" id="addAluminumBtn">＋ Thêm nhôm</button></div></div>
+        <div class="table-wrap"><table class="data-table" id="aluminumTable"><thead><tr><th class="col-no">#</th><th class="col-product">MÃ HÀNG / TÊN SẢN PHẨM</th><th>MÀU SẮC</th><th>QUY CÁCH</th><th class="align-right">SỐ LƯỢNG</th><th>ĐVT</th><th class="align-right">ĐƠN GIÁ (₫)</th><th class="align-right">THÀNH TIỀN (₫)</th><th></th></tr></thead><tbody id="aluminumRows"></tbody></table></div>
+        <div class="table-footer"><div class="data-hint"><span class="hint-icon">i</span> Đơn giá có thể chỉnh sửa trực tiếp. Thành tiền tự động cập nhật.</div><button class="text-button" id="clearAluminumBtn">Xóa tất cả dòng</button></div>
+      </section>
+
+      <section class="panel accessories-panel">
+        <div class="panel-heading"><div class="panel-title-wrap"><div class="section-icon amber-bg">⚙</div><div><h2>Phụ kiện đi kèm <span class="optional-tag">TÙY CHỌN</span></h2><p>Thêm phụ kiện vào báo giá nếu khách hàng có nhu cầu</p></div></div><label class="switch-label"><span>Bao gồm phụ kiện</span><input type="checkbox" id="includeAccessories" checked /><span class="switch"></span></label></div>
+        <div id="accessoriesContent"><div class="table-wrap"><table class="data-table accessory-table"><thead><tr><th class="col-no">#</th><th>MÃ HÀNG / TÊN PHỤ KIỆN</th><th>NHÓM PHỤ KIỆN</th><th class="align-right">SỐ LƯỢNG</th><th>ĐVT</th><th class="align-right">ĐƠN GIÁ (₫)</th><th class="align-right">CK RIÊNG (%)</th><th class="align-right">THÀNH TIỀN (₫)</th><th>CK chung</th><th></th></tr></thead><tbody id="accessoryRows"></tbody></table></div><div class="table-footer"><div class="data-hint"><span class="hint-icon">i</span> Phụ kiện không bắt buộc; bỏ chọn để loại khỏi tổng báo giá.</div><button class="btn btn-outline btn-small" id="addAccessoryBtn">＋ Thêm phụ kiện</button></div></div>
+        <div class="accessory-disabled hidden" id="accessoryDisabled"><span class="disabled-icon">⚙</span><div><strong>Chưa bao gồm phụ kiện</strong><p>Bật công tắc để thêm phụ kiện vào phiếu báo giá.</p></div></div>
+      </section>
+
+      <section class="bottom-grid">
+        <div class="panel notes-panel"><div class="panel-heading compact-heading"><div class="panel-title-wrap"><div class="section-icon">☷</div><div><h2>Ghi chú & điều khoản</h2><p>Thông tin bổ sung trên phiếu báo giá</p></div></div></div><label class="field"><span>Ghi chú cho khách hàng</span><textarea id="quoteNotes" rows="3" placeholder="VD: Hàng có sẵn theo tồn kho, vui lòng xác nhận màu trước khi đặt...">Giá áp dụng theo số lượng trong báo giá. Vui lòng xác nhận màu sắc và quy cách trước khi đặt hàng.</textarea></label><div class="terms-row"><label class="field"><span>Thời gian giao hàng</span><input id="deliveryTime" value="Theo thỏa thuận" /></label><label class="field"><span>Điều khoản thanh toán</span><select id="paymentTerms"><option>Thanh toán khi nhận hàng</option><option>Đặt cọc 30%, thanh toán còn lại khi giao hàng</option><option>Theo thỏa thuận</option></select></label></div></div>
+        <div class="panel totals-panel"><div class="panel-heading compact-heading"><div class="panel-title-wrap"><div class="section-icon green-bg">₫</div><div><h2>Tổng hợp thanh toán</h2><p>Giá trị đơn hàng</p></div></div></div>
+          <div class="totals-lines"><div class="total-line"><span>Tổng nhôm thanh</span><strong id="aluminumSubtotal">0 ₫</strong></div><div class="total-line"><span>Tổng phụ kiện</span><strong id="accessorySubtotal">0 ₫</strong></div><div class="total-line"><label for="discountAlValue">Chiết khấu nhôm</label><div class="inline-money"><input id="discountAlValue" type="number" min="0" value="0" /><select id="discountAlType" aria-label="Loại chiết khấu nhôm"><option value="percent">%</option><option value="amount">₫</option></select></div></div><div class="total-line"><label for="discountAccValue">Chiết khấu phụ kiện</label><div class="inline-money"><input id="discountAccValue" type="number" min="0" value="0" /><select id="discountAccType" aria-label="Loại chiết khấu phụ kiện"><option value="percent">%</option><option value="amount">₫</option></select></div></div><div class="total-line muted-line"><span>Tiền chiết khấu nhôm</span><strong id="discountAlAmount">0 ₫</strong></div><div class="total-line muted-line"><span>Tiền chiết khấu phụ kiện</span><strong id="discountAccAmount">0 ₫</strong></div><div class="total-line muted-line"><span>Tổng chiết khấu</span><strong id="discountAmount">0 ₫</strong></div><div class="total-line debt-toggle-line"><label for="oldDebtEnabled">Công nợ cũ</label><label class="vat-toggle"><input type="checkbox" id="oldDebtEnabled" /> <span>Bật công nợ cũ</span></label></div><div class="total-line hidden" id="oldDebtInputLine"><label for="oldDebtAmount">Số công nợ cũ</label><div class="inline-money"><input id="oldDebtAmount" type="number" min="0" step="1000" value="0" aria-label="Số tiền công nợ cũ" /><span>₫</span></div></div><div class="total-line muted-line hidden" id="oldDebtSummaryLine"><span>Công nợ cũ</span><strong id="oldDebtSummaryAmount">0 ₫</strong></div><div class="total-line vat-line"><label for="vatEnabled">Thuế VAT</label><div class="inline-money vat-control"><label class="vat-toggle"><input type="checkbox" id="vatEnabled" /> <span>Bật VAT</span></label><select id="vatRate" disabled><option value="0">0%</option><option value="5">5%</option><option value="8" selected>8%</option><option value="10">10%</option></select></div></div><div class="total-line muted-line"><span>Tiền VAT</span><strong id="vatAmount">0 ₫</strong></div></div>
+          <div class="grand-total"><div><span>TỔNG THANH TOÁN</span><small>Đơn vị: Việt Nam đồng (VND)</small></div><strong id="grandTotal">0 ₫</strong></div><div class="amount-words" id="amountWords">Bằng chữ: Không đồng.</div>
+        </div>
+      </section>
+
+      <footer class="page-footer"><div><strong>HẢI HÀ HƯNG</strong><span> · Giải pháp nhôm thanh & phụ kiện</span></div><div>© <span id="yearLabel">2026</span> Hải Hà Hưng <span class="footer-sep">•</span> Phiếu báo giá nội bộ</div></footer>
+    </main>
+  </div>
+  <button class="mobile-nav-backdrop hidden" id="mobileNavBackdrop" aria-label="Đóng menu"></button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><div><h2 id="modalTitle">Chọn sản phẩm</h2><p id="modalSubtitle">Tìm theo mã hàng, tên hàng hoặc hệ nhôm; chọn sản phẩm để tự điền thông tin.</p></div><button class="icon-button close-modal" id="closeModal" aria-label="Đóng">×</button></div><div class="modal-filters"><label class="field"><span id="modalSystemLabel">Lọc theo hệ nhôm</span><select id="modalSystemFilter"><option value="">Tất cả hệ nhôm</option></select></label><label class="modal-search"><span>⌕</span><input id="modalSearch" placeholder="Tìm mã hàng, tên hàng..." /></label></div><div class="multi-select-bar"><label class="multi-select-toggle"><input type="checkbox" id="multiSelectMode" /> <span>Chọn nhiều mã</span></label><span class="multi-select-hint" id="multiSelectHint">Bật để chọn nhiều sản phẩm cùng lúc.</span></div><div class="modal-list" id="modalList"></div><div class="modal-foot"><span id="catalogStatus">Có thể nhập sản phẩm thủ công nếu chưa có danh mục.</span><div class="modal-foot-actions"><button class="btn btn-primary hidden" id="addSelectedBtn" type="button">Thêm mã đã chọn (0)</button><button class="btn btn-secondary" id="manualProductBtn">＋ Nhập thủ công</button></div></div></div></div>
+  <div class="modal-backdrop hidden" id="customerModal" role="dialog" aria-modal="true" aria-labelledby="customerModalTitle"><div class="modal customer-modal"><div class="modal-head"><div><h2 id="customerModalTitle">Chọn khách hàng</h2><p>Tìm theo tên khách hàng, mã khách hàng, số điện thoại hoặc địa chỉ.</p></div><button class="icon-button" id="closeCustomerModal" aria-label="Đóng">×</button></div><label class="modal-search customer-search"><span>⌕</span><input id="customerSearch" type="search" placeholder="Tìm khách hàng, số điện thoại..." /></label><div class="modal-list customer-modal-list" id="customerModalList"></div><div class="modal-foot"><span id="customerModalStatus">Đang tải danh sách khách hàng…</span><div class="modal-foot-actions"><button class="btn btn-secondary" id="newCustomerBtn" type="button">＋ Nhập khách hàng mới</button></div></div></div></div>
+  <iframe id="driveSaveFrame" name="driveSaveFrame" title="Kết quả lưu Google Drive" class="visually-hidden"></iframe>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/stock-link.js"></script>
+</body>
+</html>

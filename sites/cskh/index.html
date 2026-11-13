@@ -1,0 +1,378 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chăm sóc khách hàng</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#172033;margin:0;padding:4px;font-size:14.5px}
+h1{font-size:24px;margin:6px 0 2px}h2{margin:0}.mut{color:#5b6980;font-size:13px}
+input,select,button,textarea{font:inherit;padding:8px 10px;border:1px solid #cfd8e6;border-radius:9px;background:#fff;color:#172033;min-width:0}
+textarea{width:100%;resize:vertical}
+button{font-weight:600;cursor:pointer}button:hover{background:#f1f5fb}button:disabled{opacity:.45;cursor:not-allowed}
+button.p{background:#1f5fd6;color:#fff;border-color:#1f5fd6}button.p:hover{background:#1a4fb4}
+button.x{color:#d4472a;border-color:#f0b9ab}button.x:hover{background:#fdebe6}
+button.sm{padding:4px 9px;font-size:12.5px;border-radius:7px}
+.card{background:#fff;border:1px solid #e3e8f0;border-radius:14px;padding:14px}
+.top{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.k{background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:12px 14px}.k b{display:block;font-size:22px;margin-top:2px}.k small{color:#5b6980;font-size:12px}
+.k.alert b{color:#d4472a}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.seg button{border-radius:999px;padding:6px 13px;font-size:13px}
+.seg button.on{background:#e8f0fe;border-color:#1f5fd6;color:#1f5fd6}
+.seg button .n{font-weight:700;margin-left:4px;opacity:.75}
+.main-tabs{display:flex;gap:6px;margin:6px 0 10px;border-bottom:1px solid #e3e8f0}
+.main-tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:9px 14px;color:#5b6980}
+.main-tabs button.on{color:#1f5fd6;border-bottom-color:#1f5fd6}
+.g{display:grid;grid-template-columns:350px 1fr;gap:12px;align-items:start}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.row input{min-width:0}
+#list{max-height:68vh;overflow:auto;margin-top:6px}
+.it{padding:10px 8px;border-radius:9px;cursor:pointer;display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #f0f3f8;align-items:flex-start}
+.it:hover{background:#f4f7fc}.it.on{background:#e8f0fe}
+.it .nm{font-weight:600}.it small{color:#5b6980;display:block;margin-top:1px}
+.bd{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.bd.red{background:#fdebe6;color:#d4472a}.bd.amb{background:#fdf3df;color:#b7791f}.bd.blue{background:#e8f0fe;color:#1f5fd6}
+.bd.ok{background:#e3f6ec;color:#16915f}.bd.bad{background:#f1f3f7;color:#5b6980}.bd.warn{background:#fdf3df;color:#b7791f}.bd.good{background:#16915f;color:#fff}
+.bd.hot{background:#d4472a;color:#fff}.bd.warm{background:#f6a13a;color:#fff}.bd.cold{background:#6aa0e8;color:#fff}.bd.none{background:#eef1f6;color:#5b6980}.bd.mute{background:#eef1f6;color:#5b6980}
+.head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.head .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+.tel{display:inline-block;margin-top:6px;padding:6px 12px;border-radius:9px;background:#e3f6ec;color:#16915f;font-weight:700;text-decoration:none}
+.prof{white-space:pre-wrap;background:#f6f8fc;border:1px solid #e3e8f0;border-radius:10px;padding:12px;min-height:90px;max-height:50vh;overflow:auto}
+.dotp{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16915f;margin-left:6px;vertical-align:middle}
+.remind{margin:12px 0;padding:10px 14px;border-radius:12px;font-size:13.5px;border:1px solid #e3e8f0;background:#f6f8fc}
+.remind.red{background:#fdebe6;border-color:#f0b9ab;color:#a8321a}.remind.amb{background:#fdf3df;border-color:#f3d28f;color:#7a5412}
+.tl{margin-top:8px}
+.ev{display:grid;grid-template-columns:14px 1fr;gap:10px;padding:0 0 14px}
+.ev .dot{width:10px;height:10px;border-radius:50%;background:#1f5fd6;margin-top:6px;position:relative}
+.ev .dot::after{content:"";position:absolute;left:4px;top:12px;width:2px;height:calc(100% + 28px);background:#e3e8f0}
+.ev:last-child .dot::after{display:none}
+.ev .meta{color:#5b6980;font-size:12.5px}
+.ev .chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}
+.ev .note{white-space:pre-wrap;margin:4px 0}
+.ev .fu{font-size:12.5px;color:#5b6980}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:8px 6px;border-top:1px solid #eef1f6;text-align:left;vertical-align:top}th{color:#5b6980;font-size:12px;white-space:nowrap}
+.r{text-align:right}.wrap{overflow-x:auto}
+a.cl{color:#1f5fd6;cursor:pointer;font-weight:600;text-decoration:none}
+dialog{border:0;border-radius:16px;padding:20px;width:min(600px,94vw);box-shadow:0 20px 60px rgba(20,30,60,.3)}dialog::backdrop{background:rgba(20,30,60,.45)}
+.f label{display:block;margin:10px 0 4px;font-size:13px;color:#5b6980}.f input,.f select{width:100%}
+.f .two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chipset button{border-radius:999px;padding:6px 13px;font-size:13px}
+.chipset button.on{background:#e8f0fe;border-color:#1f5fd6;color:#1f5fd6}
+.chipset button.on.yes{background:#e3f6ec;border-color:#16915f;color:#16915f}
+.chipset button.on.no{background:#f1f3f7;border-color:#8793a6;color:#3b475b}
+.chipset button.on.s-hot{background:#fdebe6;border-color:#d4472a;color:#d4472a}
+.chipset button.on.s-warm{background:#fdf3df;border-color:#f6a13a;color:#b7791f}
+.prev{margin-top:6px;font-size:13px;color:#1f5fd6;min-height:1.2em}
+.err{color:#d4472a;margin:8px 0;min-height:1em;font-size:13.5px}
+.ftr{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+#msg{position:fixed;right:14px;bottom:14px;background:#172033;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:50;max-width:calc(100vw - 28px)}
+.empty{padding:26px;text-align:center;color:#5b6980}
+@media(max-width:900px){.g{grid-template-columns:1fr}.top{grid-template-columns:repeat(2,1fr)}#list{max-height:46vh}}
+@media(max-width:560px){.f .two{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Chăm sóc khách hàng</h1>
+<div class="mut">Ghi lại mỗi lần liên hệ, đặt lịch nhắc chăm sóc lại và theo dõi khách cần gọi hôm nay.</div>
+
+<div class="top">
+  <div class="k alert"><span class="mut">Cần gọi hôm nay</span><b id="kDue">…</b><small id="kDueS"></small></div>
+  <div class="k"><span class="mut">Chưa chăm sóc lần nào</span><b id="kNew">…</b><small>khách chưa có tương tác</small></div>
+  <div class="k"><span class="mut">Tương tác hôm nay</span><b id="kToday">…</b><small id="kTodayS"></small></div>
+  <div class="k"><span class="mut">Tỉ lệ liên hệ được (7 ngày)</span><b id="kRate">…</b><small id="kRateS"></small></div>
+</div>
+
+<div class="main-tabs"><button id="tabC" class="on">Khách hàng</button><button id="tabL">Nhật ký chăm sóc</button></div>
+
+<section id="v1">
+  <div class="g">
+    <div class="card">
+      <div class="row"><input id="q" placeholder="Tìm tên, số điện thoại, địa chỉ" style="flex:1"><button class="p" id="bAdd" hidden title="Thêm khách hàng mới">＋ Khách</button></div>
+      <div class="seg" id="flt">
+        <button data-f="due" class="on">Cần gọi<span class="n" id="nDue"></span></button>
+        <button data-f="soon">Sắp tới<span class="n" id="nSoon"></span></button>
+        <button data-f="new">Chưa chăm sóc<span class="n" id="nNew"></span></button>
+        <button data-f="idle">Chưa hẹn lại<span class="n" id="nIdle"></span></button>
+        <button data-f="all">Tất cả<span class="n" id="nAll"></span></button>
+      </div>
+      <label class="mut" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="mine" style="width:auto"> Chỉ nhắc hẹn do tôi đặt</label>
+      <div id="list"><p class="mut">Đang tải…</p></div>
+    </div>
+    <div class="card" id="panel"><p class="mut">Chọn một khách hàng ở bên trái để xem lịch sử chăm sóc.</p></div>
+  </div>
+</section>
+
+<section id="v2" hidden>
+  <div class="card">
+    <div class="row">
+      <label class="mut">Từ ngày<br><input type="date" id="lFrom"></label>
+      <label class="mut">Đến ngày<br><input type="date" id="lTo"></label>
+      <label class="mut">Nhân viên<br><select id="lUser"><option value="">Tất cả</option></select></label>
+      <label class="mut">Kết quả<br><select id="lRes"><option value="">Tất cả</option></select></label>
+      <label class="mut">Tìm khách<br><input id="lQ" placeholder="Tên khách"></label>
+      <button id="lGo" style="align-self:flex-end">Xem</button>
+    </div>
+    <h3 style="margin:12px 0 4px;font-size:15px">Tổng hợp theo nhân viên</h3>
+    <div class="wrap"><table><thead><tr><th>Nhân viên</th><th class="r">Lượt tương tác</th><th class="r">Liên hệ được</th><th class="r">Tỉ lệ</th><th class="r">Tín hiệu nóng</th><th class="r">Chốt đơn</th></tr></thead><tbody id="sumRows"></tbody></table></div>
+    <h3 style="margin:16px 0 4px;font-size:15px">Chi tiết <span class="mut" id="lCount"></span></h3>
+    <div class="wrap"><table style="min-width:900px"><thead><tr><th>Thời gian</th><th>Khách hàng</th><th>Nhân viên</th><th>Kênh</th><th>Liên hệ</th><th>Kết quả</th><th>Tín hiệu</th><th>Hẹn lại</th><th>Ghi chú</th></tr></thead><tbody id="logRows"></tbody></table></div>
+  </div>
+</section>
+
+<dialog id="dLog"><h2 id="dLogT" style="font-size:19px">Ghi nhận tương tác</h2>
+  <div class="f">
+    <div class="two">
+      <div><label>Kênh liên hệ</label><select id="f_channel"></select></div>
+      <div><label>Thời điểm</label><input type="datetime-local" id="f_at"></div>
+    </div>
+    <label>Liên hệ được khách không?</label>
+    <div class="chipset" id="f_reached"><button type="button" data-v="1" class="yes">Liên hệ được</button><button type="button" data-v="0" class="no on">Không liên hệ được</button></div>
+    <label>Kết quả</label><select id="f_result"></select>
+    <label>Tín hiệu từ khách</label>
+    <div class="chipset" id="f_signal"><button type="button" data-v="hot" class="s-hot">Nóng · sắp mua</button><button type="button" data-v="warm" class="s-warm">Ấm · quan tâm</button><button type="button" data-v="cold">Lạnh · ít nhu cầu</button><button type="button" data-v="none" class="on">Chưa rõ</button></div>
+    <label>Nội dung trao đổi</label><textarea id="f_note" rows="3" placeholder="VD: Khách đang làm công trình tại Tam Kỳ, cần báo giá hệ Kogen 60…"></textarea>
+    <label>Nhắc chăm sóc lại sau</label>
+    <div class="chipset" id="f_days"><button type="button" data-d="1">1 ngày</button><button type="button" data-d="2">2 ngày</button><button type="button" data-d="3">3 ngày</button><button type="button" data-d="7">7 ngày</button><button type="button" data-d="14">14 ngày</button><button type="button" data-d="30">30 ngày</button><button type="button" data-d="">Không hẹn</button></div>
+    <div class="row" style="margin-bottom:0"><span class="mut">Hoặc nhập số ngày:</span><input type="number" id="f_dn" min="0" max="365" style="width:90px"></div>
+    <div class="prev" id="f_prev"></div>
+  </div>
+  <div class="err" id="dLogE"></div>
+  <div class="ftr"><button type="button" id="dLogNo">Hủy</button><button type="button" class="p" id="dLogOk">Lưu tương tác</button></div>
+</dialog>
+
+<dialog id="dProf"><h2 id="dProfT" style="font-size:19px">Đặc điểm tương thích</h2>
+  <div class="mut" id="dProfH" style="margin:4px 0 10px"></div>
+  <div id="dProfV" class="prof"></div>
+  <textarea id="dProfE" rows="10" hidden placeholder="Tóm gọn để CTV làm việc hiệu quả: nhu cầu chính / hệ nhôm hay dùng, thời điểm gọi tốt nhất, cách xưng hô, mức giá hoặc chiết khấu quen, điều cần tránh khi nói chuyện…"></textarea>
+  <div class="err" id="dProfErr"></div>
+  <div class="ftr"><button type="button" id="dProfNo">Đóng</button><button type="button" class="p" id="dProfOk" hidden>Lưu</button></div>
+</dialog>
+<dialog id="dNew"><h2 style="font-size:19px">Thêm khách hàng mới</h2>
+  <div class="f">
+    <label>Tên khách hàng / đơn vị *</label><input id="n_name">
+    <div class="two"><div><label>Số điện thoại</label><input id="n_phone" inputmode="tel"></div><div><label>Người liên hệ</label><input id="n_contact"></div></div>
+    <label>Địa chỉ</label><input id="n_address">
+    <label>Ghi chú</label><textarea id="n_note" rows="2"></textarea>
+  </div>
+  <div class="err" id="dNewE"></div>
+  <div class="ftr"><button type="button" id="dNewNo">Hủy</button><button type="button" class="p" id="dNewOk">Lưu khách hàng</button></div>
+</dialog>
+<div id="msg"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="cskh"></script>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id),sb=window.HHH&&HHH.sb;
+if(!sb){document.body.innerHTML='Không kết nối được Supabase.';return}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nrm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parseYmd=s=>{const [y,m,d]=String(s).slice(0,10).split('-').map(Number);return new Date(y,m-1,d)};
+const todayD=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate())};
+const diffDays=s=>Math.round((parseYmd(s)-todayD())/864e5);
+const fdate=s=>s?parseYmd(s).toLocaleDateString('vi-VN'):'—';
+const fdt=s=>{const d=new Date(s);return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})};
+const uname=e=>String(e||'').split('@')[0]||'—';
+const firstPhone=s=>{const m=String(s||'').match(/(?:\+?84|0)(?:[\s.\-]?\d){8,10}/);return m?m[0].replace(/[^\d+]/g,''):''};
+const toast=m=>{const e=$('msg');e.textContent=m;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',3600)};
+
+const CH={call:'Gọi điện',zalo:'Zalo',sms:'SMS',visit:'Gặp trực tiếp',email:'Email',other:'Khác'};
+const RES={no_answer:['Không nghe máy','bad'],busy:['Máy bận','bad'],unreachable:['Thuê bao / không liên lạc được','bad'],wrong_number:['Sai số / số không tồn tại','bad'],
+  talked:['Đã trao đổi','ok'],quoted:['Đã gửi báo giá','ok'],callback:['Khách hẹn gọi lại','warn'],ordered:['Đã chốt đơn','good'],declined:['Từ chối / chưa có nhu cầu','mute']};
+const MISSED=['no_answer','busy','unreachable','wrong_number'],REACHED=['talked','quoted','callback','ordered','declined'];
+const SIG={hot:'Nóng',warm:'Ấm',cold:'Lạnh',none:'Chưa rõ'};
+const DEF_DAYS={no_answer:1,busy:1,unreachable:2,wrong_number:null,talked:7,quoted:3,callback:1,ordered:30,declined:null};
+const resBadge=r=>RES[r]?`<span class="bd ${RES[r][1]}">${esc(RES[r][0])}</span>`:'';
+const sigBadge=s=>`<span class="bd ${esc(s||'none')}">${esc(SIG[s]||SIG.none)}</span>`;
+
+const [rr,au]=await Promise.all([sb.rpc('my_role'),sb.auth.getUser()]);
+const role=rr.data||'viewer',me=(au.data&&au.data.user)||{},isBoss=role==='admin'||role==='approver',canW=isBoss||role==='staff'||role==='ctv';
+$('bAdd').hidden=!canW;
+
+let rows=[],recent=[],cur=null,flt='due',tl=[],logData=[],prof=null,profErr='';
+const isAdmin=role==='admin';
+async function all(t,sel,f){let a=[],i=0;for(;;){let q=sb.from(t).select(sel);if(f)q=f(q);const r=await q.range(i,i+999);if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;i+=1000}return a}
+
+/* ---------- Danh sách khách + KPI ---------- */
+async function loadList(){
+  try{rows=await all('crm_customer_list','*',q=>q.order('id'))}
+  catch(e){$('list').innerHTML='<p class="err">Chưa tải được: '+esc(e.message)+'<br>Hãy chạy supabase-update-10.sql trong SQL Editor.</p>';return}
+  drawKpi();drawList();
+}
+async function loadStats(){
+  const since=new Date(todayD().getTime()-6*864e5);
+  try{recent=await all('crm_interactions','id,reached,user_id,user_email,contacted_at',q=>q.gte('contacted_at',since.toISOString()).order('contacted_at',{ascending:false}))}catch(e){recent=[]}
+  drawKpi();
+}
+const isDue=r=>r.next_follow_up&&diffDays(r.next_follow_up)<=0;
+function drawKpi(){
+  const due=rows.filter(isDue),over=rows.filter(r=>r.next_follow_up&&diffDays(r.next_follow_up)<0);
+  $('kDue').textContent=due.length;$('kDueS').textContent=over.length?`trong đó ${over.length} quá hạn`:'chưa có khách quá hạn';
+  $('kNew').textContent=rows.filter(r=>!+r.n_contacts).length;
+  const t0=todayD().getTime(),today=recent.filter(x=>new Date(x.contacted_at).getTime()>=t0),mine=today.filter(x=>x.user_id===me.id);
+  $('kToday').textContent=today.length;$('kTodayS').textContent=`của tôi: ${mine.length} · liên hệ được: ${today.filter(x=>x.reached).length}`;
+  const ok=recent.filter(x=>x.reached).length;
+  $('kRate').textContent=recent.length?Math.round(ok*100/recent.length)+'%':'—';$('kRateS').textContent=`${ok}/${recent.length} lượt`;
+  $('nDue').textContent=due.length;$('nSoon').textContent=rows.filter(r=>r.next_follow_up&&diffDays(r.next_follow_up)>0).length;
+  $('nNew').textContent=rows.filter(r=>!+r.n_contacts).length;$('nIdle').textContent=rows.filter(r=>+r.n_contacts>0&&!r.next_follow_up).length;$('nAll').textContent=rows.length;
+}
+function dueBadge(r){
+  if(!r.next_follow_up)return '';const d=diffDays(r.next_follow_up);
+  return d<0?`<span class="bd red">Quá ${-d} ngày</span>`:d===0?'<span class="bd amb">Hôm nay</span>':`<span class="bd blue">Còn ${d} ngày</span>`;
+}
+function drawList(){
+  const q=nrm($('q').value),mine=$('mine').checked;
+  let l=rows.filter(r=>{
+    if(q&&!nrm(r.name+' '+r.phone+' '+r.address+' '+r.contact).includes(q))return false;
+    if(mine&&r.follow_by!==me.email)return false;
+    if(flt==='due')return isDue(r);
+    if(flt==='soon')return r.next_follow_up&&diffDays(r.next_follow_up)>0;
+    if(flt==='new')return !+r.n_contacts;
+    if(flt==='idle')return +r.n_contacts>0&&!r.next_follow_up;
+    return true});
+  if(flt==='due'||flt==='soon')l.sort((a,b)=>String(a.next_follow_up).localeCompare(String(b.next_follow_up)));
+  else if(flt==='idle')l.sort((a,b)=>String(a.last_at||'').localeCompare(String(b.last_at||'')));
+  else l.sort((a,b)=>String(a.name).localeCompare(String(b.name),'vi'));
+  $('list').innerHTML=l.slice(0,200).map(r=>`<div class="it${cur&&cur.id===r.id?' on':''}" data-id="${r.id}"><div><span class="nm">${esc(r.name)}</span><small>${esc(r.phone||'chưa có SĐT')}${r.address?' · '+esc(r.address):''}</small><small>${+r.n_contacts?`Lần cuối ${esc(fdt(r.last_at))} · ${esc(uname(r.last_by))}`:'Chưa chăm sóc lần nào'}</small></div><div style="text-align:right">${dueBadge(r)}${r.last_signal&&r.last_signal!=='none'?'<div style="margin-top:4px">'+sigBadge(r.last_signal)+'</div>':''}</div></div>`).join('')
+    +(l.length>200?`<p class="mut" style="text-align:center">Hiển thị 200/${l.length} khách. Hãy tìm kiếm để thu hẹp.</p>`:'')
+    ||'<div class="empty">Không có khách hàng phù hợp.</div>';
+}
+$('list').onclick=e=>{const d=e.target.closest('.it');if(d)openCustomer(+d.dataset.id)};
+$('q').oninput=$('mine').onchange=drawList;
+$('flt').onclick=e=>{const b=e.target.closest('button[data-f]');if(!b)return;flt=b.dataset.f;[...$('flt').children].forEach(x=>x.classList.toggle('on',x===b));drawList()};
+
+/* ---------- Hồ sơ + dòng thời gian ---------- */
+async function openCustomer(id,quiet){
+  cur=rows.find(r=>r.id===id);if(!cur)return;drawList();
+  if(!quiet){$('panel').innerHTML='<p class="mut">Đang tải…</p>';if(innerWidth<=900)$('panel').scrollIntoView({behavior:'smooth',block:'start'})}
+  const [r,pr]=await Promise.all([sb.from('crm_interactions').select('*').eq('customer_id',id).order('contacted_at',{ascending:false}).limit(200),
+    sb.from('crm_profiles').select('*').eq('customer_id',id).maybeSingle()]);
+  if(!cur||cur.id!==id)return;
+  tl=r.error?[]:r.data;if(r.error)toast('Không tải được lịch sử: '+r.error.message);
+  prof=pr.error?null:pr.data;profErr=pr.error?pr.error.message:'';
+  drawPanel();
+}
+const canDel=x=>isBoss||((role==='staff'||role==='ctv')&&x.user_id===me.id&&Date.now()-new Date(x.created_at).getTime()<864e5);
+function drawPanel(){
+  const c=cur,tel=firstPhone(c.phone);
+  let rem='';
+  if(c.next_follow_up){const d=diffDays(c.next_follow_up);
+    rem=`<div class="remind ${d<0?'red':d===0?'amb':''}"><b>Hẹn chăm sóc lại: ${esc(fdate(c.next_follow_up))}</b> — ${d<0?`đã quá hạn ${-d} ngày`:d===0?'cần gọi hôm nay':`còn ${d} ngày`}${c.follow_by?` · người hẹn: ${esc(uname(c.follow_by))}`:''}${canW?` <button class="sm" id="bDismiss" style="margin-left:8px">Bỏ nhắc hẹn</button>`:''}</div>`}
+  else if(+c.n_contacts)rem='<div class="remind">Chưa có lịch hẹn chăm sóc lại. Hãy đặt nhắc hẹn ở lần ghi nhận tiếp theo.</div>';
+  $('panel').innerHTML=`<div class="head"><div><h2>${esc(c.name)}</h2><div class="mut">${esc(c.phone||'chưa có SĐT')} · ${esc(c.address||'chưa có địa chỉ')}</div>${c.contact?`<div class="mut">Liên hệ: ${esc(c.contact)}</div>`:''}${c.note?`<div class="mut">Ghi chú: ${esc(c.note)}</div>`:''}${tel?`<a class="tel" href="tel:${esc(tel)}">Gọi ${esc(tel)}</a>`:''}</div>
+    <div class="acts">${canW?'<button class="p" id="bLog">＋ Ghi nhận tương tác</button>':''}<button id="bProf" title="Tóm tắt đặc điểm khách do quản trị biên soạn">Đặc điểm tương thích${prof&&prof.content?'<span class="dotp"></span>':''}</button></div></div>${rem}
+    <h3 style="margin:14px 0 6px;font-size:15px">Lịch sử chăm sóc (${tl.length})</h3><div class="tl">${tl.map(evHtml).join('')||'<div class="empty">Chưa có tương tác nào với khách này.</div>'}</div>`;
+}
+function evHtml(x){
+  const fu=x.next_follow_up?`Hẹn lại sau ${x.follow_up_days} ngày (${esc(fdate(x.next_follow_up))})${x.follow_up_done?' · đã xử lý':''}`:'';
+  return `<div class="ev"><span class="dot"></span><div><div class="meta">${esc(fdt(x.contacted_at))} · <b>${esc(uname(x.user_email))}</b> · ${esc(CH[x.channel]||x.channel)}${canDel(x)?` <button class="sm x" data-del="${x.id}" style="margin-left:6px">Xóa</button>`:''}</div>
+    <div class="chips"><span class="bd ${x.reached?'ok':'bad'}">${x.reached?'Liên hệ được':'Không liên hệ được'}</span>${resBadge(x.result)}${sigBadge(x.signal)}</div>
+    ${x.note?`<div class="note">${esc(x.note)}</div>`:''}${fu?`<div class="fu">${fu}</div>`:''}</div></div>`;
+}
+$('panel').onclick=async e=>{
+  if(e.target.closest('#bLog'))return openLog();
+  if(e.target.closest('#bProf'))return openProf();
+  if(e.target.closest('#bDismiss')){
+    if(!confirm('Bỏ nhắc hẹn của khách này?'))return;
+    const r=await sb.rpc('crm_dismiss_followup',{p_customer:cur.id});if(r.error)return toast(r.error.message);
+    toast('Đã bỏ nhắc hẹn');await refresh();return}
+  const d=e.target.closest('[data-del]');
+  if(d){if(!confirm('Xóa bản ghi tương tác này?'))return;
+    const r=await sb.from('crm_interactions').delete().eq('id',d.dataset.del).select('id');
+    if(r.error)return toast(r.error.message);if(!r.data.length)return toast('Không xóa được (chỉ xóa được bản ghi của mình trong 24 giờ).');
+    toast('Đã xóa');await refresh()}
+};
+async function refresh(){const id=cur&&cur.id;await Promise.all([loadList(),loadStats()]);if(id)await openCustomer(id,true)}
+
+/* ---------- Form ghi nhận tương tác ---------- */
+const F={reached:false,result:'no_answer',signal:'none',days:1,touched:false};
+$('f_channel').innerHTML=Object.keys(CH).map(k=>`<option value="${k}">${CH[k]}</option>`).join('');
+function fillResults(){
+  const list=F.reached?REACHED:MISSED;
+  $('f_result').innerHTML=list.map(k=>`<option value="${k}">${esc(RES[k][0])}</option>`).join('');
+  if(!list.includes(F.result))F.result=list[0];$('f_result').value=F.result;
+}
+function setDays(d,fromUser){
+  if(fromUser)F.touched=true;F.days=d;
+  [...$('f_days').children].forEach(b=>b.classList.toggle('on',(b.dataset.d===''?null:+b.dataset.d)===d));
+  $('f_dn').value=d==null?'':d;
+  if(d==null)$('f_prev').textContent='Không đặt nhắc hẹn: khách sẽ không xuất hiện ở mục “Cần gọi”.';
+  else{const t=new Date(todayD().getTime()+d*864e5);$('f_prev').textContent='→ Nhắc chăm sóc vào '+t.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});}
+}
+function setReached(v){
+  F.reached=v;[...$('f_reached').children].forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===v));
+  fillResults();if(!F.touched)setDays(DEF_DAYS[F.result]??null);
+}
+function setSignal(v){F.signal=v;[...$('f_signal').children].forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
+$('f_reached').onclick=e=>{const b=e.target.closest('button');if(b)setReached(b.dataset.v==='1')};
+$('f_result').onchange=()=>{F.result=$('f_result').value;if(!F.touched)setDays(DEF_DAYS[F.result]??null)};
+$('f_signal').onclick=e=>{const b=e.target.closest('button');if(b)setSignal(b.dataset.v)};
+$('f_days').onclick=e=>{const b=e.target.closest('button');if(b)setDays(b.dataset.d===''?null:+b.dataset.d,true)};
+$('f_dn').oninput=()=>{const v=$('f_dn').value;setDays(v===''?null:Math.max(0,Math.min(365,Math.floor(+v))),true);$('f_dn').value=v};
+function openLog(){
+  if(!cur)return;$('dLogT').textContent='Ghi nhận tương tác — '+cur.name;$('dLogE').textContent='';
+  const n=new Date();$('f_at').value=ymd(n)+'T'+pad(n.getHours())+':'+pad(n.getMinutes());
+  $('f_channel').value='call';$('f_note').value='';F.touched=false;F.result='no_answer';setSignal('none');setReached(false);
+  $('dLog').showModal();
+}
+$('dLogNo').onclick=()=>$('dLog').close();
+$('dLogOk').onclick=async()=>{
+  const at=new Date($('f_at').value);if(isNaN(at))return $('dLogE').textContent='Hãy chọn thời điểm tương tác.';
+  const b=$('dLogOk');b.disabled=true;$('dLogE').textContent='';
+  const r=await sb.from('crm_interactions').insert({customer_id:cur.id,contacted_at:at.toISOString(),channel:$('f_channel').value,reached:F.reached,result:F.result,signal:F.signal,note:$('f_note').value.trim(),follow_up_days:F.days});
+  b.disabled=false;if(r.error)return $('dLogE').textContent=r.error.message;
+  $('dLog').close();toast('Đã lưu tương tác'+(F.days!=null?` · nhắc lại sau ${F.days} ngày`:''));await refresh();
+};
+
+/* ---------- Đặc điểm tương thích (admin sửa, còn lại chỉ xem) ---------- */
+function openProf(){
+  if(!cur)return;$('dProfT').textContent='Đặc điểm tương thích — '+cur.name;$('dProfErr').textContent=profErr?'Chưa tải được: '+profErr+' (hãy chạy supabase-update-11.sql)':'';
+  const c=prof&&prof.content||'';
+  $('dProfH').textContent=prof&&prof.updated_at?`Cập nhật ${fdt(prof.updated_at)} bởi ${uname(prof.updated_by)}`:(isAdmin?'Chưa có nội dung. Chỉ quản trị mới chỉnh sửa được mục này.':'Quản trị chưa biên soạn đặc điểm cho khách này.');
+  $('dProfV').hidden=isAdmin;$('dProfE').hidden=!isAdmin;$('dProfOk').hidden=!isAdmin;
+  if(isAdmin)$('dProfE').value=c;else $('dProfV').textContent=c||'Chưa có nội dung.';
+  $('dProf').showModal();
+}
+$('dProfNo').onclick=()=>$('dProf').close();
+$('dProfOk').onclick=async()=>{
+  const b=$('dProfOk');b.disabled=true;$('dProfErr').textContent='';
+  const r=await sb.from('crm_profiles').upsert({customer_id:cur.id,content:$('dProfE').value},{onConflict:'customer_id'});
+  b.disabled=false;if(r.error)return $('dProfErr').textContent=r.error.message;
+  $('dProf').close();toast('Đã lưu đặc điểm tương thích');await openCustomer(cur.id,true);
+};
+
+/* ---------- Thêm khách mới ---------- */
+$('bAdd').onclick=()=>{['n_name','n_phone','n_contact','n_address','n_note'].forEach(i=>$(i).value='');$('dNewE').textContent='';$('dNew').showModal()};
+$('dNewNo').onclick=()=>$('dNew').close();
+$('dNewOk').onclick=async()=>{
+  const b=$('dNewOk');b.disabled=true;$('dNewE').textContent='';
+  const r=await sb.rpc('crm_add_customer',{p_name:$('n_name').value,p_phone:$('n_phone').value,p_contact:$('n_contact').value,p_address:$('n_address').value,p_note:$('n_note').value});
+  b.disabled=false;if(r.error)return $('dNewE').textContent=r.error.message;
+  $('dNew').close();toast('Đã thêm khách hàng');flt='all';[...$('flt').children].forEach(x=>x.classList.toggle('on',x.dataset.f==='all'));$('q').value='';
+  await Promise.all([loadList(),loadStats()]);openCustomer(r.data);
+};
+
+/* ---------- Nhật ký chăm sóc ---------- */
+$('lRes').innerHTML+=Object.keys(RES).map(k=>`<option value="${k}">${esc(RES[k][0])}</option>`).join('');
+$('tabC').onclick=()=>{$('v1').hidden=false;$('v2').hidden=true;$('tabC').classList.add('on');$('tabL').classList.remove('on')};
+$('tabL').onclick=()=>{$('v1').hidden=true;$('v2').hidden=false;$('tabL').classList.add('on');$('tabC').classList.remove('on');if(!logData.length)loadLog()};
+{const t=todayD();$('lTo').value=ymd(t);$('lFrom').value=ymd(new Date(t.getTime()-6*864e5))}
+async function loadLog(){
+  $('logRows').innerHTML='<tr><td colspan="9" class="mut">Đang tải…</td></tr>';
+  const from=$('lFrom').value?parseYmd($('lFrom').value):null,to=$('lTo').value?new Date(parseYmd($('lTo').value).getTime()+864e5):null;
+  try{logData=await all('crm_interactions','*',q=>{if(from)q=q.gte('contacted_at',from.toISOString());if(to)q=q.lt('contacted_at',to.toISOString());if($('lRes').value)q=q.eq('result',$('lRes').value);return q.order('contacted_at',{ascending:false})})}
+  catch(e){logData=[];$('logRows').innerHTML='<tr><td colspan="9" class="err">'+esc(e.message)+'</td></tr>';return}
+  const cur=$('lUser').value,us=[...new Set(logData.map(x=>x.user_email))].sort();
+  $('lUser').innerHTML='<option value="">Tất cả</option>'+us.map(u=>`<option value="${esc(u)}">${esc(uname(u))}</option>`).join('');$('lUser').value=us.includes(cur)?cur:'';
+  drawLog();
+}
+function drawLog(){
+  const u=$('lUser').value,q=nrm($('lQ').value),nm=new Map(rows.map(r=>[r.id,r.name]));
+  const l=logData.filter(x=>(!u||x.user_email===u)&&(!q||nrm(nm.get(x.customer_id)||'').includes(q)));
+  const by={};l.forEach(x=>{const s=by[x.user_email]||(by[x.user_email]={n:0,ok:0,hot:0,ord:0});s.n++;if(x.reached)s.ok++;if(x.signal==='hot')s.hot++;if(x.result==='ordered')s.ord++});
+  $('sumRows').innerHTML=Object.keys(by).sort((a,b)=>by[b].n-by[a].n).map(k=>{const s=by[k];return `<tr><td>${esc(uname(k))}</td><td class="r">${s.n}</td><td class="r">${s.ok}</td><td class="r">${Math.round(s.ok*100/s.n)}%</td><td class="r">${s.hot}</td><td class="r">${s.ord}</td></tr>`}).join('')||'<tr><td colspan="6" class="mut">Không có dữ liệu.</td></tr>';
+  $('lCount').textContent=`(${l.length} lượt${l.length>500?', hiển thị 500 gần nhất':''})`;
+  $('logRows').innerHTML=l.slice(0,500).map(x=>`<tr><td style="white-space:nowrap">${esc(fdt(x.contacted_at))}</td><td><a class="cl" data-c="${x.customer_id}">${esc(nm.get(x.customer_id)||'#'+x.customer_id)}</a></td><td>${esc(uname(x.user_email))}</td><td>${esc(CH[x.channel]||x.channel)}</td><td><span class="bd ${x.reached?'ok':'bad'}">${x.reached?'Được':'Không'}</span></td><td>${resBadge(x.result)}</td><td>${sigBadge(x.signal)}</td><td style="white-space:nowrap">${x.next_follow_up?esc(fdate(x.next_follow_up)):'—'}</td><td style="min-width:200px;white-space:pre-wrap">${esc(x.note)}</td></tr>`).join('')||'<tr><td colspan="9" class="empty">Không có tương tác trong khoảng này.</td></tr>';
+}
+$('lGo').onclick=loadLog;$('lUser').onchange=$('lQ').oninput=drawLog;
+$('logRows').onclick=e=>{const a=e.target.closest('[data-c]');if(!a)return;$('tabC').click();flt='all';[...$('flt').children].forEach(x=>x.classList.toggle('on',x.dataset.f==='all'));$('q').value='';openCustomer(+a.dataset.c)};
+
+await Promise.all([loadList(),loadStats()]);
+})();
+</script></body></html>

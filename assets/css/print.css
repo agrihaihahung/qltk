@@ -1,0 +1,260 @@
+@page { size: A4 landscape; margin: 9mm 10mm; }
+:root{--navy:#12345a;--blue:#1769aa;--pale:#edf5fc;--line:#d7e0e9;--ink:#1b2735;--muted:#64748b;--green:#eaf5ef}
+*{box-sizing:border-box}
+html{background:#eef2f6}
+body{margin:0;color:var(--ink);font:10px/1.45 Calibri,"Segoe UI",Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.toolbar{max-width:277mm;margin:14px auto 10px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:#fff;border:1px solid #e1e7ef;border-radius:10px;box-shadow:0 4px 18px #0f172a0b}
+.toolbar-note{font-size:12px;font-weight:700;color:#475569;display:flex;align-items:center;gap:8px}
+.toolbar-dot{width:8px;height:8px;border-radius:50%;background:#16a36a}
+.toolbar-actions{display:flex;gap:8px}
+.btn{border:0;border-radius:7px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer}
+.btn-light{background:#f1f5f9;color:#334155}.btn-primary{background:var(--blue);color:#fff}
+.paper{width:277mm;min-height:190mm;margin:0 auto 20px;padding:0;background:#fff}
+.company-header{display:grid;grid-template-columns:minmax(0,1fr) 66px 155px;gap:9px;align-items:center;padding:0 0 10px;border-bottom:2px solid var(--navy)}
+.brand-mark{width:138px;height:64px;border-radius:12px;background:linear-gradient(145deg,#12345a,#2478b7);color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;letter-spacing:-1px;box-shadow:inset 0 0 0 1px #ffffff35}
+.company-info{text-align:center;min-width:0}.company-info .eyebrow{font-size:8px;letter-spacing:2px;font-weight:800;color:var(--blue);margin-bottom:3px}
+.company-info h1{font-size:15px;line-height:1.2;margin:0 0 5px;color:var(--navy);font-weight:800}
+.company-info p{font-size:9px;margin:1px 0;color:#526173}
+.separator{padding:0 5px;color:#94a3b8}
+.quote-stamp{border-left:1px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:3px}
+.quote-stamp span{font-size:8px;letter-spacing:1.4px;color:var(--muted);font-weight:800}
+.quote-stamp strong{font-size:13px;color:var(--blue);overflow-wrap:anywhere}
+.quote-stamp small{font-size:9px;color:#64748b}
+.title-block{text-align:center;padding:9px 0 10px}
+.title-block h2{margin:0;color:var(--navy);font-size:22px;letter-spacing:2px;line-height:1.2}
+.title-block p{margin:4px 0 0;color:#718096;font-size:8px;letter-spacing:2.4px;font-weight:700}
+.customer-panel{border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-bottom:10px}
+.section-label{padding:6px 9px;background:#f2f7fb;color:var(--navy);font-size:8px;font-weight:800;letter-spacing:1px;border-bottom:1px solid var(--line)}
+.customer-grid{padding:8px 10px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:8px 14px}
+.customer-field{display:flex;flex-direction:column;gap:2px;min-width:0}
+.customer-field.wide{grid-column:span 2}
+.customer-field span{font-size:8px;color:var(--muted)}
+.customer-field strong{font-size:10px;min-height:13px;overflow-wrap:anywhere}
+.table-section{margin:0 0 10px;break-inside:avoid}
+.table-heading{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.table-heading .number{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;border-radius:5px;background:var(--navy);color:#fff;font-size:9px;font-weight:800}
+.table-heading h3{margin:0;color:var(--navy);font-size:11px;letter-spacing:.6px}
+.table-caption{margin-left:auto;font-size:8px;color:var(--muted)}
+.quote-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:7.6px}
+.quote-table th{background:var(--navy);color:#fff;font-size:6.7px;letter-spacing:.1px;text-align:left;padding:5px 3px;font-weight:800;border:1px solid var(--navy)}
+.quote-table td{padding:4px 3px;border:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
+.quote-table tbody tr:nth-child(even){background:#f8fafc}
+.quote-table .stt{width:24px}.quote-table .system-col{width:72px}.quote-table .code{width:76px}.quote-table .name-col{width:auto}.quote-table .color-col{width:57px}.quote-table .unit{width:35px}.quote-table .qty{width:43px}.quote-table .weight-col{width:48px}.quote-table .kg-total-col{width:48px}.quote-table .price{width:77px}.quote-table .total{width:82px}
+.muted-spec{color:#64748b;font-size:7px}
+.center{text-align:center!important}.num{text-align:right!important;white-space:nowrap}
+.quote-table tfoot td{background:var(--green);font-weight:800;border-color:#c7dfd2;padding:6px}
+.summary-label{text-align:right;color:#22543d}
+.empty-state{display:none;padding:8px 10px;border:1px dashed var(--line);color:var(--muted);font-style:italic}
+.bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:stretch;margin-top:7px;break-inside:avoid}
+.notes-card,.totals-card{border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.notes-card>p{margin:8px 10px;color:#475569;font-size:9px;white-space:pre-line}
+.terms-row{display:flex;justify-content:space-between;gap:10px;padding:5px 10px;border-top:1px solid #edf1f5;font-size:8.5px}
+.terms-row span{color:var(--muted)}.terms-row strong{text-align:right}
+.notes-card .thanks{color:var(--blue);font-weight:700;font-style:italic;margin-top:9px}
+.totals-card{padding:8px 10px}
+.total-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:9px;border-bottom:1px solid #edf1f5}
+.total-row strong{white-space:nowrap}
+.grand-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:7px -2px 0;padding:8px;background:var(--navy);color:#fff;border-radius:5px}
+.grand-row span{font-size:9px;font-weight:800;letter-spacing:.5px}.grand-row strong{font-size:15px;white-space:nowrap}
+.amount-words{padding-top:7px;display:flex;flex-direction:column;gap:3px}
+.amount-words span{font-size:8px;color:var(--muted)}.amount-words strong{font-size:8.5px;font-style:italic;text-transform:capitalize}
+.signatures{display:flex;justify-content:space-between;text-align:center;margin:12px 20px 0;break-inside:avoid}
+.signatures>div{width:34%;display:flex;flex-direction:column;align-items:center;gap:2px}
+.signatures strong{font-size:8.5px;color:var(--navy)}
+.signatures span{font-size:8px;color:var(--muted)}
+.sign-space{height:28px}
+.paper-footer{border-top:1px solid var(--line);padding-top:5px;display:flex;justify-content:space-between;color:#94a3b8;font-size:7px;letter-spacing:.7px}
+.paper-footer b{color:var(--blue);padding:0 3px}
+@media screen and (max-width:900px){.paper{width:calc(100% - 24px);padding:14px;overflow-x:auto}.company-header{grid-template-columns:minmax(0,1fr) 52px 125px;gap:7px}.brand-mark{width:50px;height:50px}.quote-stamp{grid-column:auto;border-left:1px solid var(--line);padding-left:8px}.company-info h1{font-size:12px}.company-info p{font-size:8px}.customer-grid{grid-template-columns:1fr 1fr}.customer-field.wide{grid-column:span 2}.quote-table{min-width:850px}.bottom-grid{grid-template-columns:1fr}.toolbar{margin:8px 12px}}
+@media print{html,body{background:#fff}.toolbar,.no-print{display:none!important}.paper{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}.company-header,.customer-panel,.table-section,.bottom-grid,.signatures{break-inside:avoid}.quote-table thead{display:table-header-group}.quote-table tr{break-inside:avoid}.paper-footer{position:static}}
+
+
+/* Logo gốc và font hỗ trợ tiếng Việt */
+.brand-mark{background:#fff;box-shadow:none;border-radius:14px;overflow:hidden;padding:1px}
+.brand-mark img{display:block;width:150%;height:150%;object-fit:contain}
+
+
+/* Cân đối bố cục in: ưu tiên khả năng đọc của bảng */
+@page { size: A4 landscape; margin: 7mm; }
+.paper { width: 283mm; }
+body { font-size: 11px; line-height: 1.35; }
+.company-header { padding-bottom: 7px; }
+.company-info h1 { font-size: 16px; }
+.company-info p { font-size: 10px; }
+.title-block { padding: 7px 0 8px; }
+.customer-panel { margin-bottom: 8px; }
+.customer-grid { padding: 7px 9px; gap: 7px 12px; }
+.customer-field span { font-size: 9px; }
+.customer-field strong { font-size: 11px; }
+.table-section { margin-bottom: 8px; }
+.table-heading { margin-bottom: 4px; }
+.table-heading h3 { font-size: 12px; }
+.table-caption { font-size: 9px; }
+.quote-table { font-size: 12px; table-layout: fixed; }
+.quote-table th { font-size: 10px; line-height: 1.2; padding: 6px 4px; letter-spacing: 0; }
+.quote-table td { font-size: 12px; line-height: 1.25; padding: 5px 4px; overflow-wrap: anywhere; }
+.quote-table .muted-spec, .muted-spec { font-size: 10px; }
+/* Proportions for the 11-column aluminum table */
+#aluminumBody { font-size: 12px; }
+.quote-table:has(#aluminumBody) th:nth-child(1), .quote-table:has(#aluminumBody) td:nth-child(1) { width: 4%; }
+.quote-table:has(#aluminumBody) th:nth-child(2), .quote-table:has(#aluminumBody) td:nth-child(2) { width: 9%; }
+.quote-table:has(#aluminumBody) th:nth-child(3), .quote-table:has(#aluminumBody) td:nth-child(3) { width: 10%; }
+.quote-table:has(#aluminumBody) th:nth-child(4), .quote-table:has(#aluminumBody) td:nth-child(4) { width: 22%; }
+.quote-table:has(#aluminumBody) th:nth-child(5), .quote-table:has(#aluminumBody) td:nth-child(5) { width: 8%; }
+.quote-table:has(#aluminumBody) th:nth-child(6), .quote-table:has(#aluminumBody) td:nth-child(6) { width: 5%; }
+.quote-table:has(#aluminumBody) th:nth-child(7), .quote-table:has(#aluminumBody) td:nth-child(7) { width: 6%; }
+.quote-table:has(#aluminumBody) th:nth-child(8), .quote-table:has(#aluminumBody) td:nth-child(8) { width: 7%; }
+.quote-table:has(#aluminumBody) th:nth-child(9), .quote-table:has(#aluminumBody) td:nth-child(9) { width: 7%; }
+.quote-table:has(#aluminumBody) th:nth-child(10), .quote-table:has(#aluminumBody) td:nth-child(10) { width: 10%; }
+.quote-table:has(#aluminumBody) th:nth-child(11), .quote-table:has(#aluminumBody) td:nth-child(11) { width: 12%; }
+.quote-table tfoot td { font-size: 11px; padding: 6px 4px; }
+.bottom-grid { gap: 9px; margin-top: 5px; }
+.notes-card>p { font-size: 10px; margin: 7px 9px; }
+.terms-row { font-size: 9.5px; padding: 4px 9px; }
+.total-row { font-size: 10px; padding: 3px 0; }
+.grand-row strong { font-size: 16px; }
+.amount-words span, .amount-words strong { font-size: 9.5px; }
+.signatures { margin-top: 8px; }
+.signatures strong { font-size: 9.5px; }
+.signatures span { font-size: 9px; }
+@media print {
+  .paper { width: auto; }
+  .quote-table { font-size: 12px; }
+  .quote-table th { font-size: 10px; }
+  .quote-table td { font-size: 12px; }
+}
+
+/* Align price and amount columns across aluminum and accessory tables */
+.quote-table:has(#accessoryBody) th:nth-child(1), .quote-table:has(#accessoryBody) td:nth-child(1) { width: 4%; }
+.quote-table:has(#accessoryBody) th:nth-child(2), .quote-table:has(#accessoryBody) td:nth-child(2) { width: 10%; }
+.quote-table:has(#accessoryBody) th:nth-child(3), .quote-table:has(#accessoryBody) td:nth-child(3) { width: 34%; }
+.quote-table:has(#accessoryBody) th:nth-child(4), .quote-table:has(#accessoryBody) td:nth-child(4) { width: 18%; }
+.quote-table:has(#accessoryBody) th:nth-child(5), .quote-table:has(#accessoryBody) td:nth-child(5) { width: 5%; }
+.quote-table:has(#accessoryBody) th:nth-child(6), .quote-table:has(#accessoryBody) td:nth-child(6) { width: 6%; }
+.quote-table:has(#accessoryBody) th:nth-child(7), .quote-table:has(#accessoryBody) td:nth-child(7) { width: 11%; }
+.quote-table:has(#accessoryBody) th:nth-child(8), .quote-table:has(#accessoryBody) td:nth-child(8) { width: 12%; }
+.quote-table:has(#aluminumBody) th:nth-child(10), .quote-table:has(#aluminumBody) td:nth-child(10),
+.quote-table:has(#accessoryBody) th:nth-child(7), .quote-table:has(#accessoryBody) td:nth-child(7) { text-align: right; }
+.quote-table:has(#aluminumBody) th:nth-child(11), .quote-table:has(#aluminumBody) td:nth-child(11),
+.quote-table:has(#accessoryBody) th:nth-child(8), .quote-table:has(#accessoryBody) td:nth-child(8) { text-align: right; }
+
+/* Căn giữa khối thông tin công ty ở đầu phiếu in */
+.company-info{text-align:center}.company-info h1{margin-left:auto;margin-right:auto}.company-info p{margin-left:auto;margin-right:auto}
+
+
+/* Header A4: căn giữa thông tin công ty theo toàn bộ chiều rộng trang,
+   không căn theo phần không gian còn lại giữa logo và mã báo giá. */
+.company-header{
+  display:block;
+  position:relative;
+  min-height:70px;
+  padding:0 0 8px;
+}
+.company-info{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:72%;
+  min-width:0;
+  text-align:center;
+  z-index:1;
+}
+.company-info .eyebrow,
+.company-info h1,
+.company-info p{
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+}
+.brand-mark{
+  position:absolute;
+  right:164px;
+  top:4px;
+  width:64px;
+  height:64px;
+  margin:0;
+  z-index:2;
+}
+.quote-stamp{
+  position:absolute;
+  right:0;
+  top:0;
+  width:155px;
+  min-height:52px;
+  border-left:1px solid var(--line);
+  padding:0 0 0 14px;
+  z-index:2;
+}
+@media screen and (max-width:900px){
+  .company-header{display:block;min-height:82px;padding-bottom:8px}
+  .company-info{left:0;top:0;transform:none;width:calc(100% - 175px);text-align:center}
+  .company-info h1{font-size:12px}
+  .company-info p{font-size:8px}
+  .brand-mark{right:132px;top:20px;width:44px;height:44px}
+  .quote-stamp{right:0;top:0;width:122px;padding-left:8px}
+}
+@media print{
+  .company-header{display:block;position:relative;min-height:70px}
+  .company-info{left:50%;top:0;transform:translateX(-50%);width:72%}
+  .brand-mark{position:absolute;right:164px;top:4px;width:64px;height:64px}
+  .quote-stamp{position:absolute;right:0;top:0;width:155px}
+}
+
+
+/* Summary rows: use a wider value area and keep both tables visually consistent. */
+.quote-table tfoot .summary-label{
+  text-align:right;
+  white-space:normal;
+}
+.quote-table tfoot .summary-amount{
+  width:auto !important;
+  min-width:0;
+  white-space:nowrap;
+  text-align:right;
+  font-weight:800;
+}
+.quote-table:has(#accessoryBody) th:nth-child(7),
+.quote-table:has(#accessoryBody) td:nth-child(7){width:8%}
+.quote-table:has(#accessoryBody) th:nth-child(8),
+.quote-table:has(#accessoryBody) td:nth-child(8){width:21%}
+
+/* Cột chiết khấu riêng chỉ xuất hiện khi ít nhất một phụ kiện có mức CK riêng > 0. */
+#accessoryTable .accessory-discount-col { display: none; }
+#accessoryTable.has-item-discounts .accessory-discount-col { display: table-cell; }
+/* Cân đối bảng phụ kiện: cột CK riêng thật gọn, ưu tiên đơn giá và thành tiền. */
+#accessoryTable th:nth-child(1), #accessoryTable td:nth-child(1) { width: 4%; }
+#accessoryTable th:nth-child(2), #accessoryTable td:nth-child(2) { width: 9%; }
+#accessoryTable th:nth-child(3), #accessoryTable td:nth-child(3) { width: 28%; }
+#accessoryTable th:nth-child(4), #accessoryTable td:nth-child(4) { width: 15%; }
+#accessoryTable th:nth-child(5), #accessoryTable td:nth-child(5) { width: 5%; }
+#accessoryTable th:nth-child(6), #accessoryTable td:nth-child(6) { width: 5%; }
+#accessoryTable th:nth-child(7), #accessoryTable td:nth-child(7) { width: 13%; }
+#accessoryTable th:nth-child(8), #accessoryTable td:nth-child(8) { width: 5%; }
+#accessoryTable th:nth-child(9), #accessoryTable td:nth-child(9) { width: 16%; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(7), #accessoryTable:not(.has-item-discounts) td:nth-child(7) { width: 15%; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(8), #accessoryTable:not(.has-item-discounts) td:nth-child(8) { width: 0; padding-left: 0; padding-right: 0; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(9), #accessoryTable:not(.has-item-discounts) td:nth-child(9) { width: 18%; }
+.total-row[hidden] { display: none !important; }
+
+
+/* FINAL OVERRIDE v3: ưu tiên tên phụ kiện và đơn giá, thu gọn cột CK riêng. */
+#accessoryTable { width:100% !important; table-layout:fixed !important; }
+#accessoryTable.has-item-discounts th:nth-child(1), #accessoryTable.has-item-discounts td:nth-child(1) { width:3% !important; }
+#accessoryTable.has-item-discounts th:nth-child(2), #accessoryTable.has-item-discounts td:nth-child(2) { width:8% !important; }
+#accessoryTable.has-item-discounts th:nth-child(3), #accessoryTable.has-item-discounts td:nth-child(3) { width:31% !important; }
+#accessoryTable.has-item-discounts th:nth-child(4), #accessoryTable.has-item-discounts td:nth-child(4) { width:15% !important; }
+#accessoryTable.has-item-discounts th:nth-child(5), #accessoryTable.has-item-discounts td:nth-child(5) { width:4% !important; }
+#accessoryTable.has-item-discounts th:nth-child(6), #accessoryTable.has-item-discounts td:nth-child(6) { width:4% !important; }
+#accessoryTable.has-item-discounts th:nth-child(7), #accessoryTable.has-item-discounts td:nth-child(7) { width:13% !important; }
+#accessoryTable.has-item-discounts th:nth-child(8), #accessoryTable.has-item-discounts td:nth-child(8) { width:5% !important; }
+#accessoryTable.has-item-discounts th:nth-child(9), #accessoryTable.has-item-discounts td:nth-child(9) { width:17% !important; }
+/* Khi không có CK riêng, cột CK được ẩn và phần chiều rộng được phân bổ lại. */
+#accessoryTable:not(.has-item-discounts) th:nth-child(1), #accessoryTable:not(.has-item-discounts) td:nth-child(1) { width:3% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(2), #accessoryTable:not(.has-item-discounts) td:nth-child(2) { width:8% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(3), #accessoryTable:not(.has-item-discounts) td:nth-child(3) { width:34% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(4), #accessoryTable:not(.has-item-discounts) td:nth-child(4) { width:16% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(5), #accessoryTable:not(.has-item-discounts) td:nth-child(5) { width:4% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(6), #accessoryTable:not(.has-item-discounts) td:nth-child(6) { width:4% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(7), #accessoryTable:not(.has-item-discounts) td:nth-child(7) { width:14% !important; }
+#accessoryTable:not(.has-item-discounts) th:nth-child(8), #accessoryTable:not(.has-item-discounts) td:nth-child(8) { width:17% !important; }

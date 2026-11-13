@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#165dca">
+  <title>Danh mục nhôm | Hải Hà Hưng</title><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/catalog-nhom.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="danh-muc-nhom"></script></head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="appSidebar">
+    <div class="brand-lockup"><div class="brand-mark"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng"></div><div><strong>HẢI HÀ HƯNG</strong><small>BUSINESS MANAGEMENT</small></div></div>
+    <div class="side-caption">KHÔNG GIAN LÀM VIỆC</div>
+    <nav class="side-nav" aria-label="Điều hướng chính">
+      <a href="#" class="nav-item"><span class="nav-icon">▦</span> Tổng quan</a>
+      <a href="../danh-muc-nhom/index.html" class="nav-item active" aria-current="page"><span class="nav-icon">▤</span> Danh mục nhôm</a>
+      <a href="../phu-kien/index.html" class="nav-item"><span class="nav-icon">◫</span> Phụ kiện</a>
+      <a href="../bao-gia/index.html" class="nav-item"><span class="nav-icon">▧</span> Báo giá <span class="nav-pill">Mới</span></a>
+      <a href="../lich-su-bao-gia/index.html" class="nav-item"><span class="nav-icon">◷</span> Lịch sử báo giá</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="help-card"><div class="help-icon">?</div><strong>Cần hỗ trợ?</strong><p>Liên hệ quản trị hệ thống để cập nhật dữ liệu và bảng giá.</p><a href="mailto:mailcv.30@gmail.com">Liên hệ hỗ trợ ↗</a></div>
+      <div class="user-profile"><div class="avatar"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng"></div><div class="user-info"><strong>Nhân viên kinh doanh</strong><small>Hải Hà Hưng</small></div><span class="more">•••</span></div>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Mở menu" aria-expanded="false">☰</button><div class="breadcrumbs"><span>Danh mục</span><span class="crumb-sep">/</span><strong>Nhôm thanh</strong></div><div class="top-actions"><span class="today" id="todayLabel"></span><div class="top-avatar"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng"></div></div></header>
+    <section class="page-heading"><div><div class="eyebrow"><span class="eyebrow-dot"></span> QUẢN LÝ DANH MỤC</div><h1>Danh mục nhôm thanh</h1><p class="subtitle">Tra cứu hệ nhôm, mã hàng, màu sắc, khối lượng và đơn giá từ dữ liệu gốc.</p></div><div class="heading-actions"><button class="btn btn-secondary" id="resetFilters">↻ Làm mới bộ lọc</button><button class="btn btn-primary" id="exportCsv">⇩ Xuất CSV</button></div></section>
+    <section class="catalog-stats"><article class="stat-card"><div class="stat-top"><span>TỔNG SẢN PHẨM</span><span class="stat-icon blue">▤</span></div><div class="stat-value" id="totalProducts">—</div><div class="stat-note">Bản ghi trong danh mục gốc</div></article><article class="stat-card"><div class="stat-top"><span>SỐ HỆ NHÔM</span><span class="stat-icon violet">▦</span></div><div class="stat-value" id="totalSystems">—</div><div class="stat-note">Các hệ nhôm đang có dữ liệu</div></article><article class="stat-card"><div class="stat-top"><span>SỐ MÀU SẮC</span><span class="stat-icon green">◉</span></div><div class="stat-value" id="totalColors">—</div><div class="stat-note">Các màu có trong danh mục</div></article><article class="stat-card"><div class="stat-top"><span>KẾT QUẢ HIỂN THỊ</span><span class="stat-icon orange">⌕</span></div><div class="stat-value" id="visibleProducts">—</div><div class="stat-note">Thay đổi theo bộ lọc</div></article></section>
+    <section class="panel catalog-panel"><div class="panel-heading catalog-heading"><div class="panel-title-wrap"><div class="section-icon blue-bg">▤</div><div><h2>Tra cứu sản phẩm nhôm</h2><p>Tìm nhanh theo mã hàng, tên hàng, hệ nhôm hoặc màu sắc.</p></div></div><span class="source-chip"><span></span> Dữ liệu JSON</span></div>
+      <div class="catalog-filters"><label class="catalog-search"><span>⌕</span><input id="searchInput" type="search" placeholder="Tìm mã hàng, tên hàng, hệ nhôm, màu sắc…" autocomplete="off"></label><label class="filter-field"><span>Hệ nhôm</span><select id="systemFilter"><option value="">Tất cả hệ nhôm</option></select></label><label class="filter-field"><span>Màu sắc</span><select id="colorFilter"><option value="">Tất cả màu</option></select></label><label class="filter-field"><span>Sắp xếp</span><select id="sortFilter"><option value="system">Hệ nhôm A–Z</option><option value="code">Mã hàng A–Z</option><option value="name">Tên hàng A–Z</option><option value="price-low">Đơn giá tăng dần</option><option value="price-high">Đơn giá giảm dần</option></select></label></div>
+      <div class="catalog-table-wrap"><table class="data-table catalog-table"><thead><tr><th>STT</th><th>HỆ NHÔM</th><th>MÃ HÀNG</th><th>TÊN HÀNG / QUY CÁCH</th><th>MÀU</th><th>ĐVT</th><th class="align-right">KG/THANH</th><th class="align-right">ĐƠN GIÁ (₫)</th></tr></thead><tbody id="catalogRows"><tr><td colspan="8" class="catalog-loading">Đang tải danh mục nhôm…</td></tr></tbody></table></div>
+      <div class="catalog-table-footer"><span id="resultSummary">Đang tải dữ liệu…</span><div class="pagination"><button class="btn btn-secondary btn-small" id="prevPage" disabled>← Trước</button><span id="pageLabel">Trang 1</span><button class="btn btn-secondary btn-small" id="nextPage" disabled>Tiếp →</button></div></div>
+    </section>
+    <footer class="page-footer"><div><strong>HẢI HÀ HƯNG</strong><span> · Giải pháp nhôm thanh & phụ kiện</span></div><div>© <span id="yearLabel">2026</span> Hải Hà Hưng <span class="footer-sep">•</span> Danh mục nội bộ</div></footer>
+  </main>
+</div><div class="toast" id="toast" role="status" aria-live="polite"></div><button class="mobile-nav-backdrop hidden" id="mobileNavBackdrop" aria-label="Đóng menu"></button><script src="../../assets/js/catalog-nhom.js"></script>
+<script>
+(()=>{const side=document.getElementById('appSidebar'),btn=document.getElementById('mobileMenuBtn'),back=document.getElementById('mobileNavBackdrop');if(!side||!btn||!back)return;const close=()=>{side.classList.remove('mobile-open');back.classList.add('hidden');btn.setAttribute('aria-expanded','false');document.body.classList.remove('mobile-menu-open')};btn.addEventListener('click',()=>{const open=!side.classList.contains('mobile-open');side.classList.toggle('mobile-open',open);back.classList.toggle('hidden',!open);btn.setAttribute('aria-expanded',String(open));document.body.classList.toggle('mobile-menu-open',open)});back.addEventListener('click',close);side.querySelectorAll('.nav-item').forEach(a=>a.addEventListener('click',close));})();
+</script></body></html>

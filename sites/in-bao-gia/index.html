@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phiếu báo giá - Hải Hà Hưng</title>
+  <link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+  <nav class="toolbar no-print">
+    <div class="toolbar-note"><span class="toolbar-dot"></span> Bản xem trước phiếu báo giá</div>
+    <div class="toolbar-actions">
+      <button class="btn btn-light" id="backBtn" type="button">← Quay lại</button>
+      <button class="btn btn-primary" id="printBtn" type="button">▣ In / Lưu PDF</button>
+    </div>
+  </nav>
+
+  <main class="paper">
+    <header class="company-header">
+      <div class="company-info">
+        <h1>CÔNG TY TNHH KINH DOANH TỔNG HỢP HẢI HÀ HƯNG</h1>
+        <p>Địa chỉ: QL1A, Xã Thăng Bình, TP Đà Nẵng</p>
+        <p>Điện thoại: 0918 210 031 <span class="separator">•</span> Email: mailcv.30@gmail.com</p>
+      </div>
+      <div class="brand-mark" aria-label="Hải Hà Hưng"><img src="../../assets/images/logo-hai-ha-hung.png" alt="Logo Hải Hà Hưng"></div>
+      <div class="quote-stamp">
+        <span>MÃ BÁO GIÁ</span>
+        <strong id="quoteCode">BG-YYYYMMDD-001</strong>
+        <small id="quoteDate">Ngày ... tháng ... năm ...</small>
+      </div>
+    </header>
+
+    <div class="title-block">
+      <h2>PHIẾU BÁO GIÁ</h2>
+      <p>ALUMINUM SYSTEMS & ACCESSORIES</p>
+    </div>
+
+    <section class="customer-panel">
+      <div class="section-label">THÔNG TIN KHÁCH HÀNG</div>
+      <div class="customer-grid">
+        <div class="customer-field wide"><span>Khách hàng / Đơn vị</span><strong id="customerName">—</strong></div>
+        <div class="customer-field"><span>Số điện thoại</span><strong id="customerPhone">—</strong></div>
+        <div class="customer-field"><span>Người liên hệ</span><strong id="customerContact">—</strong></div>
+        <div class="customer-field wide"><span>Địa chỉ</span><strong id="customerAddress">—</strong></div>
+        <div class="customer-field"><span>Nhân viên phụ trách</span><strong id="salesperson">—</strong></div>
+        <div class="customer-field"><span>Hiệu lực báo giá</span><strong id="validity">15 ngày</strong></div>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <div class="table-heading"><span class="number">01</span><h3>NHÔM THANH</h3><span class="table-caption" id="aluminumCaption">Danh sách sản phẩm nhôm thanh</span></div>
+      <table class="quote-table">
+        <thead><tr>
+          <th class="center stt">STT</th><th class="system-col">HỆ</th><th class="code">MÃ HÀNG</th><th class="name-col">TÊN HÀNG / QUY CÁCH</th>
+          <th class="center color-col">MÀU</th><th class="center unit">ĐVT</th>
+          <th class="num qty">SỐ LƯỢNG</th><th class="num weight-col">KG/THANH</th><th class="num kg-total-col">TỔNG KL</th><th class="num price">ĐƠN GIÁ</th><th class="num total">THÀNH TIỀN</th>
+        </tr></thead>
+        <tbody id="aluminumBody"></tbody>
+        <tfoot><tr><td colspan="8" class="summary-label">TỔNG KHỐI LƯỢNG NHÔM</td><td class="num" id="aluminumWeightTotal">0 kg</td><td colspan="2"></td></tr><tr><td colspan="8" class="summary-label">THÀNH TIỀN NHÔM THANH</td><td colspan="3" class="num summary-amount" id="aluminumTotal">0 ₫</td></tr></tfoot>
+      </table>
+      <div class="empty-state" id="aluminumEmpty">Chưa có sản phẩm nhôm thanh.</div>
+    </section>
+
+    <section class="table-section" id="accessorySection">
+      <div class="table-heading"><span class="number">02</span><h3>PHỤ KIỆN</h3><span class="table-caption">Danh sách phụ kiện đi kèm (nếu có)</span></div>
+      <table class="quote-table" id="accessoryTable">
+        <thead><tr>
+          <th class="center stt">STT</th><th class="code">MÃ HÀNG</th><th>TÊN PHỤ KIỆN</th>
+          <th>NHÓM / QUY CÁCH</th><th class="center unit">ĐVT</th>
+          <th class="num qty">SL</th><th class="num price">ĐƠN GIÁ</th><th class="num accessory-discount-col">CK RIÊNG (%)</th><th class="num total">THÀNH TIỀN</th>
+        </tr></thead>
+        <tbody id="accessoryBody"></tbody>
+        <tfoot><tr><td colspan="7" class="summary-label">THÀNH TIỀN PHỤ KIỆN</td><td colspan="2" class="num summary-amount" id="accessoryTotal">0 ₫</td></tr></tfoot>
+      </table>
+      <div class="empty-state" id="accessoryEmpty">Không bao gồm phụ kiện trong báo giá này.</div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="notes-card">
+        <div class="section-label">GHI CHÚ & ĐIỀU KHOẢN</div>
+        <p id="quoteNotes">Báo giá có hiệu lực theo thời hạn nêu trên.</p>
+        <div class="terms-row"><span>Thời gian giao hàng</span><strong id="deliveryTime">Theo thỏa thuận</strong></div>
+        <div class="terms-row"><span>Điều kiện thanh toán</span><strong id="paymentTerms">Theo thỏa thuận</strong></div>
+        <p class="thanks">Cảm ơn Quý khách đã quan tâm và hợp tác cùng Hải Hà Hưng.</p>
+      </div>
+      <div class="totals-card">
+        <div class="total-row"><span>Tổng tiền hàng</span><strong id="subtotal">0 ₫</strong></div>
+        <div class="total-row" id="discountAlRow"><span>Chiết khấu nhôm</span><strong id="discountAl">0 ₫</strong></div>
+        <div class="total-row" id="discountAccRow"><span>Chiết khấu phụ kiện</span><strong id="discountAcc">0 ₫</strong></div>
+        <div class="total-row" id="oldDebtRow"><span>Công nợ cũ</span><strong id="oldDebt">0 ₫</strong></div>
+        <div class="total-row" id="vatRow"><span>Thuế VAT (<b id="vatRate">0</b>%)</span><strong id="vatAmount">0 ₫</strong></div>
+        <div class="grand-row"><span>TỔNG THANH TOÁN</span><strong id="grandTotal">0 ₫</strong></div>
+        <div class="amount-words"><span>Số tiền bằng chữ</span><strong id="amountWords">—</strong></div>
+      </div>
+    </section>
+
+    <section class="signatures">
+      <div><strong>ĐẠI DIỆN KHÁCH HÀNG</strong><span>(Ký, ghi rõ họ tên)</span><div class="sign-space"></div></div>
+      <div><strong>ĐẠI DIỆN HẢI HÀ HƯNG</strong><span>(Ký, ghi rõ họ tên)</span><div class="sign-space"></div></div>
+    </section>
+    <footer class="paper-footer"><span>HẢI HÀ HƯNG <b>•</b> ĐỒNG HÀNH CÙNG ĐỐI TÁC</span><span id="footerCode">BG-YYYYMMDD-001</span></footer>
+  </main>
+  <script src="../../assets/js/print.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sao lưu dữ liệu</title>
+<style>body{font-family:system-ui,sans-serif;color:#172033;margin:0;padding:8px 4px;max-width:760px}h1{font-size:24px;margin:8px 0}p{color:#5b6980;line-height:1.55}
+.card{background:#fff;border:1px solid #e3e8f0;border-radius:14px;padding:18px;margin:14px 0}button{font:inherit;font-weight:600;padding:10px 16px;border-radius:10px;border:1px solid #cfd8e6;background:#fff;cursor:pointer;margin:0 8px 8px 0}
+button.p{background:#1f5fd6;color:#fff;border-color:#1f5fd6}button:disabled{opacity:.5;cursor:wait}table{width:100%;border-collapse:collapse;font-size:14px}td{padding:6px 4px;border-top:1px solid #eef1f6}td:last-child{text-align:right}.ok{color:#16915f}.bad{color:#d4472a}</style></head><body>
+<h1>Sao lưu dữ liệu</h1>
+<p>Tải toàn bộ dữ liệu (kho, giao dịch, phiếu, báo giá, danh mục, khách hàng) về máy. Nên sao lưu hằng tuần và trước mỗi lần cập nhật web hoặc SQL. Cất file ở nơi an toàn (ổ ngoài, Google Drive riêng tư).</p>
+<p>Cần khôi phục? Dùng mục <b>Khôi phục dữ liệu</b> ở sidebar để biến file sao lưu thành SQL.</p>
+<div class="card" id="box"><p id="who">Đang kiểm tra quyền…</p>
+<button class="p" id="bJson" disabled>⬇ Tải bản sao lưu đầy đủ (.json)</button><button id="bXls" disabled>⬇ Tải Excel (mỗi bảng một sheet)</button>
+<p id="last"></p><table id="tb"></table></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="sao-luu"></script>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id),sb=window.HHH&&HHH.sb;
+const TABLES=['items','movements','requests','order_exports','offcuts','suppliers','stocktake_sessions','stocktake_session_lines','app_settings','user_roles','quotes','customers','customer_payments','catalog_aluminum','catalog_accessories'];
+const LK='hhh_last_backup';const showLast=()=>{const t=localStorage.getItem(LK);$('last').textContent=t?'Lần sao lưu gần nhất trên máy này: '+new Date(t).toLocaleString('vi-VN'):'Máy này chưa sao lưu lần nào.'};showLast();
+if(!sb){$('who').textContent='Không kết nối được Supabase.';return}
+const role=(await sb.rpc('my_role')).data;
+if(role!=='admin'&&role!=='approver'){$('who').innerHTML='<span class="bad">Chỉ admin và quản lý duyệt được sao lưu.</span>';return}
+$('who').textContent='Sẵn sàng sao lưu '+TABLES.length+' bảng.';$('bJson').disabled=$('bXls').disabled=false;
+async function dump(t){let a=[],f=0,order=true;for(;;){let q=sb.from(t).select('*');if(order)q=q.order('id');let r=await q.range(f,f+999);
+ if(r.error&&order){order=false;a=[];f=0;continue}if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;f+=1000}return a}
+async function run(){const out={},st={};$('tb').innerHTML='';
+ for(const t of TABLES){const tr=document.createElement('tr');tr.innerHTML='<td>'+t+'</td><td>đang tải…</td>';$('tb').appendChild(tr);
+  try{out[t]=await dump(t);tr.lastChild.innerHTML='<span class="ok">'+out[t].length+' dòng</span>'}catch(e){st[t]=e.message;tr.lastChild.innerHTML='<span class="bad">bỏ qua: '+(e.message||e).toString().slice(0,60)+'</span>'}}
+ return{out,st}}
+const stamp=()=>new Date().toISOString().slice(0,16).replace(/[-:T]/g,'').replace(/^(\d{8})/,'$1-');
+function save(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);localStorage.setItem(LK,new Date().toISOString());showLast()}
+$('bJson').onclick=async()=>{$('bJson').disabled=$('bXls').disabled=true;try{const{out,st}=await run();
+ save(new Blob([JSON.stringify({app:'hai-ha-hung',exported_at:new Date().toISOString(),skipped:st,tables:out})],{type:'application/json'}),'sao-luu-hai-ha-hung-'+stamp()+'.json')}finally{$('bJson').disabled=$('bXls').disabled=false}};
+$('bXls').onclick=async()=>{$('bJson').disabled=$('bXls').disabled=true;try{const{out}=await run();const wb=XLSX.utils.book_new();
+ for(const t in out){const rows=out[t].map(r=>{const o={};for(const k in r){let v=r[k];if(v&&typeof v==='object')v=JSON.stringify(v);if(typeof v==='string'&&v.length>32000)v=v.slice(0,32000);o[k]=v}return o});
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),t.slice(0,31))}
+ XLSX.writeFile(wb,'sao-luu-hai-ha-hung-'+stamp()+'.xlsx');localStorage.setItem(LK,new Date().toISOString());showLast()}finally{$('bJson').disabled=$('bXls').disabled=false}};
+})();
+</script></body></html>
