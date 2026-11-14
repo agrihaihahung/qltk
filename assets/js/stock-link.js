@@ -65,7 +65,7 @@ async function go(){
     const sv=await sb.rpc('save_order_sale',{p_id:r.data.id,p_sig:sig,p_customer_id:null,p_count:null,p_lines:sl});
     if(sv.error)um='<p style="color:#d4472a">Đã xuất kho nhưng chưa ghi được đơn vị bán: '+esc(sv.error.message)+'. Hoàn kho sau này có thể lệch giá trị, hãy báo quản trị.</p>';
   }
-  $('#slBody').innerHTML=um+'<p style="color:#16915f;font-weight:700">'+(r.data&&r.data.status==='pending'?'Đã gửi phiếu xuất chờ duyệt. Tồn kho chỉ trừ và công nợ chỉ tính khi quản lý duyệt.':'Đã xuất kho thành công, đã tính công nợ.')+'</p><p>Xem chi tiết ở mục Chờ duyệt / Lịch sử giao dịch của kho.</p>';b.remove();
+  $('#slBody').innerHTML=um+'<p style="color:#16915f;font-weight:700">'+(r.data&&r.data.status==='pending'?'Đã gửi phiếu xuất chờ duyệt. Tồn kho chỉ trừ và công nợ chỉ tính khi quản lý duyệt.':'Đã xuất kho thành công, đã tính công nợ.')+'</p><p>Xem chi tiết ở mục Chờ duyệt / Lịch sử kho.</p>';b.remove();
 }
 /* ---------- Hoàn kho theo báo giá: phiếu NHẬP chờ duyệt, sig 'HK:<mã>|...'.
    Giá trị trừ nợ do database tính khi duyệt (quote_unit_value); ở đây chỉ ước tính cùng công thức. ---------- */

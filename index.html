@@ -284,7 +284,7 @@ body.ctvkho .mainc{padding-bottom:48px}
     <button data-nav="po"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2 12h11l2-8H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>Đề xuất đặt hàng</button>
     <button data-nav="count"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h9"/></svg>Kiểm kê<span class="badge warn" id="nCnt" hidden>Đến hạn</span></button>
     <button data-nav="dc"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M4 16h6M18 4l2 4-2 4M3 12h14"/></svg>Quản lý DC<span class="badge" id="nDc" hidden>0</span></button>
-    <button data-nav="log"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Lịch sử giao dịch</button>
+    <button data-nav="log"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Lịch sử kho</button>
     <button data-nav="rpt"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Báo cáo</button>
     <button data-nav="req"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h11"/></svg>Chờ duyệt<span class="badge warn" id="nReq" hidden></span></button>
     <button data-nav="usr" id="navUsr" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 7M22 20c0-3-2-5-5-5.7"/></svg>Người dùng</button>
@@ -413,11 +413,12 @@ body.ctvkho .mainc{padding-bottom:48px}
     </div>
   </div>
   <div id="logView" hidden>
-    <div class="pg-head"><div><div class="eyebrow">NHẬT KÝ KHO</div><h1>Lịch sử giao dịch</h1><p>Lọc theo ngày, mã, người thao tác, khách hàng; xem theo từng đơn hoặc từng dòng, không giới hạn số lượng. Xuất nhầm hoặc khách đổi mã thì bấm “Hủy đơn”.</p></div>
+    <div class="pg-head"><div><div class="eyebrow">NHẬT KÝ KHO</div><h1>Lịch sử kho</h1><p>Lọc theo ngày, mã, hệ nhôm, người thao tác, khách hàng; xem theo từng đơn hoặc từng dòng, không giới hạn số lượng. Xuất nhầm hoặc khách đổi mã thì bấm “Hủy đơn”.</p></div>
       <div class="pg-act"><div class="seg" id="lgMode"><button data-m="order" class="on">Theo đơn</button><button data-m="line">Theo dòng</button></div></div></div>
     <div class="card fbar">
       <label>Từ ngày<input type="date" id="lgFrom"></label><label>Đến ngày<input type="date" id="lgTo"></label>
       <label>Mã / tên<input id="lgCode" placeholder="VD: K55-3302" autocomplete="off"></label><label>Khách hàng<input id="lgCust" placeholder="Tên khách" autocomplete="off"></label>
+      <label>Hệ nhôm<select id="lgSys"><option value="">Tất cả</option></select></label>
       <label>Người thao tác<select id="lgUser"><option value="">Tất cả</option></select></label>
       <label>Loại<select id="lgKind"><option value="">Tất cả</option><option value="out">Xuất kho</option><option value="in">Nhập kho</option><option value="kk">Kiểm kê</option><option value="hx">Hoàn xuất</option><option value="dc">Cắt DC</option><option value="new">Tạo mới</option><option value="edit">Chỉnh sửa</option></select></label>
       <label>Trạng thái<select id="lgStat"><option value="">Tất cả</option><option value="pending">Chờ duyệt</option><option value="rejected">Bị từ chối</option></select></label>
@@ -577,9 +578,9 @@ body.ctvkho .mainc{padding-bottom:48px}
   <div class="grid">
     <label data-f="from">Từ ngày<input type="date" id="rpFrom"></label><label data-f="to">Đến ngày<input type="date" id="rpTo"></label>
     <label data-f="sys">Hệ nhôm<select id="rpSys"></select></label><label data-f="type">Loại vật tư<select id="rpTyp"></select></label>
-    <label data-f="fin">Màu / bề mặt<select id="rpFin"></select></label><label data-f="user">Người xuất<select id="rpUser"></select></label>
+    <label data-f="fin">Màu / bề mặt<select id="rpFin"></select></label><label data-f="user"><span id="rpUserL">Người xuất</span><select id="rpUser"></select></label>
     <div data-f="codes" class="chk">Mã hàng của hệ (không chọn mã nào = tất cả)<input type="text" id="rpCodesQ" placeholder="Tìm mã hoặc tên hàng…"><div class="vlines" id="rpCodes"></div></div>
-    <div data-f="cust" class="chk">Khách hàng (không chọn khách nào = tất cả)<input type="text" id="rpCustQ" placeholder="Tìm tên khách…"><div class="vlines" id="rpCust"></div></div>
+    <div data-f="cust" class="chk"><span id="rpCustL">Khách hàng</span><span> (không chọn mục nào = tất cả)</span><input type="text" id="rpCustQ" placeholder="Tìm theo tên…"><div class="vlines" id="rpCust"></div></div>
     <label data-f="mode" class="full">Cách thể hiện<select id="rpMode"><option value="order">Theo đơn (mỗi đơn một dòng)</option><option value="line">Chi tiết (từng mã hàng trong đơn)</option></select></label>
   </div>
   <div class="foot"><button id="rpClr">Xóa lọc</button><button id="rpCan">Đóng</button><button class="primary" id="rpGo">Xem báo cáo</button></div>
@@ -841,7 +842,7 @@ function setView(v){
   view=v;
   Object.values(VIEWS).forEach(id=>$('#'+id).hidden=id!==VIEWS[v]);
   document.querySelectorAll('#nav button,#tabbar button').forEach(b=>b.classList.toggle('on',b.dataset.nav===v));
-  $('#crumb').textContent={dash:'Tổng quan',stock:'Tồn kho',low:'Hàng sắp hết',po:'Đề xuất đặt hàng',count:'Kiểm kê',dc:'Quản lý DC',log:'Lịch sử giao dịch',rpt:'Báo cáo',req:'Chờ duyệt',usr:'Người dùng'}[v];
+  $('#crumb').textContent={dash:'Tổng quan',stock:'Tồn kho',low:'Hàng sắp hết',po:'Đề xuất đặt hàng',count:'Kiểm kê',dc:'Quản lý DC',log:'Lịch sử kho',rpt:'Báo cáo',req:'Chờ duyệt',usr:'Người dùng'}[v];
   if(v==='stock'||v==='low'){
     $('#pgTitle').textContent=v==='low'?'Hàng sắp hết':'Tồn kho';
     $('#pgSub').textContent=v==='low'?'Các mã còn hàng nhưng dưới 10 (lớn hơn 0), cần nhập thêm. Mã đã hết hàng xem ở ô “Hết hàng”.':'Theo dõi số lượng nhôm thanh và phụ kiện, xuất kho nhanh từ phiếu báo đơn hàng.';
@@ -1291,6 +1292,8 @@ const REASONS=['Xuất nhầm','Khách đổi mã','Khách hủy đơn','Sai s�
 const KL={in:'Nhập kho',out:'Xuất kho',new:'Tạo mới',edit:'Chỉnh sửa',kk:'Kiểm kê',hx:'Hoàn xuất',dc:'Cắt DC'};
 const LG={mode:'order',page:0,size:50,total:0,rows:[],tok:0};
 const clean=v=>String(v||'').trim().replace(/[%,()*]/g,' ');
+/* Mã thuộc hệ đang chọn (hệ = phần đầu của spec, giống sysOf); null = không lọc */
+const lgSysCodes=()=>{const sy=$('#lgSys').value;return sy?S.items.filter(i=>sysOf(i)===sy).map(i=>i.code):null};
 function lgQ(q,g){
   const t=g?'t':'created_at',f=$('#lgFrom').value,to=$('#lgTo').value,u=$('#lgUser').value,k=$('#lgKind').value,cu=clean($('#lgCust').value),co=clean($('#lgCode').value);
   if(f)q=q.gte(t,new Date(f+'T00:00:00').toISOString());
@@ -1299,12 +1302,17 @@ function lgQ(q,g){
   if(k)q=q.eq('lkind',k);
   if(cu)q=q.ilike('cust','%'+cu+'%');
   if(co)q=g?q.ilike('codes','%'+co+'%'):q.or('code.ilike.%'+co+'%,name.ilike.%'+co+'%');
+  const sc=lgSysCodes();   // theo hệ: dòng lọc theo danh sách mã; đơn (movement_groups.codes là chuỗi mã cách nhau bởi dấu cách) lọc bằng regex
+  if(sc)q=g?q.filter('codes','imatch','(^| )('+sc.map(c=>c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')( |$)'):q.in('code',sc);
   return q;
 }
 async function loadLog(reset){
+  if(reset){const cs=$('#lgSys').value,sy=[...new Set(S.items.map(sysOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+    $('#lgSys').innerHTML='<option value="">Tất cả</option>'+sy.map(x=>`<option>${esc(x)}</option>`).join('');$('#lgSys').value=cs}
   if(reset){LG.page=0;const u=await sb.from('movement_users').select('user_email'),cur=$('#lgUser').value;
     if(!u.error){$('#lgUser').innerHTML='<option value="">Tất cả</option>'+u.data.map(x=>`<option>${esc(x.user_email)}</option>`).join('');$('#lgUser').value=cur}}
-  const tok=++LG.tok,g=LG.mode==='order';
+  const tok=++LG.tok,g=LG.mode==='order',sc=lgSysCodes();
+  if(sc&&sc.join('|').length>6000){LG.rows=[];LG.req=[];LG.total=0;$('#lgBody').innerHTML='<tr><td colspan="7" class="empty out">Hệ này có quá nhiều mã để lọc trực tiếp. Hãy chọn thêm khoảng ngày hoặc gõ mã.</td></tr>';return}
   $('#lgBody').innerHTML='<tr><td colspan="7" class="empty">Đang tải…</td></tr>';
   if($('#lgStat').value){LG.rows=[];LG.total=0;await loadReqRows();if(tok===LG.tok)drawLog();return}
   let q=lgQ(sb.from(g?'movement_groups':'movements_v').select('*',{count:'exact'}),g).order(g?'t':'created_at',{ascending:false});
@@ -1334,9 +1342,9 @@ function drawLog(){
   $('#lgPrev').disabled=LG.page<=0;$('#lgNext').disabled=(LG.page+1)*LG.size>=LG.total;
 }
 let lgT;const lgD=()=>{clearTimeout(lgT);lgT=setTimeout(()=>loadLog(true),350)};
-['#lgFrom','#lgTo','#lgUser','#lgKind','#lgStat'].forEach(x=>$(x).onchange=()=>loadLog(true));
+['#lgFrom','#lgTo','#lgSys','#lgUser','#lgKind','#lgStat'].forEach(x=>$(x).onchange=()=>loadLog(true));
 $('#lgCode').oninput=lgD;$('#lgCust').oninput=lgD;
-$('#lgClear').onclick=()=>{['#lgFrom','#lgTo','#lgCode','#lgCust','#lgUser','#lgKind','#lgStat'].forEach(x=>$(x).value='');loadLog(true)};
+$('#lgClear').onclick=()=>{['#lgFrom','#lgTo','#lgCode','#lgCust','#lgSys','#lgUser','#lgKind','#lgStat'].forEach(x=>$(x).value='');loadLog(true)};
 $('#lgPrev').onclick=()=>{LG.page--;loadLog()};$('#lgNext').onclick=()=>{LG.page++;loadLog()};
 $('#lgMode').onclick=e=>{const b=e.target.closest('button[data-m]');if(!b)return;LG.mode=b.dataset.m;
   document.querySelectorAll('#lgMode button').forEach(x=>x.classList.toggle('on',x===b));loadLog(true)};
@@ -1808,64 +1816,77 @@ $('#tcDays').onchange=loadTC;$('#tcMet').onchange=loadTC;
 $('#tpDays').onchange=loadDash;$('#tpMet').onchange=loadDash;$('#dzDays').onchange=drawDead;$('#dRefresh').onclick=load;
 
 /* =================== BÁO CÁO =================== */
-/* Nguồn DUY NHẤT: view report_sales (supabase-update-17.sql) = dòng xuất kho chưa hủy trong Lịch sử kho, giá trị do database tính
-   (báo giá hoặc phiếu ảnh, cùng công thức công nợ), kèm dòng hoàn kho theo báo giá (số âm). Hủy đơn ở Lịch sử kho thì báo cáo tự bỏ dòng đó. */
+/* Hai nguồn, đều do database tính (không tự tính lại ở trình duyệt):
+   - report_sales (supabase-update-17.sql): hàng xuất chưa hủy trong Lịch sử kho + giá trị (báo giá / phiếu ảnh) + hoàn kho theo báo giá (số âm)
+   - report_stock (supabase-update-18.sql): hàng nhập vào (typ 'in') và hàng hoàn tồn (typ 'return': phiếu hoàn kho + dòng xuất đã hủy)
+   Hủy đơn ở Lịch sử kho thì báo cáo bán ra tự bỏ dòng đó, báo cáo hoàn tồn tự thêm dòng đó. */
 const RPT={
-  sold:{label:'Hàng bán ra',sub:'Hàng đã xuất kho: số lượng và giá trị, gộp theo mã hàng.',f:['from','to','sys','codes','type','fin','cust','user']},
-  cust:{label:'Doanh thu khách hàng',sub:'Doanh thu theo khách hàng, xem theo từng đơn hoặc chi tiết từng mã hàng.',f:['from','to','cust','sys','codes','type','fin','mode']}
+  sold:{label:'Hàng bán ra',sub:'Hàng đã xuất kho: số lượng và giá trị, gộp theo mã hàng.',src:'sales',sql:17,val:true,n:'Đơn',vlab:'GIÁ TRỊ XUẤT BÁN (ĐỒNG)',nlab:'SỐ ĐƠN XUẤT',plab:'SỐ KHÁCH',who:'Người xuất',party:'Khách hàng',b:['code','sys','month'],f:['from','to','sys','codes','type','fin','cust','user']},
+  cust:{label:'Doanh thu khách hàng',sub:'Doanh thu theo khách hàng, xem theo từng đơn hoặc chi tiết từng mã hàng.',src:'sales',sql:17,val:true,n:'Đơn',vlab:'GIÁ TRỊ XUẤT BÁN (ĐỒNG)',nlab:'SỐ ĐƠN XUẤT',plab:'SỐ KHÁCH',who:'Người xuất',party:'Khách hàng',b:['cust','sys','month'],f:['from','to','cust','sys','codes','type','fin','mode']},
+  in:{label:'Hàng nhập vào',sub:'Hàng đã nhập kho (không gồm hàng khách trả lại), gộp theo mã hàng.',src:'stock',typ:'in',sql:18,val:false,n:'Phiếu',nlab:'SỐ PHIẾU NHẬP',plab:'SỐ NHÀ CUNG CẤP',who:'Người nhập',party:'Nhà cung cấp',b:['code','cust','sys','month'],f:['from','to','sys','codes','type','fin','cust','user']},
+  ret:{label:'Hàng hoàn tồn',sub:'Hàng trở lại tồn kho do khách trả (phiếu hoàn kho) hoặc đơn xuất bị hủy, gộp theo mã hàng.',src:'stock',typ:'return',sql:18,val:true,n:'Lần',vlab:'GIÁ TRỊ HOÀN (ĐỒNG)',nlab:'SỐ LẦN HOÀN',plab:'SỐ KHÁCH',who:'Người thao tác',party:'Khách hàng',b:['code','cust','sys','month'],f:['from','to','sys','codes','type','fin','cust','user']}
 };
-const RP={type:'sold',rows:null,f:{codes:[],cust:[],mode:'order'}};
-const NOCUST='(chưa xác định khách)';
+const RP={type:'sold',sales:null,stock:null,f:{codes:[],cust:[],mode:'order'}};
+const NOCUST='(chưa xác định khách)',NOSUP='(không ghi nhà cung cấp)';
 const rpSum=(a,k)=>a.reduce((n,r)=>n+(r[k]||0),0);
 const rpQty=a=>{const m={};a.forEach(r=>{const u=r.unit||'';m[u]=(m[u]||0)+r.qty});return Object.entries(m).filter(e=>e[1]).map(([u,n])=>fmt(n)+' '+u).join(' · ')||'0'};
 const rpOrdN=rows=>new Set(rows.filter(r=>!r.ret).map(r=>r.grp)).size;
 const rpVal=ls=>ls.some(x=>x.hasP)?fmt(rpSum(ls,'amt')):'—';
+/* Dòng của loại báo cáo đang chọn; null nếu nguồn chưa tải / chưa cài */
+const rpRows=()=>{const T=RPT[RP.type],d=RP[T.src];return d&&d.rows?d.rows.filter(r=>!T.typ||r.typ===T.typ):null};
 async function loadRpt(){
   $('#rpBody').innerHTML='<tr><td class="empty">Đang tải…</td></tr>';
-  const r=await fetchAll(()=>sb.from('report_sales').select('*').order('created_at',{ascending:false}).order('grp').order('code').order('qty').order('id'));
-  if(r.error){RP.rows=null;$('#rpBody').innerHTML=`<tr><td class="empty out">${/report_sales|schema cache/.test(r.error.message)?'Chưa cài nguồn dữ liệu báo cáo. Hãy chạy file supabase/supabase-update-17.sql trong SQL Editor.':esc(rpcMsg(r.error))}</td></tr>`;return}
   const byCode=new Map(S.items.map(i=>[nrm(i.code),i]));
-  RP.rows=r.data.map(x=>{const it=(x.item_id!=null&&itemById(x.item_id))||byCode.get(nrm(x.code));
-    return{t:x.created_at,grp:x.grp,src:x.src,ref:x.ref,ret:x.src==='return',cust:String(x.cust||'').trim()||NOCUST,user:x.user_email||'',code:x.code,name:x.name||(it&&it.name)||'',
-      sys:it?(sysOf(it)||'(không có hệ)'):'(mã ngoài kho)',type:it?it.type:'',fin:(it&&it.fin)||'',qty:Number(x.qty)||0,unit:it?it.unit:'',amt:Number(x.value)||0,hasP:x.value!=null}});
+  const map=(x,st)=>{const it=(x.item_id!=null&&itemById(x.item_id))||byCode.get(nrm(x.code));
+    return{t:x.created_at,grp:x.grp,src:x.src,ref:x.ref,typ:x.typ,ret:!st&&x.src==='return',cust:String(x.cust??x.party??'').trim()||(st&&x.typ==='in'?NOSUP:NOCUST),user:x.user_email||'',code:x.code,name:x.name||(it&&it.name)||'',
+      sys:it?(sysOf(it)||'(không có hệ)'):'(mã ngoài kho)',type:it?it.type:'',fin:(it&&it.fin)||'',qty:Number(x.qty)||0,unit:it?it.unit:'',amt:Number(x.value)||0,hasP:x.value!=null}};
+  const ld=async(v,st)=>{const r=await fetchAll(()=>sb.from(v).select('*').order('created_at',{ascending:false}).order('grp').order('code').order('qty').order('id'));return r.error?{err:r.error}:{rows:r.data.map(x=>map(x,st))}};
+  [RP.sales,RP.stock]=await Promise.all([ld('report_sales',false),ld('report_stock',true)]);
   rpDraw();
 }
 const rpFiltered=()=>{const f=RP.f,fr=f.from?new Date(f.from+'T00:00:00'):null,to=f.to?new Date(f.to+'T23:59:59.999'):null,cu=new Set(f.cust.map(nrm)),cd=new Set(f.codes.map(nrm));
-  return RP.rows.filter(r=>{const d=new Date(r.t);return(!fr||d>=fr)&&(!to||d<=to)&&(!f.sys||r.sys===f.sys)&&(!f.type||r.type===f.type)&&(!f.fin||r.fin===f.fin)&&(!f.user||r.user===f.user)&&(!cu.size||cu.has(nrm(r.cust)))&&(!cd.size||cd.has(nrm(r.code)))})};
+  return rpRows().filter(r=>{const d=new Date(r.t);return(!fr||d>=fr)&&(!to||d<=to)&&(!f.sys||r.sys===f.sys)&&(!f.type||r.type===f.type)&&(!f.fin||r.fin===f.fin)&&(!f.user||r.user===f.user)&&(!cu.size||cu.has(nrm(r.cust)))&&(!cd.size||cd.has(nrm(r.code)))})};
 function rpGroup(rows,key){const m=new Map();rows.forEach(r=>{const k=key(r);(m.get(k)||m.set(k,[]).get(k)).push(r)});return m}
 const rpSrc=a=>a.src==='quote'?'Báo giá '+a.ref:a.src==='image'?'Phiếu ảnh':a.src==='return'?'Hoàn kho '+a.ref:'Xuất tay';
 const rpOrders=rows=>[...rpGroup(rows,r=>r.grp)].map(([,ls])=>{const a=ls[0];
   return{t:a.t,cust:(ls.find(x=>x.cust!==NOCUST)||a).cust,src:rpSrc(a),ret:a.ret,n:ls.length,qty:rpQty(ls),ls}});
-/* Bảng phân tích: gộp theo khóa, có dòng tổng và tỷ trọng giá trị */
-function rpTable(title,head,rows,key,o){
-  o=o||{};const top=o.top||8,tot=rpSum(rows,'amt'),lab=o.lab||(k=>k);
+/* Bảng phân tích: gộp theo khóa, có dòng tổng; o.val=false thì bỏ cột giá trị và % (hàng nhập vào) */
+function rpTable(title,head,nHead,rows,key,o){
+  o=o||{};const top=o.top||8,tot=rpSum(rows,'amt'),lab=o.lab||(k=>k),val=o.val!==false,cols=val?5:3;
   const g=[...rpGroup(rows,key)].map(([k,ls])=>({k,ls,v:rpSum(ls,'amt')}));
   g.sort(o.chrono?(a,b)=>b.k.localeCompare(a.k):(a,b)=>b.v-a.v||b.ls.length-a.ls.length);
   const sh=g.slice(0,top),rest=g.slice(top).flatMap(x=>x.ls);
-  const row=(k,ls)=>{const v=rpSum(ls,'amt');return`<tr><td>${k}</td><td class="num">${rpOrdN(ls)}</td><td class="num">${esc(rpQty(ls))}</td><td class="num">${rpVal(ls)}</td><td class="num">${tot>0&&v?Math.round(v/tot*100)+'%':''}</td></tr>`};
-  return`<div class="card tablecard"><div class="card-head"><h3>${title}</h3></div><div class="wrap"><table><thead><tr><th>${head}</th><th class="num">Đơn</th><th class="num">Số lượng</th><th class="num">Giá trị (đ)</th><th class="num">%</th></tr></thead><tbody>${sh.map(x=>row(esc(lab(x.k)),x.ls)).join('')||'<tr><td colspan="5" class="empty">Không có dữ liệu</td></tr>'}${rest.length?row('Còn '+(g.length-top)+' mục khác',rest):''}</tbody><tfoot><tr><th>Tổng</th><th class="num">${rpOrdN(rows)}</th><th class="num">${esc(rpQty(rows))}</th><th class="num">${fmt(tot)}</th><th></th></tr></tfoot></table></div></div>`}
+  const row=(k,ls)=>{const v=rpSum(ls,'amt');return`<tr><td>${k}</td><td class="num">${rpOrdN(ls)}</td><td class="num">${esc(rpQty(ls))}</td>${val?`<td class="num">${rpVal(ls)}</td><td class="num">${tot>0&&v?Math.round(v/tot*100)+'%':''}</td>`:''}</tr>`};
+  return`<div class="card tablecard"><div class="card-head"><h3>${title}</h3></div><div class="wrap"><table><thead><tr><th>${head}</th><th class="num">${nHead}</th><th class="num">Số lượng</th>${val?'<th class="num">Giá trị (đ)</th><th class="num">%</th>':''}</tr></thead><tbody>${sh.map(x=>row(esc(lab(x.k)),x.ls)).join('')||`<tr><td colspan="${cols}" class="empty">Không có dữ liệu</td></tr>`}${rest.length?row('Còn '+(g.length-top)+' mục khác',rest):''}</tbody><tfoot><tr><th>Tổng</th><th class="num">${rpOrdN(rows)}</th><th class="num">${esc(rpQty(rows))}</th>${val?`<th class="num">${fmt(tot)}</th><th></th>`:''}</tr></tfoot></table></div></div>`}
 const rpMonth=r=>{const d=new Date(r.t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
 function rpDraw(){
-  if(!RP.rows)return;
-  const T=RPT[RP.type],rows=rpFiltered(),isC=RP.type==='cust',line=!isC||RP.f.mode==='line',F=RP.f,CAP=500;
+  const T=RPT[RP.type],d=RP[T.src];
   document.querySelectorAll('#rpType button').forEach(b=>b.classList.toggle('on',b.dataset.k===RP.type));$('#rpSub').textContent=T.sub;
-  const ch=[F.from||F.to?'Ngày: '+(F.from||'…')+' → '+(F.to||'…'):'',F.sys&&'Hệ: '+F.sys,F.codes.length&&'Mã: '+F.codes.slice(0,3).join(', ')+(F.codes.length>3?'…':''),F.type&&F.type,F.fin&&'Màu: '+F.fin,F.user&&'Người xuất: '+F.user,F.cust.length&&'Khách: '+F.cust.slice(0,2).join(', ')+(F.cust.length>2?' +'+(F.cust.length-2):'')].filter(Boolean);
-  $('#rpChips').textContent=ch.length?'Đang lọc · '+ch.join(' · '):'Chưa lọc: toàn bộ hàng đã xuất kho (không gồm đơn đã hủy).';
+  if(!d)return;
+  if(d.err){['#rpKpi','#rpBrk','#rpHead','#rpFoot','#rpChips','#rpInfo'].forEach(x=>$(x).innerHTML='');
+    $('#rpBody').innerHTML=`<tr><td class="empty out">${/report_|schema cache/.test(d.err.message)?'Chưa cài nguồn dữ liệu cho báo cáo này. Hãy chạy file supabase/supabase-update-'+T.sql+'.sql trong SQL Editor.':esc(rpcMsg(d.err))}</td></tr>`;return}
+  const rows=rpFiltered(),isC=RP.type==='cust',line=!isC||RP.f.mode==='line',F=RP.f,CAP=500,val=T.val;
+  const ch=[F.from||F.to?'Ngày: '+(F.from||'…')+' → '+(F.to||'…'):'',F.sys&&'Hệ: '+F.sys,F.codes.length&&'Mã: '+F.codes.slice(0,3).join(', ')+(F.codes.length>3?'…':''),F.type&&F.type,F.fin&&'Màu: '+F.fin,F.user&&T.who+': '+F.user,F.cust.length&&T.party+': '+F.cust.slice(0,2).join(', ')+(F.cust.length>2?' +'+(F.cust.length-2):'')].filter(Boolean);
+  $('#rpChips').textContent=ch.length?'Đang lọc · '+ch.join(' · '):'Chưa lọc: toàn bộ dữ liệu của loại báo cáo này.';
   const out=rows.filter(r=>!r.ret),ret=rows.filter(r=>r.ret),tot=rpSum(rows,'amt'),nOrd=rpOrdN(rows),miss=out.filter(r=>!r.hasP).length;
-  const k=(l,v,sm)=>`<div class="card stat"><div class="st-top"><span class="lab">${l}</span></div><b>${v}</b><small>${sm||''}</small></div>`;
-  $('#rpKpi').innerHTML=k('GIÁ TRỊ XUẤT BÁN (ĐỒNG)',fmt(tot),[ret.length?'Đã trừ hoàn kho '+fmt(-rpSum(ret,'amt'))+' đ':'',miss?miss+' dòng chưa xác định được giá':''].filter(Boolean).join(' · ')||'Theo giá báo giá / phiếu')
-    +k('SỐ ĐƠN XUẤT',fmt(nOrd),nOrd?'Trung bình '+fmt(Math.round(tot/nOrd))+' đ / đơn':'')
-    +k('SỐ LƯỢNG',esc(rpQty(rows)),'Từ '+fmt(new Set(out.map(r=>nrm(r.code))).size)+' mã hàng')
-    +k('SỐ KHÁCH',fmt(new Set(out.map(r=>nrm(r.cust))).size),'Khách có đơn trong bộ lọc');
-  $('#rpBrk').innerHTML=(isC?rpTable('Theo khách hàng','Khách hàng',rows,r=>r.cust,{top:10}):rpTable('Theo mã hàng','Mã hàng',rows,r=>r.code+' · '+r.name,{top:10}))
-    +rpTable('Theo hệ nhôm','Hệ',rows,r=>r.sys)+rpTable('Theo tháng','Tháng',rows,rpMonth,{chrono:true,top:12,lab:k=>'Tháng '+k.slice(5)+'/'+k.slice(0,4)});
+  const k=(l,v,sm)=>`<div class="card stat"><div class="st-top"><span class="lab">${l}</span></div><b>${v}</b><small>${sm||''}</small></div>`,nCode=new Set(out.map(r=>nrm(r.code))).size,nParty=new Set(out.map(r=>nrm(r.cust))).size;
+  $('#rpKpi').innerHTML=(val?k(T.vlab,fmt(tot),[ret.length?'Đã trừ hoàn kho '+fmt(-rpSum(ret,'amt'))+' đ':'',miss?miss+' dòng chưa xác định được giá':''].filter(Boolean).join(' · ')||'Theo giá báo giá / phiếu'):'')
+    +k(T.nlab,fmt(nOrd),val&&nOrd?'Trung bình '+fmt(Math.round(tot/nOrd))+' đ / '+T.n.toLowerCase():'')
+    +k('SỐ LƯỢNG',esc(rpQty(rows)),val?'Từ '+fmt(nCode)+' mã hàng':'')
+    +k(val?T.plab:'SỐ MÃ HÀNG',fmt(val?nParty:nCode),val?'Trong bộ lọc':'Trong bộ lọc')
+    +(val?'':k(T.plab,fmt(nParty),'Trong bộ lọc'));
+  const B={code:()=>rpTable('Theo mã hàng','Mã hàng',T.n,rows,r=>r.code+' · '+r.name,{top:10,val}),
+    cust:()=>rpTable('Theo '+T.party.toLowerCase(),T.party,T.n,rows,r=>r.cust,{top:10,val}),
+    sys:()=>rpTable('Theo hệ nhôm','Hệ',T.n,rows,r=>r.sys,{val}),
+    month:()=>rpTable('Theo tháng','Tháng',T.n,rows,rpMonth,{chrono:true,top:12,val,lab:k=>'Tháng '+k.slice(5)+'/'+k.slice(0,4)})};
+  $('#rpBrk').innerHTML=T.b.map(x=>B[x]()).join('');
   $('#rpTitle').textContent=T.label+(isC?(line?' · chi tiết':' · theo đơn'):' · theo mã hàng');
   const tr=(a,n)=>a.slice(0,CAP).join('')||`<tr><td class="empty" colspan="${n}">Không có dữ liệu khớp bộ lọc.</td></tr>`,sg=x=>x<0?'out':'';let html,n,unit,head,foot;
   const tfoot=(c,rest)=>`<tr><th colspan="${c}">Tổng cộng</th>${rest}</tr>`;
-  if(!isC){const g=[...rpGroup(rows,r=>nrm(r.code))].map(([,ls])=>({ls,r:ls[0],v:rpSum(ls,'amt')})).sort((a,b)=>b.v-a.v||a.r.code.localeCompare(b.r.code,'vi',{numeric:true}));n=g.length;unit=' mã hàng';
-    head='<tr><th>Mã / Tên</th><th>Hệ</th><th>Màu</th><th class="num">Đơn</th><th class="num">Số lượng</th><th class="num">Giá trị (đ)</th></tr>';
-    html=tr(g.map(x=>`<tr><td><b>${esc(x.r.code)}</b><small>${esc(x.r.name)}</small></td><td>${esc(x.r.sys)}</td><td>${esc(x.r.fin)}</td><td class="num">${rpOrdN(x.ls)}</td><td class="num">${esc(rpQty(x.ls))}</td><td class="num">${rpVal(x.ls)}</td></tr>`),6);
-    foot=tfoot(3,`<th class="num">${nOrd}</th><th class="num">${esc(rpQty(rows))}</th><th class="num">${fmt(tot)}</th>`)}
+  if(!isC){const g=[...rpGroup(rows,r=>nrm(r.code))].map(([,ls])=>({ls,r:ls[0],v:rpSum(ls,'amt')})).sort((a,b)=>(val?b.v-a.v:0)||a.r.code.localeCompare(b.r.code,'vi',{numeric:true}));n=g.length;unit=' mã hàng';
+    head=`<tr><th>Mã / Tên</th><th>Hệ</th><th>Màu</th><th class="num">${T.n}</th><th class="num">Số lượng</th>${val?'<th class="num">Giá trị (đ)</th>':''}</tr>`;
+    html=tr(g.map(x=>`<tr><td><b>${esc(x.r.code)}</b><small>${esc(x.r.name)}</small></td><td>${esc(x.r.sys)}</td><td>${esc(x.r.fin)}</td><td class="num">${rpOrdN(x.ls)}</td><td class="num">${esc(rpQty(x.ls))}</td>${val?`<td class="num">${rpVal(x.ls)}</td>`:''}</tr>`),val?6:5);
+    foot=tfoot(3,`<th class="num">${nOrd}</th><th class="num">${esc(rpQty(rows))}</th>${val?`<th class="num">${fmt(tot)}</th>`:''}`)}
   else if(!line){const o=rpOrders(rows).sort((a,b)=>a.cust.localeCompare(b.cust,'vi')||new Date(b.t)-new Date(a.t));n=o.length;unit=' đơn';
     head='<tr><th>Ngày</th><th>Khách hàng</th><th>Nguồn</th><th class="num">Số dòng</th><th class="num">Số lượng</th><th class="num">Giá trị (đ)</th></tr>';
     html=tr(o.map(x=>`<tr><td>${esc(dateVi(x.t))}</td><td>${esc(x.cust)}</td><td>${esc(x.src)}</td><td class="num">${x.n}</td><td class="num">${esc(x.qty)}</td><td class="num ${sg(rpSum(x.ls,'amt'))}"><b>${rpVal(x.ls)}</b></td></tr>`),6);
@@ -1879,7 +1900,7 @@ function rpDraw(){
 }
 /* Popup lọc: chỉ hiện những ô thuộc loại báo cáo đang chọn; danh sách mã phụ thuộc hệ + loại đã chọn */
 const rpOpts=(a,all)=>'<option value="">'+all+'</option>'+a.map(x=>`<option>${esc(x)}</option>`).join('');
-const rpUniq=k=>[...new Set(RP.rows.map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+const rpUniq=k=>[...new Set(rpRows().map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
 /* Danh sách checkbox: "Chọn tất cả" chỉ áp cho các mục đang hiện sau khi tìm; mục đã tick được giữ khi đổi từ khóa */
 function rpChecks(id,list,sel){
   $(id).innerHTML=`<label style="position:sticky;top:0;background:#f4f7fb"><input type="checkbox" data-all><b>Chọn tất cả <span data-n></span></b></label>`
@@ -1891,12 +1912,13 @@ const rpPicked=id=>rpBoxes(id).filter(b=>b.checked).map(b=>b.value);
 function rpFind(id){const q=nrm($(id+'Q').value);rpBoxes(id).forEach(b=>{const l=b.closest('label');l.style.display=!q||nrm(l.textContent).includes(q)?'':'none'});rpSync(id)}
 function rpSync(id){const a=$(id).querySelector('[data-all]'),b=rpVis(id),n=b.filter(x=>x.checked).length;a.checked=b.length>0&&n===b.length;a.indeterminate=n>0&&n<b.length;$(id).querySelector('[data-n]').textContent='('+b.length+')'}
 function rpFillCodes(sel){const sy=$('#rpSys').value,ty=$('#rpTyp').value,m=new Map();sel=sel||rpPicked('#rpCodes');
-  RP.rows.forEach(r=>{if((!sy||r.sys===sy)&&(!ty||r.type===ty))m.set(r.code,r.code+' · '+r.name)});
+  rpRows().forEach(r=>{if((!sy||r.sys===sy)&&(!ty||r.type===ty))m.set(r.code,r.code+' · '+r.name)});
   rpChecks('#rpCodes',[...m].sort((a,b)=>a[0].localeCompare(b[0],'vi',{numeric:true})),sel)}
 function rpOpen(){
-  if(!RP.rows){toast('Dữ liệu báo cáo chưa tải được.');return}
-  const F=RP.f;$('#rpDT').textContent='Lọc: '+RPT[RP.type].label;$('#rpCodesQ').value=$('#rpCustQ').value='';
-  document.querySelectorAll('#dRp [data-f]').forEach(l=>l.hidden=!RPT[RP.type].f.includes(l.dataset.f));
+  if(!rpRows()){toast('Dữ liệu báo cáo này chưa tải được.');return}
+  const F=RP.f,T=RPT[RP.type];$('#rpDT').textContent='Lọc: '+T.label;$('#rpCodesQ').value=$('#rpCustQ').value='';
+  $('#rpUserL').textContent=T.who;$('#rpCustL').textContent=T.party;
+  document.querySelectorAll('#dRp [data-f]').forEach(l=>l.hidden=!T.f.includes(l.dataset.f));
   $('#rpSys').innerHTML=rpOpts(rpUniq('sys'),'Tất cả hệ');$('#rpTyp').innerHTML=rpOpts(rpUniq('type'),'Tất cả');$('#rpFin').innerHTML=rpOpts(rpUniq('fin'),'Tất cả');$('#rpUser').innerHTML=rpOpts(rpUniq('user'),'Tất cả');
   rpChecks('#rpCust',rpUniq('cust').map(c=>[c,c]),F.cust);
   $('#rpFrom').value=F.from||'';$('#rpTo').value=F.to||'';$('#rpSys').value=F.sys||'';$('#rpTyp').value=F.type||'';$('#rpFin').value=F.fin||'';$('#rpUser').value=F.user||'';$('#rpMode').value=F.mode;
@@ -1904,12 +1926,13 @@ function rpOpen(){
   $('#dRp').showModal();
 }
 $('#rpType').innerHTML=Object.entries(RPT).map(([k,v])=>`<button data-k="${k}">${v.label}</button>`).join('');
-$('#rpType').onclick=e=>{const b=e.target.closest('button[data-k]');if(!b)return;RP.type=b.dataset.k;rpDraw();rpOpen()};
+$('#rpType').onclick=e=>{const b=e.target.closest('button[data-k]');if(!b)return;RP.type=b.dataset.k;RP.f={codes:[],cust:[],mode:RP.f.mode};rpDraw();if(rpRows())rpOpen()};
 $('#rpFilter').onclick=rpOpen;$('#rpRefresh').onclick=loadRpt;$('#rpCan').onclick=()=>$('#dRp').close();
 $('#rpSys').onchange=$('#rpTyp').onchange=()=>rpFillCodes();
 ['#rpCodes','#rpCust'].forEach(id=>{$(id).onchange=e=>{if(e.target.matches('[data-all]'))rpVis(id).forEach(b=>b.checked=e.target.checked);rpSync(id)};$(id+'Q').oninput=()=>rpFind(id)});
 $('#rpClr').onclick=()=>{RP.f={codes:[],cust:[],mode:RP.f.mode};$('#dRp').close();rpDraw()};
-$('#rpGo').onclick=()=>{if($('#rpFrom').value&&$('#rpTo').value&&$('#rpFrom').value>$('#rpTo').value){toast('“Từ ngày” phải trước “Đến ngày”.');return}
+$('#rpGo').onclick=()=>{
+  if($('#rpFrom').value&&$('#rpTo').value&&$('#rpFrom').value>$('#rpTo').value){toast('“Từ ngày” phải trước “Đến ngày”.');return}
   RP.f={from:$('#rpFrom').value,to:$('#rpTo').value,sys:$('#rpSys').value,type:$('#rpTyp').value,fin:$('#rpFin').value,user:$('#rpUser').value,codes:rpPicked('#rpCodes'),cust:rpPicked('#rpCust'),mode:$('#rpMode').value};
   $('#dRp').close();rpDraw()};
 
@@ -1932,7 +1955,8 @@ async function loadReqRows(){
   let q=sb.from('requests').select('*,request_lines(*)').in('status',st?[st]:['pending','rejected']).order('created_at',{ascending:false}).limit(50);
   if(k)q=q.eq('kind',k);if(u)q=q.eq('created_by',u);if(cu)q=q.ilike('party','%'+cu+'%');
   if(f)q=q.gte('created_at',new Date(f+'T00:00:00').toISOString());if(to)q=q.lte('created_at',new Date(to+'T23:59:59.999').toISOString());
-  const r=await q;LG.req=r.error?[]:r.data;
+  const r=await q,sc=lgSysCodes(),cs=sc&&new Set(sc.map(c=>c.toUpperCase()));
+  LG.req=r.error?[]:cs?r.data.filter(x=>(x.request_lines||[]).some(l=>cs.has(String(l.code).toUpperCase()))):r.data;
 }
 function reqRow(q,i){
   const ls=q.request_lines||[],cd=ls.map(l=>l.code);
