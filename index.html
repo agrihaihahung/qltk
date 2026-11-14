@@ -220,6 +220,7 @@ tr.void td{color:#9aa9bc}tr.void .n2,tr.void td.num{text-decoration:line-through
 .rem{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 16px;border:1px solid var(--line);background:#fff;border-radius:12px;margin-bottom:14px;font-size:13.5px;color:var(--mute)}
 .rem.due{border-color:#f3d28f;background:var(--amberbg);color:#7a5412}.rem span{flex:1;min-width:200px}
 .tag.ok{background:var(--okbg);color:var(--ok)}
+.chk{display:flex;flex-direction:column;align-items:stretch;gap:6px;text-align:left;min-width:0;font-size:13px;color:var(--mute)}.chk input[type=text]{display:block;width:100%;box-sizing:border-box;height:44px;padding:0 14px;font-size:15px;border-radius:10px}.chk .vlines{width:100%;max-height:min(280px,32vh)}
 .rpg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px;margin-bottom:16px}.rpg table{min-width:0}.rpg td:first-child{word-break:break-word}#rptView td.num,#rptView th.num{white-space:nowrap}#rptView tfoot th{background:#f4f7fb;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink)}
 .dgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:16px}
 .chart{width:100%;height:auto;display:block}
@@ -571,14 +572,14 @@ body.ctvkho .mainc{padding-bottom:48px}
 
 <div id="toast" hidden></div>
 
-<dialog id="dRp" style="width:min(640px,calc(100vw - 24px))">
+<dialog id="dRp" style="width:min(980px,calc(100vw - 24px))">
   <h2 id="rpDT">Lọc báo cáo</h2>
   <div class="grid">
     <label data-f="from">Từ ngày<input type="date" id="rpFrom"></label><label data-f="to">Đến ngày<input type="date" id="rpTo"></label>
     <label data-f="sys">Hệ nhôm<select id="rpSys"></select></label><label data-f="type">Loại vật tư<select id="rpTyp"></select></label>
-    <label data-f="codes" class="full">Mã hàng của hệ (giữ Ctrl / ⌘ để chọn nhiều; không chọn = tất cả)<select id="rpCodes" multiple size="6"></select></label>
     <label data-f="fin">Màu / bề mặt<select id="rpFin"></select></label><label data-f="user">Người xuất<select id="rpUser"></select></label>
-    <label data-f="cust" class="full">Khách hàng (giữ Ctrl / ⌘ để chọn nhiều; không chọn = tất cả)<select id="rpCust" multiple size="6"></select></label>
+    <div data-f="codes" class="chk">Mã hàng của hệ (không chọn mã nào = tất cả)<input type="text" id="rpCodesQ" placeholder="Tìm mã hoặc tên hàng…"><div class="vlines" id="rpCodes"></div></div>
+    <div data-f="cust" class="chk">Khách hàng (không chọn khách nào = tất cả)<input type="text" id="rpCustQ" placeholder="Tìm tên khách…"><div class="vlines" id="rpCust"></div></div>
     <label data-f="mode" class="full">Cách thể hiện<select id="rpMode"><option value="order">Theo đơn (mỗi đơn một dòng)</option><option value="line">Chi tiết (từng mã hàng trong đơn)</option></select></label>
   </div>
   <div class="foot"><button id="rpClr">Xóa lọc</button><button id="rpCan">Đóng</button><button class="primary" id="rpGo">Xem báo cáo</button></div>
@@ -1879,27 +1880,37 @@ function rpDraw(){
 /* Popup lọc: chỉ hiện những ô thuộc loại báo cáo đang chọn; danh sách mã phụ thuộc hệ + loại đã chọn */
 const rpOpts=(a,all)=>'<option value="">'+all+'</option>'+a.map(x=>`<option>${esc(x)}</option>`).join('');
 const rpUniq=k=>[...new Set(RP.rows.map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
-function rpFillCodes(){const sy=$('#rpSys').value,ty=$('#rpTyp').value,sel=new Set([...$('#rpCodes').selectedOptions].map(o=>o.value)),m=new Map();
-  RP.rows.forEach(r=>{if((!sy||r.sys===sy)&&(!ty||r.type===ty))m.set(r.code,r.name)});
-  $('#rpCodes').innerHTML=[...m].sort((a,b)=>a[0].localeCompare(b[0],'vi',{numeric:true})).map(([c,n])=>`<option value="${esc(c)}"${sel.has(c)?' selected':''}>${esc(c)} · ${esc(n)}</option>`).join('')}
+/* Danh sách checkbox: "Chọn tất cả" chỉ áp cho các mục đang hiện sau khi tìm; mục đã tick được giữ khi đổi từ khóa */
+function rpChecks(id,list,sel){
+  $(id).innerHTML=`<label style="position:sticky;top:0;background:#f4f7fb"><input type="checkbox" data-all><b>Chọn tất cả <span data-n></span></b></label>`
+    +list.map(([v,t])=>`<label><input type="checkbox" value="${esc(v)}"${sel.includes(v)?' checked':''}><span>${esc(t)}</span></label>`).join('');
+  rpFind(id)}
+const rpBoxes=id=>[...$(id).querySelectorAll('input[value]')];
+const rpVis=id=>rpBoxes(id).filter(b=>b.closest('label').style.display!=='none');
+const rpPicked=id=>rpBoxes(id).filter(b=>b.checked).map(b=>b.value);
+function rpFind(id){const q=nrm($(id+'Q').value);rpBoxes(id).forEach(b=>{const l=b.closest('label');l.style.display=!q||nrm(l.textContent).includes(q)?'':'none'});rpSync(id)}
+function rpSync(id){const a=$(id).querySelector('[data-all]'),b=rpVis(id),n=b.filter(x=>x.checked).length;a.checked=b.length>0&&n===b.length;a.indeterminate=n>0&&n<b.length;$(id).querySelector('[data-n]').textContent='('+b.length+')'}
+function rpFillCodes(sel){const sy=$('#rpSys').value,ty=$('#rpTyp').value,m=new Map();sel=sel||rpPicked('#rpCodes');
+  RP.rows.forEach(r=>{if((!sy||r.sys===sy)&&(!ty||r.type===ty))m.set(r.code,r.code+' · '+r.name)});
+  rpChecks('#rpCodes',[...m].sort((a,b)=>a[0].localeCompare(b[0],'vi',{numeric:true})),sel)}
 function rpOpen(){
   if(!RP.rows){toast('Dữ liệu báo cáo chưa tải được.');return}
-  const F=RP.f;$('#rpDT').textContent='Lọc: '+RPT[RP.type].label;
+  const F=RP.f;$('#rpDT').textContent='Lọc: '+RPT[RP.type].label;$('#rpCodesQ').value=$('#rpCustQ').value='';
   document.querySelectorAll('#dRp [data-f]').forEach(l=>l.hidden=!RPT[RP.type].f.includes(l.dataset.f));
   $('#rpSys').innerHTML=rpOpts(rpUniq('sys'),'Tất cả hệ');$('#rpTyp').innerHTML=rpOpts(rpUniq('type'),'Tất cả');$('#rpFin').innerHTML=rpOpts(rpUniq('fin'),'Tất cả');$('#rpUser').innerHTML=rpOpts(rpUniq('user'),'Tất cả');
-  $('#rpCust').innerHTML=rpUniq('cust').map(c=>`<option${F.cust.includes(c)?' selected':''}>${esc(c)}</option>`).join('');
+  rpChecks('#rpCust',rpUniq('cust').map(c=>[c,c]),F.cust);
   $('#rpFrom').value=F.from||'';$('#rpTo').value=F.to||'';$('#rpSys').value=F.sys||'';$('#rpTyp').value=F.type||'';$('#rpFin').value=F.fin||'';$('#rpUser').value=F.user||'';$('#rpMode').value=F.mode;
-  rpFillCodes();[...$('#rpCodes').options].forEach(o=>o.selected=F.codes.includes(o.value));
+  rpFillCodes(F.codes);
   $('#dRp').showModal();
 }
 $('#rpType').innerHTML=Object.entries(RPT).map(([k,v])=>`<button data-k="${k}">${v.label}</button>`).join('');
 $('#rpType').onclick=e=>{const b=e.target.closest('button[data-k]');if(!b)return;RP.type=b.dataset.k;rpDraw();rpOpen()};
 $('#rpFilter').onclick=rpOpen;$('#rpRefresh').onclick=loadRpt;$('#rpCan').onclick=()=>$('#dRp').close();
-$('#rpSys').onchange=$('#rpTyp').onchange=rpFillCodes;
+$('#rpSys').onchange=$('#rpTyp').onchange=()=>rpFillCodes();
+['#rpCodes','#rpCust'].forEach(id=>{$(id).onchange=e=>{if(e.target.matches('[data-all]'))rpVis(id).forEach(b=>b.checked=e.target.checked);rpSync(id)};$(id+'Q').oninput=()=>rpFind(id)});
 $('#rpClr').onclick=()=>{RP.f={codes:[],cust:[],mode:RP.f.mode};$('#dRp').close();rpDraw()};
-$('#rpGo').onclick=()=>{const sel=id=>[...$(id).selectedOptions].map(o=>o.value);
-  if($('#rpFrom').value&&$('#rpTo').value&&$('#rpFrom').value>$('#rpTo').value){toast('“Từ ngày” phải trước “Đến ngày”.');return}
-  RP.f={from:$('#rpFrom').value,to:$('#rpTo').value,sys:$('#rpSys').value,type:$('#rpTyp').value,fin:$('#rpFin').value,user:$('#rpUser').value,codes:sel('#rpCodes'),cust:sel('#rpCust'),mode:$('#rpMode').value};
+$('#rpGo').onclick=()=>{if($('#rpFrom').value&&$('#rpTo').value&&$('#rpFrom').value>$('#rpTo').value){toast('“Từ ngày” phải trước “Đến ngày”.');return}
+  RP.f={from:$('#rpFrom').value,to:$('#rpTo').value,sys:$('#rpSys').value,type:$('#rpTyp').value,fin:$('#rpFin').value,user:$('#rpUser').value,codes:rpPicked('#rpCodes'),cust:rpPicked('#rpCust'),mode:$('#rpMode').value};
   $('#dRp').close();rpDraw()};
 
 /* =================== PHÂN QUYỀN + DUYỆT PHIẾU + NHẬP KHO TỪ ẢNH =================== */
