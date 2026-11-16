@@ -1,0 +1,131 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lịch sử nguồn tiền</title>
+<style>
+*{box-sizing:border-box}body{font-family:system-ui,sans-serif;color:#172033;margin:0;padding:4px}h1{font-size:24px;margin:6px 0 2px}.mut{color:#5b6980;font-size:13px}
+.top{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}.k{background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:12px 14px}.k b{display:block;font-size:20px;margin-top:2px}
+.funds{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:0 0 10px}.fd{background:#f6f8fc;border:1px solid #e3e8f0;border-radius:12px;padding:10px 14px}.fd b{display:block;font-size:18px;margin:2px 0}
+@media(max-width:900px){.top{grid-template-columns:1fr 1fr}}@media(max-width:520px){.top{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid #e3e8f0;border-radius:14px;padding:14px}input,select,button,textarea{font:inherit;padding:8px 10px;border:1px solid #cfd8e6;border-radius:9px;background:#fff}
+button{font-weight:600;cursor:pointer}button.p{background:#1f5fd6;color:#fff;border-color:#1f5fd6}button.in{background:#16915f;color:#fff;border-color:#16915f}button.out{background:#d4472a;color:#fff;border-color:#d4472a}button.x{color:#d4472a}button.s{padding:3px 8px;font-size:12px}button:disabled{opacity:.6;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.row input,.row select{min-width:0}.row label{font-size:13px;color:#5b6980}.sp{flex:1}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:7px 6px;border-top:1px solid #eef1f6;text-align:left;vertical-align:top}th{color:#5b6980;font-size:12px;white-space:nowrap}.r{text-align:right;white-space:nowrap}
+.thu{color:#16915f;font-weight:700}.chi{color:#d4472a;font-weight:700}.bd{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:700}.bd.thu{background:#e4f6ee}.bd.chi{background:#fbe9e4}
+tr.vd td{color:#99a3b5;text-decoration:line-through}tr.vd td:last-child{text-decoration:none}
+dialog{border:0;border-radius:16px;padding:20px;width:min(560px,94vw);box-shadow:0 20px 60px rgba(20,30,60,.3)}dialog::backdrop{background:rgba(20,30,60,.45)}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;margin-top:10px}.dg .w2{grid-column:1/-1}@media(max-width:560px){.dg{grid-template-columns:1fr}}
+.f label{display:block;margin:6px 0;font-size:13px;color:#5b6980}.f input,.f textarea,.f select{width:100%}.hint{font-size:12.5px;margin:2px 0 6px}
+#msg{position:fixed;right:14px;bottom:14px;background:#172033;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:9}
+.fl{display:grid;grid-template-columns:1fr 150px;gap:8px;align-items:center;margin:6px 0}
+</style></head><body>
+<h1>Lịch sử nguồn tiền</h1><div class="mut">Theo dõi tiền vào – tiền ra của từng nguồn (tiền mặt, ngân hàng…). Tiền khách trả ở trang “Khách hàng &amp; công nợ” tự hiện ở đây thành phiếu thu.</div>
+<div class="top"><div class="k"><span class="mut">Tổng số dư các nguồn</span><b id="kBal">…</b></div><div class="k"><span class="mut">Tổng thu (theo bộ lọc)</span><b id="kIn" class="thu">…</b></div><div class="k"><span class="mut">Tổng chi (theo bộ lọc)</span><b id="kOut" class="chi">…</b></div><div class="k"><span class="mut">Chênh lệch thu − chi</span><b id="kNet">…</b></div></div>
+<div class="funds" id="funds"></div>
+<div class="card">
+ <div class="row"><button class="in" id="bThu" hidden>＋ Phiếu thu</button><button class="out" id="bChi" hidden>＋ Phiếu chi</button><button id="bFund" hidden>Nguồn tiền &amp; số dư đầu kỳ</button><span class="sp"></span><button id="bCsv">Xuất CSV</button></div>
+ <div class="row"><select id="fr"><option value="m">Tháng này</option><option value="pm">Tháng trước</option><option value="y">Năm nay</option><option value="all">Tất cả</option><option value="c">Tùy chọn…</option></select>
+  <input type="date" id="fFrom"><span class="mut">→</span><input type="date" id="fTo">
+  <select id="fKind"><option value="">Thu &amp; chi</option><option value="thu">Chỉ phiếu thu</option><option value="chi">Chỉ phiếu chi</option></select>
+  <select id="fFund"></select><input id="q" class="sp" placeholder="Tìm số phiếu, hạng mục, đối tượng, nội dung" style="min-width:200px"><label><input type="checkbox" id="fVoid"> Hiện phiếu đã hủy</label></div>
+ <div class="tw"><table><thead><tr><th>Ngày</th><th>Số phiếu</th><th>Loại</th><th>Nguồn tiền</th><th>Hạng mục</th><th>Đối tượng</th><th>Nội dung</th><th class="r">Số tiền</th><th></th></tr></thead><tbody id="tb"><tr><td colspan="9" class="mut">Đang tải…</td></tr></tbody></table></div>
+ <p class="mut" id="foot"></p>
+</div>
+
+<dialog id="dlg"><h2 id="dTitle" style="margin:0;font-size:20px"></h2><div class="f dg">
+ <label>Ngày<input type="date" id="v_date"></label><label>Số tiền (đ) *<input id="v_amount" inputmode="numeric" placeholder="VD: 5.000.000"></label>
+ <label>Nguồn tiền<select id="v_fund"></select></label><label>Hạng mục<input id="v_cat" list="catList" placeholder="VD: Mua hàng, Lương…"></label>
+ <label class="w2" id="v_partyLbl">Đối tượng<input id="v_party" list="custList" autocomplete="off"></label>
+ <div class="w2 hint" id="v_hint"></div>
+ <label class="w2">Nội dung / ghi chú<textarea id="v_note" rows="2"></textarea></label></div>
+ <datalist id="catList"></datalist><datalist id="custList"></datalist>
+ <p id="dErr" class="chi" style="margin:6px 0"></p><div style="text-align:right"><button type="button" id="dNo">Hủy bỏ</button> <button type="button" class="p" id="dOk">Lưu phiếu</button></div></dialog>
+
+<dialog id="fdlg"><h2 style="margin:0;font-size:20px">Nguồn tiền &amp; số dư đầu kỳ</h2><p class="mut">Số dư đầu kỳ là số tiền có sẵn trước khi bắt đầu ghi phiếu. Số dư hiện tại = đầu kỳ + tổng thu − tổng chi.</p><div class="f" id="fList"></div>
+ <div class="fl"><input id="nfName" placeholder="Thêm nguồn tiền mới (VD: Ví MoMo)"><input id="nfBal" inputmode="numeric" placeholder="Số dư đầu kỳ"></div>
+ <p id="fErr" class="chi" style="margin:6px 0"></p><div style="text-align:right"><button type="button" id="fNo">Đóng</button> <button type="button" class="p" id="fOk">Lưu</button></div></dialog>
+<div id="msg"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="nguon-tien"></script>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id),sb=window.HHH&&HHH.sb;if(!sb){document.body.innerHTML='Không kết nối được Supabase.';return}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Math.round(Number(n)||0).toLocaleString('vi-VN'),dd=d=>d?String(d).slice(0,10).split('-').reverse().join('/'):'—';
+const nrm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const num=s=>Number(String(s).replace(/[.\s]/g,'').replace(',','.'))||0;
+const role=(await sb.rpc('my_role')).data,boss=role==='admin'||role==='approver',canW=boss||role==='staff';
+const CAT={thu:['Thu tiền khách hàng','Thu khác','Vốn góp / vay vào','Rút tiền ngân hàng về quỹ'],chi:['Trả nhà cung cấp','Lương nhân viên','Vận chuyển','Điện nước, thuê kho','Chi phí khác','Hoàn tiền khách hàng','Nộp tiền vào ngân hàng']};
+let L=[],F=[],C=[],cmap={},kind='thu';
+const toast=m=>{const e=$('msg');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',3800)};
+async function all(t,sel,f){let a=[],i=0;for(;;){let q=sb.from(t).select(sel);if(f)q=f(q);const r=await q.range(i,i+999);if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;i+=1000}return a}
+const sgn=r=>r.kind==='thu'?1:-1;
+function fundNames(){const n=F.map(f=>f.name);L.forEach(r=>{if(r.fund&&!n.includes(r.fund))n.push(r.fund)});return n}
+async function load(){try{[L,F]=await Promise.all([all('cash_ledger','*',q=>q.order('d',{ascending:false}).order('created_at',{ascending:false}).order('row_key',{ascending:false})),all('cash_funds','*',q=>q.order('sort_no'))])}
+ catch(e){$('tb').innerHTML='<tr><td colspan="9" class="chi">Chưa tải được: '+esc(e.message)+'<br>Hãy chạy supabase-update-19.sql trong SQL Editor.</td></tr>';return}
+ const cur=$('fFund').value;$('fFund').innerHTML='<option value="">Mọi nguồn tiền</option>'+fundNames().map(n=>`<option${n===cur?' selected':''}>${esc(n)}</option>`).join('');draw()}
+function setRange(k){const t=new Date(),y=t.getFullYear(),m=t.getMonth();let a='',b='';
+ if(k==='m'){a=iso(new Date(y,m,1));b=iso(new Date(y,m+1,0))}else if(k==='pm'){a=iso(new Date(y,m-1,1));b=iso(new Date(y,m,0))}else if(k==='y'){a=y+'-01-01';b=y+'-12-31'}
+ if(k!=='c'){$('fFrom').value=a;$('fTo').value=b}}
+function view(){const a=$('fFrom').value,b=$('fTo').value,k=$('fKind').value,f=$('fFund').value,q=nrm($('q').value),sv=$('fVoid').checked;
+ return L.filter(r=>(sv||!r.voided_at)&&(!a||r.d>=a)&&(!b||r.d<=b)&&(!k||r.kind===k)&&(!f||r.fund===f)&&(!q||nrm([r.voucher_no,r.category,r.party,r.note,r.fund].join(' ')).includes(q)))}
+function draw(){const rows=view(),ok=rows.filter(r=>!r.voided_at);
+ const tin=ok.filter(r=>r.kind==='thu').reduce((a,r)=>a+ +r.amount,0),tout=ok.filter(r=>r.kind==='chi').reduce((a,r)=>a+ +r.amount,0);
+ const fb={};fundNames().forEach(n=>fb[n]={o:+(F.find(f=>f.name===n)||{}).opening_balance||0,i:0,u:0,pi:0,pu:0});
+ L.filter(r=>!r.voided_at&&fb[r.fund]).forEach(r=>{fb[r.fund][r.kind==='thu'?'i':'u']+=+r.amount});
+ ok.filter(r=>fb[r.fund]).forEach(r=>{fb[r.fund][r.kind==='thu'?'pi':'pu']+=+r.amount});
+ const tot=Object.values(fb).reduce((a,x)=>a+x.o+x.i-x.u,0);
+ $('kBal').textContent=fmt(tot)+' đ';$('kIn').textContent=fmt(tin)+' đ';$('kOut').textContent=fmt(tout)+' đ';
+ $('kNet').textContent=(tin-tout>0?'+':'')+fmt(tin-tout)+' đ';$('kNet').className=tin-tout>=0?'thu':'chi';
+ $('funds').innerHTML=Object.entries(fb).map(([n,x])=>{const b=x.o+x.i-x.u;return`<div class="fd"><span class="mut">${esc(n)}</span><b class="${b<0?'chi':''}">${fmt(b)} đ</b><span class="mut">Kỳ lọc: <span class="thu">+${fmt(x.pi)}</span> · <span class="chi">−${fmt(x.pu)}</span></span></div>`}).join('');
+ $('tb').innerHTML=rows.slice(0,500).map(r=>`<tr class="${r.voided_at?'vd':''}"><td>${dd(r.d)}</td><td>${esc(r.voucher_no)}</td><td><span class="bd ${r.kind}">${r.kind==='thu'?'Thu':'Chi'}</span></td><td>${esc(r.fund)}</td><td>${esc(r.category)}</td><td>${esc(r.party)}</td><td>${esc(r.note)}${r.src==='payment'?'<br><small class="mut">từ trang Khách hàng &amp; công nợ</small>':''}${r.voided_at?'<br><small>Đã hủy'+(r.void_reason?': '+esc(r.void_reason):'')+'</small>':''}</td><td class="r ${r.kind}">${r.kind==='thu'?'+':'−'}${fmt(r.amount)}</td><td class="r"><button class="s" data-pr="${esc(r.row_key)}">In</button>${boss&&r.src==='voucher'&&!r.voided_at?` <button class="s x" data-vd="${r.src_id}">Hủy</button>`:''}${r.src==='payment'?` <button class="s" data-kh="1">Mở</button>`:''}</td></tr>`).join('')||'<tr><td colspan="9" class="mut">Không có phiếu nào trong bộ lọc.</td></tr>';
+ $('foot').textContent=rows.length>500?`Đang hiện 500 / ${rows.length} dòng mới nhất, hãy thu hẹp bộ lọc để xem đủ.`:`${rows.length} dòng. Phiếu đã hủy không tính vào số dư.`}
+$('tb').onclick=async e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.pr)return printV(L.find(r=>r.row_key===b.dataset.pr));
+ if(b.dataset.kh){try{parent.location.hash='#/khach-hang'}catch(x){}return}
+ if(b.dataset.vd){const why=prompt('Lý do hủy phiếu (có thể để trống):');if(why===null)return;
+  const r=await sb.from('cash_vouchers').update({voided_at:new Date().toISOString(),void_reason:(why||'').trim()}).eq('id',b.dataset.vd);
+  if(r.error)return toast('Không hủy được: '+r.error.message);toast('Đã hủy phiếu');load()}};
+['fKind','fFund','fVoid'].forEach(i=>$(i).onchange=draw);$('q').oninput=draw;
+$('fr').onchange=()=>{setRange($('fr').value);draw()};$('fFrom').onchange=$('fTo').onchange=()=>{$('fr').value='c';draw()};
+/* ===== Lập phiếu ===== */
+async function loadCust(){if(C.length)return;try{C=await all('customers','id,name,phone',q=>q.order('id'))}catch(e){return}
+ cmap={};C.forEach(c=>{const k=c.name+(c.phone?' · '+c.phone:'');cmap[nrm(k)]=c});$('custList').innerHTML=C.map(c=>`<option value="${esc(c.name+(c.phone?' · '+c.phone:''))}">`).join('')}
+const custOf=()=>cmap[nrm($('v_party').value.trim())];
+function hint(){if(kind!=='thu'){$('v_hint').textContent='';return}const c=custOf();
+ $('v_hint').innerHTML=c?'<span class="thu">✓ Khớp khách hàng — sẽ ghi vào “Thanh toán” của khách và trừ công nợ.</span>':'<span class="mut">Nhập tên khách đã lưu để trừ công nợ; nhập tên khác thì chỉ lưu thành phiếu thu khác (không đổi công nợ).</span>';$('v_cat').disabled=!!c;if(c)$('v_cat').value='Thu tiền khách hàng'}
+async function openV(k){kind=k;$('dTitle').textContent=k==='thu'?'Lập phiếu thu':'Lập phiếu chi';$('v_partyLbl').firstChild.textContent=k==='thu'?'Người nộp / khách hàng':'Người nhận / nhà cung cấp';
+ $('v_date').value=iso(new Date());$('v_amount').value='';$('v_party').value='';$('v_note').value='';$('v_cat').value='';$('v_cat').disabled=false;$('dErr').textContent='';
+ $('v_fund').innerHTML=fundNames().map(n=>`<option>${esc(n)}</option>`).join('');$('catList').innerHTML=CAT[k].map(c=>`<option value="${esc(c)}">`).join('');
+ $('v_party').setAttribute('list',k==='thu'?'custList':'');$('dOk').className=k==='thu'?'in':'out';hint();$('dlg').showModal();$('v_amount').focus();if(k==='thu'){await loadCust();hint()}}
+$('bThu').onclick=()=>openV('thu');$('bChi').onclick=()=>openV('chi');$('dNo').onclick=()=>$('dlg').close();
+$('v_party').oninput=hint;$('v_amount').oninput=()=>{const n=num($('v_amount').value);if(n)$('v_amount').value=fmt(n)};
+$('dOk').onclick=async()=>{const amt=num($('v_amount').value),dt=$('v_date').value,fund=$('v_fund').value,party=$('v_party').value.trim(),note=$('v_note').value.trim(),cat=$('v_cat').value.trim();
+ if(!(amt>0))return $('dErr').textContent='Nhập số tiền lớn hơn 0.';if(!dt)return $('dErr').textContent='Chọn ngày lập phiếu.';
+ const c=kind==='thu'?custOf():null;if(!c&&!cat)return $('dErr').textContent='Nhập hạng mục (VD: '+CAT[kind][1]+').';
+ $('dOk').disabled=true;let r;
+ if(c)r=await sb.from('customer_payments').insert({customer_id:c.id,amount:amt,paid_at:dt,method:fund==='Ngân hàng'?'Chuyển khoản':fund,note});
+ else r=await sb.from('cash_vouchers').insert({kind,voucher_date:dt,amount:amt,fund,category:cat,party:c?c.name:party,note});
+ $('dOk').disabled=false;if(r.error)return $('dErr').textContent=/cash_vouchers|schema cache|does not exist/i.test(r.error.message)?'Chưa cập nhật CSDL: hãy chạy supabase-update-19.sql.':'Không lưu được: '+r.error.message;
+ $('dlg').close();toast(kind==='thu'?'Đã lập phiếu thu':'Đã lập phiếu chi');load()};
+/* ===== Nguồn tiền & số dư đầu kỳ ===== */
+function drawF(){$('fList').innerHTML=fundNames().map((n,i)=>`<div class="fl"><b>${esc(n)}</b><input data-fn="${esc(n)}" inputmode="numeric" value="${fmt((F.find(f=>f.name===n)||{}).opening_balance||0)}"></div>`).join('')}
+$('bFund').onclick=()=>{drawF();$('nfName').value=$('nfBal').value='';$('fErr').textContent='';$('fdlg').showModal()};$('fNo').onclick=()=>$('fdlg').close();
+$('fOk').onclick=async()=>{const rows=[...document.querySelectorAll('#fList input')].map((i,k)=>({name:i.dataset.fn,opening_balance:num(i.value),sort_no:(F.find(f=>f.name===i.dataset.fn)||{}).sort_no??100+k}));
+ const nn=$('nfName').value.trim();if(nn){if(rows.some(r=>nrm(r.name)===nrm(nn)))return $('fErr').textContent='Nguồn tiền này đã có.';rows.push({name:nn,opening_balance:num($('nfBal').value),sort_no:100+rows.length})}
+ const r=await sb.from('cash_funds').upsert(rows,{onConflict:'name'});if(r.error)return $('fErr').textContent='Không lưu được: '+r.error.message;
+ $('fdlg').close();toast('Đã lưu nguồn tiền');load()};
+/* ===== In phiếu + xuất CSV ===== */
+function words(n){n=Math.round(n);if(!n)return'Không đồng';const D=['không','một','hai','ba','bốn','năm','sáu','bảy','tám','chín'];
+ const g3=(x,full)=>{const h=Math.floor(x/100),t=Math.floor(x%100/10),u=x%10;let s=(h||full)?D[h]+' trăm':'';
+  if(t>1)s+=' '+D[t]+' mươi'+(u===1?' mốt':u===4?' tư':u===5?' lăm':u?' '+D[u]:'');else if(t===1)s+=' mười'+(u===5?' lăm':u?' '+D[u]:'');else if(u)s+=((h||full)?' lẻ':'')+' '+D[u];return s.trim()};
+ const g=[];while(n>0){g.unshift(n%1000);n=Math.floor(n/1000)}const U=['','nghìn','triệu','tỷ'],out=[];let first=true;
+ g.forEach((x,i)=>{if(!x)return;const p=g.length-1-i;out.push(g3(x,!first)+(U[p%4]?' '+U[p%4]:''));first=false});
+ const s=out.join(' ')+' đồng';return s[0].toUpperCase()+s.slice(1)}
+function printV(r){if(!r)return;const w=window.open('','_blank');if(!w)return toast('Trình duyệt chặn cửa sổ in');const T=r.kind==='thu';
+ w.document.write(`<meta charset="utf-8"><title>${esc(r.voucher_no)}</title><style>body{font-family:system-ui;padding:28px;max-width:720px;margin:auto}h2{text-align:center;margin:14px 0 2px}.c{text-align:center}td{padding:5px 0;vertical-align:top}.s{display:flex;justify-content:space-around;margin-top:36px;text-align:center}</style><b>CÔNG TY TNHH KINH DOANH TỔNG HỢP HẢI HÀ HƯNG</b><h2>PHIẾU ${T?'THU':'CHI'}</h2><div class="c">Số: <b>${esc(r.voucher_no)}</b> · Ngày ${dd(r.d)}</div><table style="margin-top:16px;width:100%"><tr><td width="170">${T?'Người nộp tiền':'Người nhận tiền'}:</td><td><b>${esc(r.party||'')}</b></td></tr><tr><td>Hạng mục:</td><td>${esc(r.category)}</td></tr><tr><td>Nội dung:</td><td>${esc(r.note)}</td></tr><tr><td>Nguồn tiền:</td><td>${esc(r.fund)}</td></tr><tr><td>Số tiền:</td><td><b style="font-size:18px">${fmt(r.amount)} đ</b></td></tr><tr><td>Bằng chữ:</td><td><i>${esc(words(r.amount))}</i></td></tr></table><div class="s"><div>Người lập phiếu<br><br><br>${esc(r.created_by||'')}</div><div>${T?'Người nộp tiền':'Người nhận tiền'}<br><br><br></div><div>Giám đốc / Kế toán<br><br><br></div></div><script>setTimeout(()=>print(),300)<\/script>`);w.document.close()}
+$('bCsv').onclick=()=>{const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',rows=view();
+ const h=['Ngày','Số phiếu','Loại','Nguồn tiền','Hạng mục','Đối tượng','Nội dung','Số tiền','Trạng thái'];
+ const csv='\ufeff'+[h,...rows.map(r=>[dd(r.d),r.voucher_no,r.kind==='thu'?'Thu':'Chi',r.fund,r.category,r.party,r.note,(r.kind==='thu'?'':'-')+Math.round(r.amount),r.voided_at?'Đã hủy':''])].map(a=>a.map(q).join(',')).join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='nguon-tien-'+iso(new Date())+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$('bThu').hidden=$('bChi').hidden=!canW;$('bFund').hidden=!boss;
+setRange('m');load();
+})();
+</script></body></html>
