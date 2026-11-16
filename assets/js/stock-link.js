@@ -4,7 +4,7 @@ const sb=H.sb,$=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nrm=s=>String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/[^a-z0-9]/g,'');
 const fmt=n=>Number(n).toLocaleString('vi-VN',{maximumFractionDigits:2});
-async function loadItems(){let a=[],f=0;for(;;){const r=await sb.from('items').select('id,code,name,fin,qty,unit').order('code').range(f,f+999);if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;f+=1000}return a}
+async function loadItems(){let a=[],f=0;for(;;){let r=await sb.from('items').select('id,code,name,fin,qty,unit').eq('track_stock',true).order('code').range(f,f+999);if(r.error&&/track_stock/.test(r.error.message))r=await sb.from('items').select('id,code,name,fin,qty,unit').order('code').range(f,f+999);if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;f+=1000}return a}
 /* Đơn vị bán: báo giá có thể bán theo hộp/bộ… còn kho tính theo đơn vị kho (items.unit). Bảng quy đổi: item_units (supabase-update-15.sql).
    f = số đơn vị kho trên 1 đơn vị báo giá; null = chưa biết quy đổi. */
 let IU={};

@@ -26,7 +26,7 @@ const role=(await sb.rpc('my_role')).data;
 if(role!=='admin'){$('who').innerHTML='<span class="bad">Chỉ tài khoản admin được khôi phục dữ liệu.</span>';return}
 $('who').textContent='Chọn file sao lưu (.json):';$('file').disabled=false;
 /* thứ tự nạp: bảng cha trước, bảng con sau */
-const ORDER=['suppliers','items','catalog_aluminum','catalog_accessories','customers','app_settings','requests','movements','order_exports','offcuts','stocktake_sessions','stocktake_session_lines','quotes','customer_payments','user_roles'];
+const ORDER=['suppliers','items','customers','app_settings','requests','movements','order_exports','offcuts','stocktake_sessions','stocktake_session_lines','quotes','customer_payments','user_roles'];
 let data=null;
 $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;
  try{data=JSON.parse(await f.text());if(!data||data.app!=='hai-ha-hung'||!data.tables)throw 0}catch{$('info').innerHTML='<p class="bad">Đây không phải file sao lưu của hệ thống này.</p>';$('opt').hidden=true;return}

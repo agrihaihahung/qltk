@@ -14,7 +14,7 @@ button.p{background:#1f5fd6;color:#fff;border-color:#1f5fd6}button:disabled{opac
 <script>
 (async()=>{
 const $=id=>document.getElementById(id),sb=window.HHH&&HHH.sb;
-const TABLES=['items','movements','requests','order_exports','offcuts','suppliers','stocktake_sessions','stocktake_session_lines','app_settings','user_roles','quotes','customers','customer_payments','catalog_aluminum','catalog_accessories'];
+const TABLES=['items','movements','requests','order_exports','offcuts','suppliers','stocktake_sessions','stocktake_session_lines','app_settings','user_roles','quotes','customers','customer_payments'];  /* danh mục nhôm / phụ kiện nay nằm trong bảng items (supabase-update-21.sql) */
 const LK='hhh_last_backup';const showLast=()=>{const t=localStorage.getItem(LK);$('last').textContent=t?'Lần sao lưu gần nhất trên máy này: '+new Date(t).toLocaleString('vi-VN'):'Máy này chưa sao lưu lần nào.'};showLast();
 if(!sb){$('who').textContent='Không kết nối được Supabase.';return}
 const role=(await sb.rpc('my_role')).data;

@@ -1,0 +1,96 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Danh mục sản phẩm</title>
+<style>
+*{box-sizing:border-box}body{font-family:system-ui,sans-serif;color:#172033;margin:0;padding:4px}h1{font-size:24px;margin:6px 0 2px}.mut{color:#5b6980;font-size:13px}
+.top{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}.k{background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:12px 14px;cursor:pointer}.k.on{border-color:#1f5fd6;background:#f3f7ff}.k b{display:block;font-size:20px;margin-top:2px}
+@media(max-width:800px){.top{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid #e3e8f0;border-radius:14px;padding:14px}input,select,button,textarea{font:inherit;padding:8px 10px;border:1px solid #cfd8e6;border-radius:9px;background:#fff}
+button{font-weight:600;cursor:pointer}button.p{background:#1f5fd6;color:#fff;border-color:#1f5fd6}button.x{color:#d4472a}button.s{padding:3px 8px;font-size:12px}button:disabled{opacity:.6}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.sp{flex:1;min-width:200px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:7px 6px;border-top:1px solid #eef1f6;text-align:left;vertical-align:top}th{color:#5b6980;font-size:12px;white-space:nowrap}.r{text-align:right;white-space:nowrap}
+.bd{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11.5px;font-weight:700;margin:1px 2px 1px 0}.b1{background:#e4f6ee;color:#16915f}.b2{background:#eef1f6;color:#5b6980}.b3{background:#fff3dc;color:#b7791f}.b4{background:#e8f0fe;color:#1f5fd6}
+dialog{border:0;border-radius:16px;padding:20px;width:min(680px,95vw);box-shadow:0 20px 60px rgba(20,30,60,.3)}dialog::backdrop{background:rgba(20,30,60,.45)}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;margin-top:10px}.dg .w2{grid-column:1/-1}@media(max-width:560px){.dg{grid-template-columns:1fr}}
+.f label{display:block;margin:6px 0;font-size:13px;color:#5b6980}.f input,.f select{width:100%}.f input[type=checkbox]{width:auto}.f input[readonly]{background:#f3f5f9}.f h3{margin:12px 0 0;font-size:14px;color:#172033}
+#msg{position:fixed;right:14px;bottom:14px;background:#172033;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:9}.chi{color:#d4472a}
+</style></head><body>
+<h1>Danh mục sản phẩm</h1><div class="mut">Một bảng duy nhất cho kho và báo giá: mỗi sản phẩm có mã, hệ, màu, kg, giá bán và (nếu quản lý tồn kho) số lượng tồn. Thêm mã ở đây hoặc ở trang Kho đều xuất hiện trong báo giá.</div>
+<div class="top"><div class="k on" data-sc="all"><span class="mut">Tất cả sản phẩm</span><b id="kAll">…</b></div><div class="k" data-sc="stock"><span class="mut">Đang quản lý tồn kho</span><b id="kStock">…</b></div><div class="k" data-sc="quote"><span class="mut">Chỉ có trong báo giá</span><b id="kQuote">…</b></div><div class="k" data-sc="review"><span class="mut">Cần xem lại giá / thông tin</span><b id="kRev" style="color:#b7791f">…</b></div></div>
+<div class="card">
+ <div class="row"><input id="q" class="sp" placeholder="Tìm mã, tên, hệ, màu"><select id="fKind"><option value="">Mọi loại bán</option><option value="aluminum">Nhôm</option><option value="accessory">Phụ kiện</option><option value="none">Không bán qua báo giá</option></select><select id="fBrand"></select><select id="fSys"></select><button class="p" id="bAdd" hidden>＋ Thêm sản phẩm</button></div>
+ <div class="tw"><table><thead><tr><th>Mã</th><th>Tên</th><th>Hệ / nhóm</th><th>Màu</th><th>ĐVT</th><th class="r">Kg/thanh</th><th class="r">Giá bán</th><th class="r">Tồn kho</th><th>Trạng thái</th><th></th></tr></thead><tbody id="tb"><tr><td colspan="10" class="mut">Đang tải…</td></tr></tbody></table></div>
+ <div class="row"><button id="pPrev">← Trước</button><span class="mut" id="pInfo"></span><button id="pNext">Sau →</button></div>
+</div>
+<dialog id="dlg"><h2 id="dTitle" style="margin:0;font-size:20px"></h2><div class="f dg">
+ <label>Mã sản phẩm *<input id="e_code"></label><label>Loại trong kho<select id="e_type"></select></label>
+ <label class="w2">Tên sản phẩm *<input id="e_name"></label>
+ <label>Màu / hoàn thiện<input id="e_fin"></label><label>Đơn vị kho<select id="e_unit"></select></label>
+ <div class="w2 mut" id="e_lock"></div>
+ <h3 class="w2">Bán qua báo giá</h3>
+ <label>Hiện trong báo giá là<select id="e_kind"><option value="aluminum">Nhôm thanh</option><option value="accessory">Phụ kiện</option><option value="none">Không bán qua báo giá</option></select></label><label>Đơn giá bán (đ)<input id="e_price" inputmode="numeric"></label>
+ <label>Hãng<input id="e_brand" list="brandList" placeholder="VD: Trường Thành"></label><datalist id="brandList"></datalist><label>Hệ nhôm / hệ phụ kiện<input id="e_system"></label><label id="e_wl">Khối lượng (kg / thanh)<input id="e_weight" inputmode="decimal"></label><label id="e_gl">Nhóm phụ kiện<input id="e_grp"></label>
+ <label class="w2"><input type="checkbox" id="e_review"> Cần xem lại (giá bán / hệ / kg chưa chính xác)</label>
+ <label class="w2"><input type="checkbox" id="e_track"> Quản lý tồn kho (nhập – xuất – kiểm kê)</label>
+ <h3 class="w2">Hiển thị trên báo giá <span class="mut" style="font-weight:400">(để trống = dùng như kho)</span></h3>
+ <label>Mã trên báo giá<input id="e_qcode"></label><label>Đơn vị trên báo giá<input id="e_qunit" placeholder="VD: Thanh"></label>
+ <label>Tên trên báo giá<input id="e_qname"></label><label>Màu trên báo giá<input id="e_qcolor"></label></div>
+ <p id="dErr" class="chi" style="margin:6px 0"></p><div style="display:flex;gap:8px"><button type="button" class="x" id="dDel" hidden>Xóa</button><span class="sp"></span><button type="button" id="dNo">Đóng</button><button type="button" class="p" id="dOk">Lưu</button></div></dialog>
+<div id="msg"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script src="../../config.js"></script><script src="../../assets/js/bridge.js" data-route="san-pham"></script>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id),sb=window.HHH&&HHH.sb;if(!sb){document.body.innerHTML='Không kết nối được Supabase.';return}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>(Number(n)||0).toLocaleString('vi-VN',{maximumFractionDigits:2});
+const nrm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const num=s=>Number(String(s).replace(/\./g,'').replace(',','.'))||0;
+const role=(await sb.rpc('my_role')).data,boss=role==='admin'||role==='approver';
+const TYPES=['Thanh định hình','Tấm nhôm','Cuộn nhôm','Ống nhôm','Phụ kiện'],UNITS=['thanh','cây','chiếc','cái','bộ','cặp','tấm','cuộn','kg','m','m2','hộp','thùng','túi','gói','bao','vỉ'];
+const KIND={aluminum:'Nhôm',accessory:'Phụ kiện',none:'Không bán'},PG=100;
+let COLS='id,code,name,type,fin,unit,qty,track_stock,catalog_kind,brand,system,grp,weight_kg,sale_price,needs_review,q_code,q_name,q_unit,q_color',NB=false;
+let A=[],sc='all',pg=0,cur=null;
+const toast=m=>{const e=$('msg');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',4200)};
+async function load(){let a=[],f=0;try{for(;;){const r=await sb.from('items').select(COLS).order('code').range(f,f+999);if(r.error)throw r.error;a=a.concat(r.data);if(r.data.length<1000)break;f+=1000}}
+ catch(e){if(!NB&&/brand/.test(e.message)){NB=true;COLS=COLS.replace('brand,','');$('fBrand').hidden=true;$('e_brand').parentElement.hidden=true;return load()} /* chưa chạy supabase-update-22.sql */
+  $('tb').innerHTML='<tr><td colspan="10" class="chi">Chưa tải được: '+esc(e.message)+'<br>Hãy chạy supabase-update-21.sql trong SQL Editor.</td></tr>';return}
+ A=a.map(x=>({brand:'',...x}));const cb=$('fBrand').value,bs=[...new Set(A.map(x=>x.brand).filter(Boolean))].sort((x,y)=>x.localeCompare(y,'vi'));$('fBrand').innerHTML='<option value="">Mọi hãng</option>'+bs.map(n=>`<option${n===cb?' selected':''}>${esc(n)}</option>`).join('')+(bs.length?'<option value="__none"'+(cb==='__none'?' selected':'')+'>(chưa ghi hãng)</option>':'');$('brandList').innerHTML=bs.map(n=>`<option value="${esc(n)}">`).join('');const cs=$('fSys').value;$('fSys').innerHTML='<option value="">Mọi hệ / nhóm</option>'+[...new Set(A.map(x=>x.system).filter(Boolean))].sort((x,y)=>x.localeCompare(y,'vi')).map(n=>`<option${n===cs?' selected':''}>${esc(n)}</option>`).join('');draw()}
+const view=()=>{const q=nrm($('q').value),k=$('fKind').value,sy=$('fSys').value,br=$('fBrand').value;
+ return A.filter(x=>(sc==='all'||(sc==='stock'&&x.track_stock)||(sc==='quote'&&!x.track_stock)||(sc==='review'&&x.needs_review))&&(!k||x.catalog_kind===k)&&(!sy||x.system===sy)&&(!br||(br==='__none'?!x.brand:x.brand===br))&&(!q||nrm([x.code,x.q_code,x.name,x.q_name,x.brand,x.system,x.grp,x.fin,x.q_color].join(' ')).includes(q)))};
+function draw(){$('kAll').textContent=fmt(A.length);$('kStock').textContent=fmt(A.filter(x=>x.track_stock).length);$('kQuote').textContent=fmt(A.filter(x=>!x.track_stock).length);$('kRev').textContent=fmt(A.filter(x=>x.needs_review).length);
+ document.querySelectorAll('.k').forEach(e=>e.classList.toggle('on',e.dataset.sc===sc));
+ const v=view(),pages=Math.max(1,Math.ceil(v.length/PG));if(pg>=pages)pg=pages-1;
+ $('tb').innerHTML=v.slice(pg*PG,pg*PG+PG).map(x=>`<tr><td><b>${esc(x.code)}</b>${x.q_code?`<br><small class="mut">báo giá: ${esc(x.q_code)}</small>`:''}</td><td>${esc(x.name)}${x.q_name?`<br><small class="mut">báo giá: ${esc(x.q_name)}</small>`:''}</td><td>${esc(x.system)}${x.brand?'<br><small class="mut">'+esc(x.brand)+'</small>':''}${x.grp?'<br><small class="mut">'+esc(x.grp)+'</small>':''}</td><td>${esc(x.q_color||x.fin)}</td><td>${esc(x.q_unit||x.unit)}</td><td class="r">${x.catalog_kind==='aluminum'?fmt(x.weight_kg):''}</td><td class="r">${x.catalog_kind==='none'||!x.catalog_kind?'':fmt(x.sale_price)}</td><td class="r">${x.track_stock?fmt(x.qty)+' '+esc(x.unit):'—'}</td><td>${x.track_stock?'<span class="bd b1">Tồn kho</span>':'<span class="bd b2">Chỉ báo giá</span>'}<span class="bd b4">${KIND[x.catalog_kind]||'—'}</span>${x.needs_review?'<span class="bd b3">Cần xem lại</span>':''}</td><td>${boss?`<button class="s" data-id="${x.id}">Sửa</button>`:''}</td></tr>`).join('')||'<tr><td colspan="10" class="mut">Không có sản phẩm phù hợp.</td></tr>';
+ $('pInfo').textContent=`${fmt(v.length)} sản phẩm · trang ${pg+1}/${pages}`;$('pPrev').disabled=pg<=0;$('pNext').disabled=pg>=pages-1}
+document.querySelector('.top').onclick=e=>{const k=e.target.closest('.k');if(k){sc=k.dataset.sc;pg=0;draw()}};
+$('q').oninput=$('fKind').onchange=$('fSys').onchange=$('fBrand').onchange=()=>{pg=0;draw()};$('pPrev').onclick=()=>{pg--;draw()};$('pNext').onclick=()=>{pg++;draw()};
+$('tb').onclick=e=>{const b=e.target.closest('button[data-id]');if(b)openE(A.find(x=>String(x.id)===b.dataset.id))};
+$('e_type').innerHTML=TYPES.map(t=>`<option>${t}</option>`).join('');$('e_unit').innerHTML=UNITS.map(t=>`<option>${t}</option>`).join('');
+const kindUI=()=>{const k=$('e_kind').value;$('e_wl').hidden=k!=='aluminum';$('e_gl').hidden=k!=='accessory'};$('e_kind').onchange=kindUI;
+function openE(x){cur=x||null;const t=!!(x&&x.track_stock);$('dTitle').textContent=x?'Sửa sản phẩm':'Thêm sản phẩm';$('dErr').textContent='';
+ const set=(i,v)=>{if($(i).tagName==='SELECT'&&v&&![...$(i).options].some(o=>o.value===v))$(i).add(new Option(v,v));$(i).value=v==null?'':v};
+ set('e_code',x&&x.code);set('e_name',x&&x.name);set('e_type',x?x.type:'Thanh định hình');set('e_fin',x&&x.fin);set('e_unit',x?x.unit:'thanh');
+ set('e_kind',x?x.catalog_kind||'aluminum':'aluminum');set('e_price',x?fmt(x.sale_price):'');set('e_brand',x&&x.brand);set('e_system',x&&x.system);set('e_weight',x?x.weight_kg:'');set('e_grp',x&&x.grp);
+ $('e_review').checked=x?!!x.needs_review:true;$('e_track').checked=x?!!x.track_stock:false;
+ set('e_qcode',x&&x.q_code);set('e_qunit',x&&x.q_unit);set('e_qname',x&&x.q_name);set('e_qcolor',x&&x.q_color);
+ ['e_code','e_name','e_fin'].forEach(i=>$(i).readOnly=t);['e_type','e_unit'].forEach(i=>$(i).disabled=t);
+ $('e_lock').textContent=t?'Mã, tên, loại, màu, đơn vị của hàng đang quản lý tồn kho chỉ sửa ở trang Kho (để ghi nhật ký). Tồn: '+fmt(x.qty)+' '+x.unit+'.':'';
+ $('dDel').hidden=!(x&&!t);kindUI();$('dlg').showModal()}
+$('bAdd').onclick=()=>openE(null);$('bAdd').hidden=!boss;$('dNo').onclick=()=>$('dlg').close();
+$('e_price').oninput=()=>{const n=num($('e_price').value);if(n)$('e_price').value=fmt(n)};
+$('dOk').onclick=async()=>{const v=i=>$(i).value.trim(),kind=v('e_kind'),track=$('e_track').checked;
+ const code=v('e_code'),name=v('e_name');if(!code||!name)return $('dErr').textContent='Nhập mã và tên sản phẩm.';
+ if(cur&&cur.track_stock&&!track&&Number(cur.qty)!==0)return $('dErr').textContent='Còn tồn '+fmt(cur.qty)+' '+cur.unit+': xuất / điều chỉnh về 0 ở trang Kho trước khi tắt quản lý tồn kho.';
+ const row={catalog_kind:kind,sale_price:num(v('e_price')),brand:v('e_brand'),system:v('e_system'),weight_kg:kind==='aluminum'?(parseFloat(v('e_weight').replace(',','.'))||0):0,grp:kind==='accessory'?v('e_grp'):'',needs_review:$('e_review').checked,track_stock:track,
+  q_code:v('e_qcode')||null,q_unit:v('e_qunit')||null,q_name:v('e_qname')||null,q_color:v('e_qcolor')||null};
+ if(!cur||!cur.track_stock)Object.assign(row,{code,name,type:v('e_type'),fin:v('e_fin'),unit:$('e_unit').value});
+ $('dOk').disabled=true;let r;
+ if(cur)r=await sb.from('items').update(row).eq('id',cur.id).select('id').single();
+ else r=await sb.from('items').insert({...row,spec:'',qty:0,min_qty:0,price:0,loc:''}).select('id').single();
+ $('dOk').disabled=false;
+ if(r.error)return $('dErr').textContent=r.error.code==='23505'?'Mã (và màu) này đã tồn tại.':'Không lưu được: '+r.error.message;
+ if(track&&(!cur||!cur.track_stock))await sb.from('movements').insert({item_id:r.data.id,code,name,kind:'new',qty:0,note:'Bắt đầu quản lý tồn kho'});
+ $('dlg').close();toast('Đã lưu sản phẩm');load()};
+$('dDel').onclick=async()=>{if(!cur||cur.track_stock||!confirm('Xóa sản phẩm "'+cur.code+'" khỏi danh mục? Báo giá cũ đã lưu không bị ảnh hưởng.'))return;
+ const r=await sb.from('items').delete().eq('id',cur.id);if(r.error)return $('dErr').textContent='Không xóa được: '+r.error.message;$('dlg').close();toast('Đã xóa');load()};
+load();
+})();
+</script></body></html>
