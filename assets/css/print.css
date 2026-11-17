@@ -258,3 +258,15 @@ body { font-size: 11px; line-height: 1.35; }
 #accessoryTable:not(.has-item-discounts) th:nth-child(6), #accessoryTable:not(.has-item-discounts) td:nth-child(6) { width:4% !important; }
 #accessoryTable:not(.has-item-discounts) th:nth-child(7), #accessoryTable:not(.has-item-discounts) td:nth-child(7) { width:14% !important; }
 #accessoryTable:not(.has-item-discounts) th:nth-child(8), #accessoryTable:not(.has-item-discounts) td:nth-child(8) { width:17% !important; }
+
+/* ===== QR thanh toán (cột thứ 3 của bottom-grid) ===== */
+.amount-words strong{text-transform:none!important}
+.bottom-grid.has-payment{grid-template-columns:.7fr 44mm 1.1fr}
+.payment-card{border:1px solid var(--line);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 6px 6px;break-inside:avoid}
+.payment-card .section-label{align-self:stretch;margin:0 -6px 5px}
+.payment-card img.qr{width:29mm;height:29mm;object-fit:contain}
+.payment-info{font-size:8px;line-height:1.35;color:var(--ink);margin-top:3px}
+.payment-info b{display:block;color:var(--navy);font-size:8.5px}
+.payment-info .acc{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--navy)}
+.payment-info .name{font-size:7.5px;color:var(--muted)}
+@media screen and (max-width:900px){.bottom-grid.has-payment{grid-template-columns:1fr}}

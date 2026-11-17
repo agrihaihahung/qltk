@@ -7,9 +7,9 @@
   function numberWords(n) {
     if (!n) return 'Không đồng';
     const digits=['không','một','hai','ba','bốn','năm','sáu','bảy','tám','chín'];
-    const read3=x=>{let s='',h=Math.floor(x/100),t=Math.floor(x%100/10),u=x%10;if(h)s+=digits[h]+' trăm';else if(t||u)s+='không trăm';if(t>1)s+=' '+digits[t]+' mươi';else if(t===1)s+=' mười';else if(u&&h)s+=' lẻ';if(u){if(t>1&&u===1)s+=' mốt';else if(t>0&&u===5)s+=' lăm';else s+=' '+digits[u]}return s.trim()};
+    const read3=(x,lead)=>{let s='',h=Math.floor(x/100),t=Math.floor(x%100/10),u=x%10;if(h)s+=digits[h]+' trăm';else if(!lead&&(t||u))s+='không trăm';if(t>1)s+=' '+digits[t]+' mươi';else if(t===1)s+=' mười';else if(u&&(h||!lead))s+=' lẻ';if(u){if(t>1&&u===1)s+=' mốt';else if(t>0&&u===5)s+=' lăm';else s+=' '+digits[u]}return s.trim()};
     const units=['',' nghìn',' triệu',' tỷ',' nghìn tỷ',' triệu tỷ'];let groups=[];while(n>0){groups.unshift(n%1000);n=Math.floor(n/1000)}
-    return groups.map((g,i)=>g?read3(g)+(units[groups.length-i-1]||''):'').filter(Boolean).join(' ').replace(/\s+/g,' ').trim()+' đồng';
+    return groups.map((g,i)=>g?read3(g,i===0)+(units[groups.length-i-1]||''):'').filter(Boolean).join(' ').replace(/\s+/g,' ').trim().replace(/^./,c=>c.toUpperCase())+' đồng';
   }
   function getPayload() {
     try {
@@ -94,6 +94,11 @@
     set('vatAmount',money(vat));set('grandTotal',money(grand));set('amountWords',numberWords(Math.round(grand)));
   }
   $('printBtn').addEventListener('click',()=>window.print());
-  $('backBtn').addEventListener('click',()=>history.back());
+  $('backBtn').addEventListener('click',()=>{
+    // Trang in thường mở bằng tab mới nên không có lịch sử để quay lại.
+    if(window.history.length>1){history.back();return;}
+    window.close();
+    setTimeout(()=>{ if(document.referrer) location.href=document.referrer; else location.href='../../index.html'; },200);
+  });
   window.addEventListener('load',init);
 })();
