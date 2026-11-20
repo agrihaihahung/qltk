@@ -8,17 +8,16 @@
 - Danh mục nhôm, phụ kiện, khách hàng nằm trong Supabase (`catalog_aluminum`, `catalog_accessories`, `customers`); `bridge.js` tự nạp, không còn file JSON công khai.
 - `assets/js/stock-link.js`: nút "Tồn kho / Xuất kho" trong trang báo giá (đối chiếu `items`, tạo phiếu qua `submit_request`).
 
-Tuyến: dash, stock, low, po, count, dc, log, rpt, req, usr, bao-gia, ve-bao-gia, lich-su, danh-muc-nhom, phu-kien, khach-hang, nguon-tien, cskh.
+Tuyến: dash, stock, low, po, count, dc, log, rpt, req, usr, bao-gia, lich-su, danh-muc-nhom, phu-kien, khach-hang, nguon-tien.
 Đăng nhập Cloudflare cũ (`functions/`, `login/`) đã bỏ vì dùng chung tài khoản Supabase.
 - `sites/sao-luu`, `sites/khoi-phuc`: tải file sao lưu .json, và tạo SQL khôi phục từ file đó (chạy trong SQL Editor).
 
 ## CSKH (chăm sóc khách hàng / telesale) và vai trò CTV
-- `sites/cskh/index.html`: trang CSKH nằm trong nhóm **Kinh doanh** (tuyến `#/cskh`).
   - Ghi nhận mỗi lần tương tác: kênh, thời điểm, liên hệ được hay không, kết quả, tín hiệu (nóng/ấm/lạnh), nội dung, **nhắc chăm sóc lại sau N ngày**. Người chăm sóc do server tự gán theo tài khoản đăng nhập.
   - Tab khách: Cần gọi (đến hạn + quá hạn) · Sắp tới · Chưa chăm sóc · Chưa hẹn lại · Tất cả; lọc "nhắc hẹn do tôi đặt"; nút gọi `tel:` trên điện thoại.
   - Tab "Nhật ký chăm sóc": lọc theo ngày / nhân viên / kết quả, kèm bảng tổng hợp theo nhân viên.
 - `supabase/supabase-update-10.sql` (chạy SAU update-9): bảng `crm_interactions`, view `crm_customer_list` (không có công nợ), hàm `crm_add_customer`, `crm_dismiss_followup`, vai trò `ctv`.
-- Vai trò **ctv** (Cộng tác viên) là thấp nhất: giao diện chỉ còn mục CSKH, mọi tuyến khác tự đưa về `#/cskh`. Ở database, policy `ctv_block` (restrictive) chặn ctv đọc/ghi mọi bảng nghiệp vụ khác, nên gõ tay URL hoặc gọi API trực tiếp cũng không lấy được dữ liệu kho, báo giá, công nợ.
+- Vai trò **ctv** (Cộng tác viên CSKH) không còn trang nào sau khi bỏ mục CSKH: giao diện chỉ hiện thông báo; ở database policy `ctv_block` vẫn chặn đọc/ghi các bảng nghiệp vụ.
 - Quyền trong CSKH: admin/quản lý duyệt xem + ghi + xóa mọi bản ghi; nhân viên kho và ctv xem + ghi, xóa bản ghi của mình trong 24 giờ; chỉ xem thì chỉ đọc.
 - Cấp quyền: trang **Người dùng** (admin) → đổi vai trò thành "Cộng tác viên (chỉ CSKH)".
 - **Đặc điểm tương thích** (nút cạnh "Ghi nhận tương tác"): bản tóm tắt đặc điểm từng khách do admin biên soạn (bảng `crm_profiles`, `supabase-update-11.sql`). Chỉ admin sửa được (chặn ở database); CTV và vai trò khác chỉ xem. Nút có chấm xanh khi khách đã có nội dung.
@@ -94,3 +93,5 @@ Thứ tự triển khai: (1) chạy `supabase-update-15.sql` trong SQL Editor; (
 ## Thêm danh mục theo hãng (supabase-update-22.sql, chạy SAU update-21)
 - Cột `items.brand` (hãng) + ô lọc "Hãng" ở trang Danh mục sản phẩm. update-22 nạp 71 mã nhôm **Trường Thành** (hệ TTLY2_ 1.2mm, TTLY4_ 1.4mm, TTLY8_ 1.8mm, TT2LY_ 2.0mm; giá 125.000 đ/kg), loại "chỉ có trong báo giá". Nhập kho đúng mã (VD `TTLY2_CC3328`) thì tự bật quản lý tồn kho cho dòng đó.
 - Thêm hãng khác: tạo file SQL tương tự (insert vào `items` với `catalog_kind='aluminum'`, `track_stock=false`, `brand='<hãng>'`), hoặc thêm tay ở trang Danh mục sản phẩm.
+
+- Đề xuất đặt hàng: bộ lọc (tìm kiếm, loại, hệ nhôm, màu, tình trạng, nhà cung cấp), mặc định chưa tick mã nào; nút **Tạo đơn đặt hàng** lưu vào bảng `purchase_orders` (supabase-update-23.sql) và mở trang in A4; thẻ **Đơn đã tạo** xem lại, in lại, đổi trạng thái.

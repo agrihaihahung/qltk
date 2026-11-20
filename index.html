@@ -228,12 +228,12 @@ tr.void td{color:#9aa9bc}tr.void .n2,tr.void td.num{text-decoration:line-through
 .hb{margin:0 0 12px}.hb div.t{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}.hb .bar{height:9px;background:#e6eef8;border-radius:5px;overflow:hidden}.hb .bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
 .pog{border-top:1px solid var(--line)}.pog:first-child{border-top:0}
 .pog-h{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px;background:#fafbfd}
-.pog-h small{display:block;color:var(--mute);font-size:12.5px}
+.pog-h small{display:block;color:var(--mute);font-size:12.5px}.pofil{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--line)}.pofil input[type=search]{min-width:220px;flex:1 1 220px}.pofil select{max-width:210px}.po-sel{color:var(--accent);font-weight:600}.po-open{color:var(--warn);font-weight:600}
 @media (max-width:900px){.dgrid{grid-template-columns:1fr}}
 .tag.pend{background:var(--amberbg);color:var(--amber)}
 body:not(.boss) #rows [data-a="edit"],body:not(.boss) #imp,body:not(.boss) #add,body:not(.boss) #remSet,body:not(.boss) [data-rem],body:not(.boss) #cDone,body:not(.boss) #lgBody button[data-i]{display:none!important}
 body.viewer #rows [data-a="in"],body.viewer #rows [data-a="out"],body.viewer #ord,body.viewer #inImg,body.viewer #dcAdd,body.viewer #dcRows button,body.viewer #cDone{display:none!important}
-body.ctv #nav,body.ctv #nav3,body.ctv #lblKho,body.ctv #lblHt,body.ctv #tabbar,body.ctv #nav2 button:not([data-nav="cskh"]){display:none!important}
+body.ctv #nav,body.ctv #nav2,body.ctv #nav3,body.ctv #lblKho,body.ctv #lblHt,body.ctv #tabbar,body.ctv .s-label{display:none!important}body.ctv main>*{display:none!important}body.ctv main::before{content:"Tài khoản cộng tác viên (CSKH) hiện không còn trang nào để dùng. Vui lòng liên hệ quản lý.";display:block;padding:32px 8px;color:var(--mute)}
 body.ctv .mainc{padding-bottom:48px}
 body.ctvkho #nav button:not([data-nav="stock"]),body.ctvkho #nav2,body.ctvkho #nav3,body.ctvkho .s-label:not(#lblKho),body.ctvkho #tabbar,body.ctvkho #stockView .pg-act,body.ctvkho #rows .acts,body.ctvkho #rows td:has(>.acts),body.ctvkho #stockView thead th:last-child{display:none!important}
 body.ctvkho .mainc{padding-bottom:48px}
@@ -290,7 +290,7 @@ body.ctvkho .mainc{padding-bottom:48px}
     <button data-nav="usr" id="navUsr" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 7M22 20c0-3-2-5-5-5.7"/></svg>Người dùng</button>
   </nav>
   <div class="s-label">KINH DOANH</div>
-  <nav class="nav" id="nav2"><button data-nav="bao-gia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Báo giá</button><button data-nav="ve-bao-gia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>Báo giá có bản vẽ</button><button data-nav="lich-su"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 001 1h12a1 1 0 001-1V8M10 12h4"/></svg>Lịch sử báo giá</button><button data-nav="khach-hang"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></svg>Khách hàng &amp; công nợ</button><button data-nav="nguon-tien"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.8"/><path d="M6 9.5v0M18 15.5v0"/></svg>Lịch sử nguồn tiền</button><button data-nav="cskh"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><path d="M4 13h3v5H5a1 1 0 01-1-1v-4zM20 13h-3v5h2a1 1 0 001-1v-4z"/><path d="M17 18v1a2 2 0 01-2 2h-3"/></svg>Chăm sóc khách hàng</button><button data-nav="san-pham"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>Danh mục sản phẩm</button><button data-nav="danh-muc-nhom"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>Danh mục nhôm</button><button data-nav="phu-kien"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Danh mục phụ kiện</button></nav>
+  <nav class="nav" id="nav2"><button data-nav="bao-gia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Báo giá</button><button data-nav="lich-su"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 001 1h12a1 1 0 001-1V8M10 12h4"/></svg>Lịch sử báo giá</button><button data-nav="khach-hang"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3M15 9h3M15 13h3"/></svg>Khách hàng &amp; công nợ</button><button data-nav="nguon-tien"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.8"/><path d="M6 9.5v0M18 15.5v0"/></svg>Lịch sử nguồn tiền</button><button data-nav="san-pham"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>Danh mục sản phẩm</button><button data-nav="danh-muc-nhom"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>Danh mục nhôm</button><button data-nav="phu-kien"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Danh mục phụ kiện</button></nav>
   <div class="s-label" id="lblHt">HỆ THỐNG</div>
   <nav class="nav" id="nav3"><button data-nav="sao-luu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>Sao lưu dữ liệu</button><button data-nav="khoi-phuc"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 8v4l3 2"/></svg>Khôi phục dữ liệu</button></nav>
   <div class="s-foot"><span id="uMail"></span><button class="sm" id="out">Đăng xuất</button></div>
@@ -326,9 +326,13 @@ body.ctvkho .mainc{padding-bottom:48px}
     </div>
   </div>
   <div id="poView" hidden>
-    <div class="pg-head"><div><div class="eyebrow">ĐẶT HÀNG</div><h1>Đề xuất đặt hàng</h1><p>Gom các mã sắp hết theo nhà cung cấp. Số đề xuất đưa tồn về mức gấp 3 lần mức tối thiểu, bạn chỉnh được trước khi gửi.</p></div><div class="pg-act"><button id="poSup">Nhà cung cấp</button><button class="primary" id="poXls">Tải Excel tất cả</button></div></div>
+    <div class="pg-head"><div><div class="eyebrow">ĐẶT HÀNG</div><h1>Đề xuất đặt hàng</h1><p>Lọc và tích chọn các mã cần đặt (mặc định chưa chọn mã nào), chỉnh số lượng rồi bấm “Tạo đơn đặt hàng” để lưu và in đơn gửi nhà cung cấp.</p></div><div class="pg-act"><button id="poSup">Nhà cung cấp</button><button id="poXls">Tải Excel đã chọn</button><button class="primary" id="poMake">Tạo đơn đặt hàng</button></div></div>
+    <div class="seg" id="poTabs" style="margin-bottom:14px"><button data-t="sug" class="on">Đề xuất</button><button data-t="his">Đơn đã tạo <span id="poHisN"></span></button></div>
     <div class="card" id="poErr" hidden style="padding:14px 18px;margin-bottom:16px;border-color:#f0b9ab;background:var(--warnbg);color:var(--warn)">Chưa cài bảng nhà cung cấp. Hãy chạy file supabase-update-2.sql trong SQL Editor rồi tải lại trang.</div>
-    <div class="card tablecard"><div class="card-head"><span class="chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2 12h11l2-8H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></span><div><h3>Hàng cần đặt</h3><small id="poSum"></small></div><div class="card-tools"><select id="poFilt" aria-label="Lọc nhà cung cấp"></select><label class="chk"><input type="checkbox" id="poOut"> Gồm cả mã hết hàng chưa đặt mức tối thiểu</label></div></div><div id="poGroups"></div></div>
+    <div class="card tablecard" id="poSug"><div class="card-head"><span class="chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2 12h11l2-8H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></span><div><h3>Hàng cần đặt</h3><small id="poSum"></small></div><div class="card-tools"><button class="sm" id="poAll">Chọn tất cả đang hiện</button><button class="sm" id="poNone">Bỏ chọn hết</button></div></div>
+      <div class="pofil"><input type="search" id="poQ" placeholder="Tìm mã, tên, quy cách" aria-label="Tìm vật tư"><select id="poFt" aria-label="Lọc theo loại"></select><select id="poFs" aria-label="Lọc theo hệ nhôm"></select><select id="poFc" aria-label="Lọc theo màu"></select><select id="poSt" aria-label="Lọc theo tình trạng"><option value="need">Cần đặt (sắp hết / hết)</option><option value="low">Sắp hết (còn dưới 10)</option><option value="out">Hết hàng</option><option value="all">Tất cả vật tư</option></select><select id="poFilt" aria-label="Lọc nhà cung cấp"></select><label class="chk"><input type="checkbox" id="poOut"> Gồm cả mã hết hàng chưa đặt mức tối thiểu</label><button class="sm" id="poReset" hidden>Xóa lọc</button></div>
+      <div id="poGroups"></div></div>
+    <div class="card tablecard" id="poHis" hidden><div class="card-head"><div><h3>Đơn đặt hàng đã tạo</h3><small id="poHisS"></small></div><div class="card-tools"><select id="poHisSt" aria-label="Lọc trạng thái"><option value="">Tất cả trạng thái</option><option value="ordered">Đã đặt</option><option value="received">Đã nhận hàng</option><option value="cancelled">Đã hủy</option></select></div></div><div class="wrap" style="border:0"><table style="min-width:780px"><thead><tr><th>Số đơn / Ngày</th><th>Nhà cung cấp</th><th class="num">Số mã</th><th class="num">Giá trị</th><th>Trạng thái</th><th></th></tr></thead><tbody id="poHisRows"></tbody></table></div></div>
   </div>
   <div id="stockView" hidden>
     <div class="pg-head">
@@ -663,6 +667,14 @@ body.ctvkho .mainc{padding-bottom:48px}
   <div class="foot"><button class="left" id="supNew">Thêm mới</button><button id="supClose">Đóng</button><button class="primary" id="supSave">Lưu</button></div>
 </dialog>
 
+<dialog id="dPO" style="width:min(940px,calc(100vw - 24px))">
+  <h2>Tạo đơn đặt hàng</h2>
+  <div class="grid"><label>Ngày đặt<input type="date" id="poDate"></label><label>Ngày giao dự kiến<input type="date" id="poDue"></label><label class="full">Địa chỉ nhận hàng<input id="poTo" autocomplete="off"></label><label class="full">Ghi chú trên đơn<input id="poNote" autocomplete="off" placeholder="Ví dụ: giao trong giờ hành chính, kèm hóa đơn VAT"></label></div>
+  <div id="poPrev" style="margin-top:12px;max-height:min(46vh,420px);overflow:auto"></div><div id="poTot" style="margin-top:8px;font-weight:600;color:var(--accent)"></div>
+  <div class="err" id="ePO"></div>
+  <div class="foot"><button id="poClose">Đóng</button><button id="poTry">In thử (không lưu)</button><button class="primary" id="poSave">Lưu &amp; in đơn</button></div>
+</dialog>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="config.js"></script>
@@ -755,7 +767,7 @@ function render(){
   renderBadges();renderRem();
   if(view==='count')renderCount();
   if(view==='dc')renderDC();
-  if(view==='po')renderPO();
+  if(view==='po'){renderPO();loadPO().then(()=>renderPO())}
   if(view==='dash')loadDash();
 }
 function openItem(id){
@@ -1675,64 +1687,6 @@ $('#remS').onclick=async()=>{const days=+$('#remDays').value;
 $('#remC').onclick=()=>$('#dRemD').close();$('#remSet').onclick=openRem;
 document.addEventListener('click',e=>{if(e.target.closest('[data-rem]'))openRem();const g=e.target.closest('[data-go]');if(g)go(g.dataset.go)});
 
-/* =================== ĐỀ XUẤT ĐẶT HÀNG =================== */
-const PO={sup:'',allOut:false,q:{},off:new Set()};
-const supOf=i=>(S.sup||[]).find(s=>sid(s.id)===sid(i.supplier_id));
-function poRows(){return S.items.filter(i=>low(i)||(isOut(i)&&(PO.allOut||Number(i.min)>0))).map(i=>({i,sp:supOf(i),qty:PO.q[sid(i.id)]??Math.max(1,Math.ceil((i.min>0?i.min:LOW_LIMIT)*3-i.qty)),on:!PO.off.has(sid(i.id))}))}
-const poKey=x=>x.sp?sid(x.sp.id):'none';
-function poGroups(){
-  const f=PO.sup,m=new Map();
-  poRows().filter(x=>!f||poKey(x)===f).forEach(x=>{const k=poKey(x);if(!m.has(k))m.set(k,[]);m.get(k).push(x)});
-  const nm=k=>k==='none'?'\uffff':(S.sup.find(s=>sid(s.id)===k)||{name:''}).name;
-  return [...m.entries()].sort((a,b)=>nm(a[0]).localeCompare(nm(b[0]),'vi'));
-}
-function renderPO(){
-  $('#poErr').hidden=S.sup!==null;if(S.sup===null){$('#poGroups').innerHTML='';return}
-  const cur=PO.sup;$('#poFilt').innerHTML='<option value="">Tất cả nhà cung cấp</option><option value="none">Chưa có nhà cung cấp</option>'+S.sup.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');$('#poFilt').value=cur;
-  const gs=poGroups(),all=gs.flatMap(g=>g[1]).filter(x=>x.on);
-  $('#poSum').textContent=all.length+' mã được chọn · '+gs.filter(g=>g[0]!=='none').length+' nhà cung cấp'+(all.reduce((a,x)=>a+x.qty*x.i.price,0)?' · ước tính '+fmt(all.reduce((a,x)=>a+x.qty*x.i.price,0))+' đ':'');
-  $('#poGroups').innerHTML=gs.length?gs.map(([k,rows])=>{
-    const sp=k==='none'?null:S.sup.find(s=>sid(s.id)===k),on=rows.filter(x=>x.on),tot=on.reduce((a,x)=>a+x.qty*x.i.price,0);
-    return `<div class="pog"><div class="pog-h"><div><b>${sp?esc(sp.name):'Chưa có nhà cung cấp'}</b><small>${sp&&sp.phone?esc(sp.phone)+' · ':''}${on.length}/${rows.length} mã được chọn${tot?' · ước tính '+fmt(tot)+' đ':''}${sp?'':' · chọn nhà cung cấp ở cột cuối để gom đơn'}</small></div>
-    <div class="acts"><button class="sm" data-po="copy" data-k="${esc(k)}"${on.length?'':' disabled'}>Sao chép tin Zalo</button>${sp&&sp.phone?`<button class="sm btn-out" data-po="zalo" data-k="${esc(k)}">Mở Zalo</button>`:''}<button class="sm" data-po="xls" data-k="${esc(k)}"${on.length?'':' disabled'}>Tải Excel</button></div></div>
-    <div class="wrap" style="border:0;border-radius:0"><table style="min-width:760px"><thead><tr><th></th><th>Mã / Tên</th><th class="num">Tồn</th><th class="num">Tối thiểu</th><th>Đề xuất đặt</th><th>Nhà cung cấp</th></tr></thead><tbody>${rows.map(x=>`<tr><td><input type="checkbox" class="pc" data-id="${esc(x.i.id)}"${x.on?' checked':''}></td>
-    <td><div class="n2">${esc(x.i.name)}</div><small><code>${esc(x.i.code)}</code>${x.i.fin?' · '+esc(x.i.fin):''}</small></td><td class="num">${fmt(x.i.qty)} ${esc(x.i.unit)}</td><td class="num">${fmt(x.i.min)}</td>
-    <td><input type="number" class="pq" min="0" step="any" value="${x.qty}" data-id="${esc(x.i.id)}" style="width:90px"> ${esc(x.i.unit)}</td>
-    <td><select class="ps" data-id="${esc(x.i.id)}"><option value="">— chọn —</option>${S.sup.map(s=>`<option value="${esc(s.id)}"${x.sp&&sid(x.sp.id)===sid(s.id)?' selected':''}>${esc(s.name)}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table></div></div>`}).join('')
-    :'<div class="empty">Không có mã nào cần đặt. Hàng vào danh sách khi còn dưới 10 (lớn hơn 0), hoặc đã hết hàng và có đặt mức tối thiểu.</div>';
-}
-function poMsg(sp,rows){
-  return 'Chào '+(sp?sp.name:'anh/chị')+', bên Hải Hà Hưng muốn đặt hàng ngày '+new Date().toLocaleDateString('vi-VN')+':\n'
-   +rows.map((x,n)=>(n+1)+'. '+x.i.code+' - '+x.i.name+(x.i.fin?' ('+x.i.fin+')':'')+': '+fmt(x.qty)+' '+x.i.unit).join('\n')+'\nNhờ anh/chị báo giá và thời gian giao hàng giúp em. Cảm ơn!';
-}
-async function copyText(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}}
-function poXlsx(keys){
-  const wb=XLSX.utils.book_new(),hd=['STT','Mã','Tên vật tư','Màu / bề mặt','Đơn vị','Tồn hiện tại','Số lượng đặt','Đơn giá nhập','Thành tiền','Nhà cung cấp'],used=new Set();
-  const sheet=(rows,name)=>{const ws=XLSX.utils.aoa_to_sheet([hd].concat(rows.map((x,n)=>[n+1,x.i.code,x.i.name,x.i.fin||'',x.i.unit,x.i.qty,x.qty,x.i.price||'',x.i.price?x.qty*x.i.price:'',x.sp?x.sp.name:''])));
-    ws['!cols']=[{wch:5},{wch:18},{wch:50},{wch:16},{wch:8},{wch:11},{wch:12},{wch:13},{wch:14},{wch:22}];
-    let n=name.replace(/[\\\/?*\[\]:]/g,' ').slice(0,28)||'Sheet',u=n,c=2;while(used.has(u))u=n+' '+c++;used.add(u);XLSX.utils.book_append_sheet(wb,ws,u)};
-  const gs=poGroups().filter(g=>!keys||keys.includes(g[0])).map(g=>[g[0],g[1].filter(x=>x.on)]).filter(g=>g[1].length);
-  if(!gs.length){toast('Chưa chọn mã nào để đặt.');return}
-  if(!keys||gs.length>1)sheet(gs.flatMap(g=>g[1]),'Tất cả');
-  gs.forEach(g=>sheet(g[1],g[0]==='none'?'Chưa có NCC':g[1][0].sp.name));
-  XLSX.writeFile(wb,'de-xuat-dat-hang-'+new Date().toISOString().slice(0,10)+'.xlsx');
-}
-$('#poGroups').onchange=async e=>{
-  const t=e.target,id=t.dataset.id;if(!id)return;
-  if(t.classList.contains('pc')){t.checked?PO.off.delete(id):PO.off.add(id);renderPO()}
-  else if(t.classList.contains('pq')){PO.q[id]=Math.max(0,pf(t.value)||0);renderPO()}
-  else if(t.classList.contains('ps')){const r=await sb.from('items').update({supplier_id:t.value||null}).eq('id',id);
-    if(r.error){toast(rpcMsg(r.error));return}const i=itemById(id);if(i)i.supplier_id=t.value||null;renderPO()}
-};
-$('#poGroups').onclick=async e=>{
-  const b=e.target.closest('button[data-po]');if(!b)return;
-  const g=poGroups().find(x=>x[0]===b.dataset.k);if(!g)return;const rows=g[1].filter(x=>x.on),sp=rows[0]&&rows[0].sp||(b.dataset.k==='none'?null:S.sup.find(s=>sid(s.id)===b.dataset.k));
-  if(b.dataset.po==='copy'){await copyText(poMsg(sp,rows));toast('Đã sao chép tin nhắn. Dán vào Zalo để gửi.')}
-  else if(b.dataset.po==='zalo'){await copyText(poMsg(sp,rows));toast('Đã sao chép tin nhắn, đang mở Zalo. Dán tin vào khung chat.');window.open('https://zalo.me/'+String(sp.phone).replace(/[^\d]/g,''),'_blank','noopener')}
-  else poXlsx([b.dataset.k]);
-};
-$('#poFilt').onchange=e=>{PO.sup=e.target.value;renderPO()};$('#poOut').onchange=e=>{PO.allOut=e.target.checked;renderPO()};
-$('#poXls').onclick=()=>poXlsx(null);$('#toPO').onclick=()=>go('po');
 let supEdit=null;
 function drawSup(){
   $('#supRows').innerHTML=(S.sup||[]).length?S.sup.map(s=>`<tr><td><b>${esc(s.name)}</b><small>${esc(s.phone||'')}${s.note?' · '+esc(s.note):''}</small></td><td class="num"><div class="acts"><button class="sm" data-e="${esc(s.id)}">Sửa</button><button class="sm danger" data-d="${esc(s.id)}">Xóa</button></div></td></tr>`).join(''):'<tr><td class="empty">Chưa có nhà cung cấp nào.</td></tr>';
@@ -1953,7 +1907,7 @@ $('#rpGo').onclick=()=>{
 
 /* =================== PHÂN QUYỀN + DUYỆT PHIẾU + NHẬP KHO TỪ ẢNH =================== */
 let ROLE='admin';
-const ROLES={admin:'Quản trị',approver:'Quản lý duyệt',staff:'Nhân viên kho',viewer:'Chỉ xem',ctv:'Cộng tác viên (chỉ CSKH)',ctv_kho:'CTV kho (chỉ xem Tồn kho)'};
+const ROLES={admin:'Quản trị',approver:'Quản lý duyệt',staff:'Nhân viên kho',viewer:'Chỉ xem',ctv:'Cộng tác viên (đã ngưng CSKH)',ctv_kho:'CTV kho (chỉ xem Tồn kho)'};
 const isBoss=()=>ROLE==='admin'||ROLE==='approver';
 function applyRole(){
   document.body.classList.toggle('boss',isBoss());document.body.classList.toggle('viewer',ROLE==='viewer');document.body.classList.toggle('ctv',ROLE==='ctv');document.body.classList.toggle('ctvkho',ROLE==='ctv_kho');
@@ -2124,7 +2078,7 @@ $('#out').onclick=()=>sb.auth.signOut();
 sb.auth.onAuthStateChange((ev,sess)=>{const em=sess&&sess.user?sess.user.email:'';window.UE=em;$('#uMail').textContent=em;$('#avatar').textContent=em?em[0].toUpperCase():'';showApp(!!sess)});
 
 /* ===== Hợp nhất kho + báo giá: một khung, định tuyến bằng hash (#/ten-trang) ===== */
-const BIZ={'bao-gia':['Báo giá','sites/bao-gia/index.html'],'ve-bao-gia':['Báo giá có bản vẽ','sites/dung-bao-gia-co-ban-ve/index.html'],'lich-su':['Lịch sử báo giá','sites/lich-su-bao-gia/index.html'],'danh-muc-nhom':['Danh mục nhôm','sites/danh-muc-nhom/index.html'],'khach-hang':['Khách hàng & công nợ','sites/khach-hang/index.html'],'nguon-tien':['Lịch sử nguồn tiền','sites/nguon-tien/index.html'],'san-pham':['Danh mục sản phẩm','sites/san-pham/index.html'],'cskh':['Chăm sóc khách hàng','sites/cskh/index.html'],'phu-kien':['Danh mục phụ kiện','sites/phu-kien/index.html'],'sao-luu':['Sao lưu dữ liệu','sites/sao-luu/index.html'],'khoi-phuc':['Khôi phục dữ liệu','sites/khoi-phuc/index.html']};
+const BIZ={'bao-gia':['Báo giá','sites/bao-gia/index.html'],'lich-su':['Lịch sử báo giá','sites/lich-su-bao-gia/index.html'],'danh-muc-nhom':['Danh mục nhôm','sites/danh-muc-nhom/index.html'],'khach-hang':['Khách hàng & công nợ','sites/khach-hang/index.html'],'nguon-tien':['Lịch sử nguồn tiền','sites/nguon-tien/index.html'],'san-pham':['Danh mục sản phẩm','sites/san-pham/index.html'],'phu-kien':['Danh mục phụ kiện','sites/phu-kien/index.html'],'sao-luu':['Sao lưu dữ liệu','sites/sao-luu/index.html'],'khoi-phuc':['Khôi phục dữ liệu','sites/khoi-phuc/index.html']};
 const _setView=setView;
 setView=function(v){const b=BIZ[v],on=x=>x.classList.toggle('on',x.dataset.nav===v);
   if(!b){$('#bizView').hidden=true;_setView(v);document.querySelectorAll('#nav2 button,#nav3 button').forEach(on);return}
@@ -2132,9 +2086,9 @@ setView=function(v){const b=BIZ[v],on=x=>x.classList.toggle('on',x.dataset.nav==
   document.querySelectorAll('#nav button,#nav2 button,#nav3 button,#tabbar button').forEach(on);
   $('#crumb').textContent=b[0];$('#toPO').hidden=true;
   const f=$('#bizFrame');if(f.dataset.v!==v){f.dataset.v=v;f.src=b[1]}};
-const _go=go;go=function(v){if(ROLE==='ctv')v='cskh';if(ROLE==='ctv_kho')v='stock';_go(v);if(ROLE==='ctv_kho')$('#pgSub').textContent='Chỉ xem số lượng tồn kho. Vai trò CTV kho không được nhập, xuất hay chỉnh sửa.';if(location.hash!=='#/'+v)history.replaceState(null,'','#/'+v)};
+const _go=go;go=function(v){if(ROLE==='ctv_kho')v='stock';_go(v);if(ROLE==='ctv_kho')$('#pgSub').textContent='Chỉ xem số lượng tồn kho. Vai trò CTV kho không được nhập, xuất hay chỉnh sửa.';if(location.hash!=='#/'+v)history.replaceState(null,'','#/'+v)};
 $('#nav2').onclick=$('#nav3').onclick=navClick;
-const route=()=>{let v=location.hash.replace(/^#\//,'');if(ROLE==='ctv'){v='cskh';if(location.hash!=='#/cskh')history.replaceState(null,'','#/cskh')}if(ROLE==='ctv_kho'){v='stock';if(location.hash!=='#/stock')history.replaceState(null,'','#/stock')}if(v&&(VIEWS[v]||BIZ[v])&&v!==view)go(v)};
+const route=()=>{let v=location.hash.replace(/^#\//,'');if(ROLE==='ctv_kho'){v='stock';if(location.hash!=='#/stock')history.replaceState(null,'','#/stock')}if(v&&(VIEWS[v]||BIZ[v])&&v!==view)go(v)};
 /* CTV kho: chỉ xem. Chặn mọi nút thao tác trong trang Tồn kho (lớp chặn thật nằm ở database, xem supabase-update-16.sql) */
 document.addEventListener('click',e=>{if(ROLE!=='ctv_kho')return;const b=e.target.closest('#stockView button');if(!b||['pPrev','pNext','fReset'].includes(b.id))return;e.preventDefault();e.stopImmediatePropagation();toast('Vai trò CTV kho chỉ được xem tồn kho.')},true);
 addEventListener('hashchange',route);
@@ -2142,5 +2096,6 @@ const _load=load;load=async function(){await _load();route()};
 addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||e.data.hhh!=='route')return;const r=e.data.route;
   if(BIZ[r]&&view!==r){$('#bizFrame').dataset.v=r;go(r)}});
 </script>
+<script src="assets/js/po.js?v=4"></script>
 </body>
 </html>
